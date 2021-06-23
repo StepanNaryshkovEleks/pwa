@@ -7,14 +7,13 @@ import reportWebVitals from "./reportWebVitals";
 import initStore from "./redux/createStore";
 import {Provider} from "react-redux";
 import {BrowserRouter as Router} from "react-router-dom";
-import history from "./routes/history";
 
 const store = initStore();
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router history={history}>
+      <Router>
         <App />
       </Router>
     </Provider>

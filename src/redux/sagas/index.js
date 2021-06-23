@@ -1,4 +1,4 @@
-import {takeLatest, takeEvery} from "redux-saga/effects";
+import {takeLatest} from "redux-saga/effects";
 import CNST from "../../constants";
 import {getUser, signIn, signOut} from "./user";
 

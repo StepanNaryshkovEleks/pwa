@@ -1,4 +1,4 @@
-export default {
+const USER = {
   SIGN_IN: {
     FETCH: "SIGN_IN_FETCH",
     SUCCESS: "SIGN_IN_SUCCESS",
@@ -14,3 +14,5 @@ export default {
     ERROR: "GET_PROFILE_ERROR",
   },
 };
+
+export default USER;

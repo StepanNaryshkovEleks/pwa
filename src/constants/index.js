@@ -1,7 +1,9 @@
 import user from "./user";
 import routes from "./routes";
 
-export default {
+const CNST = {
   USER: user,
   ROUTES: routes,
 };
+
+export default CNST;
