@@ -1,6 +1,6 @@
-import {connect} from 'react-redux';
-import {signInAction} from '../../redux/actions/user/signIn';
-import {SignIn} from './component';
+import {connect} from "react-redux";
+import {signInAction} from "../../redux/actions/user/signIn";
+import {SignIn} from "./component";
 
 export const mapStateToProps = (state) => ({
   fetching: state.user.fetching,
