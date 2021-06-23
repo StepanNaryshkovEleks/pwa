@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './style/ant-customize/variables-override.less';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
-import initStore from './redux/createStore';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import "./style/ant-customize/variables-override.less";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
+import initStore from "./redux/createStore";
 import {Provider} from "react-redux";
 import {BrowserRouter as Router} from "react-router-dom";
 import history from "./routes/history";
@@ -14,12 +14,12 @@ const store = initStore();
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router history={history} >
+      <Router history={history}>
         <App />
       </Router>
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

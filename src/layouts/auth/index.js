@@ -1,3 +1,3 @@
-import {AuthLayout} from './component';
+import {AuthLayout} from "./component";
 
 export default AuthLayout;

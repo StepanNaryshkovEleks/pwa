@@ -1,10 +1,6 @@
-import {takeLatest, takeEvery} from 'redux-saga/effects';
-import CNST from '../../constants';
-import {
-  getUser,
-  signIn,
-  signOut,
-} from './user';
+import {takeLatest, takeEvery} from "redux-saga/effects";
+import CNST from "../../constants";
+import {getUser, signIn, signOut} from "./user";
 
 export default function* rootSaga() {
   yield takeLatest(CNST.USER.SIGN_IN.FETCH, signIn);

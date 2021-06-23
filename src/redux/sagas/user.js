@@ -1,20 +1,18 @@
-import {put, call} from 'redux-saga/effects';
-import axios from 'axios';
-import CNST from '../../constants';
-import {isResponseOk} from '../../helpers/api/isResponseOk';
+import {put, call} from "redux-saga/effects";
+import axios from "axios";
+import CNST from "../../constants";
+import {isResponseOk} from "../../helpers/api/isResponseOk";
 
 export const signInRequest = () =>
-  axios.get('/users/s').catch((error) => {
+  axios.get("/users/s").catch((error) => {
     throw error.response.data;
   });
 
 export function* signIn(props) {
   try {
     const user = yield call(signInRequest, props.payload);
-    console.log(user)
-  } catch (error) {
-
-  }
+    console.log(user);
+  } catch (error) {}
 }
 
 export function* signOut() {
@@ -24,7 +22,7 @@ export function* signOut() {
 }
 
 export const getUserRequest = () =>
-  axios.get('/users/current').catch((error) => {
+  axios.get("/users/current").catch((error) => {
     throw error.response.data;
   });
 

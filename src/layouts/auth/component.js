@@ -1,9 +1,6 @@
-import React from 'react';
+import React from "react";
 
-
-export const AuthLayout = ({
-  children,
-}) => {
+export const AuthLayout = ({children}) => {
   return (
     <>
       <header>header</header>
@@ -11,4 +8,3 @@ export const AuthLayout = ({
     </>
   );
 };
-

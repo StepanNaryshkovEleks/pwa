@@ -1,8 +1,7 @@
-﻿import React from 'react';
-import {Route} from 'react-router-dom';
-import {connect} from 'react-redux';
+﻿import React from "react";
+import {Route} from "react-router-dom";
+import {connect} from "react-redux";
 import AuthLayout from "../layouts/auth";
-
 
 const IsAuthUser = ({
   component: Component,
@@ -15,20 +14,19 @@ const IsAuthUser = ({
   return (
     <Route
       {...rest}
-      render={(props) =>
+      render={(props) => (
         <AuthLayout permissions={permissions}>
           <Component {...props} />
         </AuthLayout>
-      }
+      )}
     />
   );
 };
 
 export const mapStateToProps = (state) => ({
-  isLoggedIn: state.user.isLoggedIn
+  isLoggedIn: state.user.isLoggedIn,
 });
 
-export const mapDispatchToProps = (dispatch) => ({
-});
+export const mapDispatchToProps = (dispatch) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(IsAuthUser);

@@ -1,4 +1,4 @@
-import CNST from '../../../constants';
+import CNST from "../../../constants";
 
 export function signOutAction() {
   return {
