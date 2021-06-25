@@ -1,0 +1,33 @@
+.wrap {
+  min-height: 100vh;
+  background-image: url("../../images/home-bg.png");
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  padding: 120px 15px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(4.11deg, #00efff 1.47%, #006dff 88.68%);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  margin-bottom: 80px;
+}
+
+.img {
+  margin: auto;
+}
