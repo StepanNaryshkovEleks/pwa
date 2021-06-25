@@ -5,9 +5,11 @@ import IsNotAuthUser from "./IsNotAuthUser";
 
 import SignIn from "../pages/sign-in";
 import SignUp from "../pages/sign-up";
+import Home from "../pages/home";
 
 export const AppRouter = () => (
   <Switch>
+    <IsNotAuthUser exact path={CNST.ROUTES.HOME} component={Home} />
     <IsNotAuthUser exact path={CNST.ROUTES.SIGN_IN} component={SignIn} />
     <IsNotAuthUser exact path={CNST.ROUTES.SIGN_UP} component={SignUp} />
   </Switch>
