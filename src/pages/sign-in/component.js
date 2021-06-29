@@ -14,34 +14,30 @@ export const SignIn = () => {
   return (
     <>
       <Header title="Sign in" />
-      <div className={styles.wrap}>
-        <Form name="basic" {...formItemLayout}>
-          <Form.Item
-            label="Username"
-            name="username"
-            rules={[{required: true, message: "Please input your username!"}]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[{required: true, message: "Please input your password!"}]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Link to={CNST.ROUTES.FORGOT_PASSWORD}>Forgot your Password?</Link>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Log In
-            </Button>
-          </Form.Item>
-        </Form>
-        <span>
-          I don’t have an account. <Link to={CNST.ROUTES.FORGOT_PASSWORD}>Create</Link>
-        </span>
-      </div>
+      <form className={styles.form}>
+        <div className={styles.row}>
+          <label htmlFor="" className="label">
+            Email
+          </label>
+          <Input type="email" />
+        </div>
+        <div className={styles.row}>
+          <label htmlFor="" className="label">
+            Password
+          </label>
+          <Input.Password iconRender={false} visibilityToggle={false} />
+        </div>
+        <Link to={CNST.ROUTES.FORGOT_PASSWORD} className={styles.link}>
+          Forgot your password?
+        </Link>
+        <Button type="primary" htmlType="submit">
+          Log In
+        </Button>
+      </form>
+      <footer className={styles.footer}>
+        <span className={styles.footerText}>I don’t have an account.</span>{" "}
+        <Link to={CNST.ROUTES.FORGOT_PASSWORD}>Create</Link>
+      </footer>
     </>
   );
 };
