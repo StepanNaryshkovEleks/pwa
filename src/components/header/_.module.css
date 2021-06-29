@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 15px;
+}
+
+.icon {
+  width: 17px;
+  height: 17px;
+}
+
+.title {
+  font-size: 18px;
+  margin: auto;
+  margin-bottom: 3px;
+}
+
+.img {
+  height: 22px;
+  width: 22px;
+  border-radius: 100%;
+}
