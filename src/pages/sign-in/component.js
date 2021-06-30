@@ -1,31 +1,53 @@
-import React from "react";
+import React, {useState} from "react";
 import CNST from "../../constants";
 import {Link} from "react-router-dom";
 import {Button, Input} from "antd";
 import styles from "./_.module.css";
 import Header from "../../components/header";
 
-export const SignIn = () => {
+export const SignIn = ({signIn}) => {
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = () => {
+    signIn({
+      password,
+      email,
+    });
+  };
   return (
     <>
       <Header title="Sign in" />
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.row}>
-          <label htmlFor="" className="label">
+          <label htmlFor="email" className="label">
             Email
           </label>
-          <Input type="email" />
+          <Input
+            type="email"
+            id="email"
+            onChange={(event) => setEmail(event.target.value)}
+          />
         </div>
         <div className={styles.row}>
-          <label htmlFor="" className="label">
+          <label htmlFor="password" className="label">
             Password
           </label>
-          <Input.Password iconRender={false} visibilityToggle={false} />
+          <Input.Password
+            iconRender={false}
+            visibilityToggle={false}
+            id="password"
+            onChange={(event) => setPassword(event.target.value)}
+          />
         </div>
         <Link to={CNST.ROUTES.FORGOT_PASSWORD} className={styles.link}>
           Forgot your password?
         </Link>
-        <Button type="primary" htmlType="submit">
+        <Button
+          type="primary"
+          onClick={handleSubmit}
+          disabled={!email.length || !password.length}
+        >
           Log In
         </Button>
       </form>

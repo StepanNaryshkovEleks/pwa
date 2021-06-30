@@ -17,7 +17,8 @@
   padding-right: 15px;
   padding-left: 15px;
   margin-top: 90px;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
+  margin-bottom: auto;
 }
 
 :global(.ant-input) {
@@ -35,7 +36,6 @@
 }
 
 .footer {
-  margin-top: auto;
   margin-bottom: 50px;
   text-align: center;
 }
