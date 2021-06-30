@@ -1,14 +1,60 @@
-import React from "react";
+import React, {useState} from "react";
 import CNST from "../../constants";
 import {Link} from "react-router-dom";
-import {Switch} from "antd";
+import {Button, Input} from "antd";
+import styles from "./_.module.css";
+import Header from "../../components/header";
 
-export const SignIn = () => {
+export const SignIn = ({signIn}) => {
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = () => {
+    signIn({
+      password,
+      email,
+    });
+  };
   return (
     <>
-      <h1>Sign in page!!!!!!!</h1>
-      <Switch defaultChecked />
-      <Link to={CNST.ROUTES.SIGN_UP}>sign up</Link>
+      <Header title="Sign in" />
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.row}>
+          <label htmlFor="email" className="label">
+            Email
+          </label>
+          <Input
+            type="email"
+            id="email"
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </div>
+        <div className={styles.row}>
+          <label htmlFor="password" className="label">
+            Password
+          </label>
+          <Input.Password
+            iconRender={false}
+            visibilityToggle={false}
+            id="password"
+            onChange={(event) => setPassword(event.target.value)}
+          />
+        </div>
+        <Link to={CNST.ROUTES.FORGOT_PASSWORD} className={styles.link}>
+          Forgot your password?
+        </Link>
+        <Button
+          type="primary"
+          onClick={handleSubmit}
+          disabled={!email.length || !password.length}
+        >
+          Log In
+        </Button>
+      </form>
+      <footer className={styles.footer}>
+        <span className={styles.footerText}>I don’t have an account.</span>{" "}
+        <Link to={CNST.ROUTES.SIGN_UP}>Create</Link>
+      </footer>
     </>
   );
 };
