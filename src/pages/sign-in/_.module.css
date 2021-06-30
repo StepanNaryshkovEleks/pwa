@@ -6,6 +6,10 @@
   margin-bottom: 25px;
 }
 
+.row:last-of-type {
+  margin-bottom: 20px;
+}
+
 .form {
   width: 100%;
   display: flex;
@@ -18,7 +22,10 @@
 
 :global(.ant-input) {
   text-align: right;
-  margin-left: 10px;
+}
+
+:global(.label) {
+  margin-right: 10px;
 }
 
 :global(#root) {

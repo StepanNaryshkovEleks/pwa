@@ -1,14 +1,9 @@
 import React from "react";
 import CNST from "../../constants";
 import {Link} from "react-router-dom";
-import {Button, Form, Input} from "antd";
+import {Button, Input} from "antd";
 import styles from "./_.module.css";
 import Header from "../../components/header";
-
-const formItemLayout = {
-  labelCol: {span: 24},
-  wrapperCol: {span: 24},
-};
 
 export const SignIn = () => {
   return (
@@ -36,7 +31,7 @@ export const SignIn = () => {
       </form>
       <footer className={styles.footer}>
         <span className={styles.footerText}>I don’t have an account.</span>{" "}
-        <Link to={CNST.ROUTES.FORGOT_PASSWORD}>Create</Link>
+        <Link to={CNST.ROUTES.SIGN_UP}>Create</Link>
       </footer>
     </>
   );
