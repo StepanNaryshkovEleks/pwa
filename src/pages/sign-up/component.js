@@ -3,7 +3,11 @@ import Header from "../../components/header";
 import styles from "./_.module.css";
 import {Tabs, Avatar, Button, Input} from "antd";
 import {UserOutlined} from "@ant-design/icons";
+import {DatePicker, Select} from "antd";
+import {Link} from "react-router-dom";
+import CNST from "../../constants";
 
+const {Option} = Select;
 const {TabPane} = Tabs;
 
 function callback(key) {
@@ -35,7 +39,7 @@ export const SignUp = () => {
           Company
         </TabPane>
       </Tabs>
-      <form>
+      <form className={styles.form}>
         <div className={styles.img}>
           <Avatar size={64} icon={<UserOutlined />} />
           <input
@@ -49,27 +53,53 @@ export const SignUp = () => {
           <label htmlFor="name" className="label">
             Name
           </label>
-          <Input type="text" id="name" />
+          <Input type="text" id="name" placeholder="please input" allowClear={true} />
         </div>
         <div className={styles.row}>
           <label htmlFor="address" className="label">
             Postal address
           </label>
-          <Input type="email" id="address" />
+          <Input type="email" id="address" allowClear={true} placeholder="please input" />
         </div>
         <div className={styles.row}>
           <label htmlFor="email" className="label">
             Email
           </label>
-          <Input type="email" id="email" />
+          <Input type="email" id="email" allowClear={true} placeholder="please input" />
         </div>
         <div className={styles.row}>
           <label htmlFor="tel" className="label">
             Phone number
           </label>
-          <Input type="tel" id="tel" />
+          <Input type="tel" id="tel" allowClear={true} placeholder="please input" />
         </div>
+        <div className={styles.row}>
+          <label htmlFor="date" className="label">
+            Date of Birth
+          </label>
+          <DatePicker
+            suffixIcon={() => {}}
+            bordered={false}
+            allowClear={true}
+            placeholder="please input"
+            id="date"
+            className={styles.date}
+          />
+        </div>
+        <div className={styles.row}>
+          <label htmlFor="date" className="label">
+            Gender
+          </label>
+          <Select showArrow={false} bordered={false} className={styles.select}>
+            <Option value="jack">Prefer not to disclose</Option>
+          </Select>
+        </div>
+        <Button type="primary">Set Account Details</Button>
       </form>
+      <footer className={styles.footer}>
+        <span className={styles.footerText}>I have an account.</span>{" "}
+        <Link to={CNST.ROUTES.SIGN_IN}>Log In</Link>
+      </footer>
     </>
   );
 };

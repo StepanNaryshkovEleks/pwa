@@ -24,6 +24,7 @@ export const SignIn = ({signIn}) => {
             Email
           </label>
           <Input
+            allowClear={true}
             type="email"
             id="email"
             onChange={(event) => setEmail(event.target.value)}
@@ -34,6 +35,7 @@ export const SignIn = ({signIn}) => {
             Password
           </label>
           <Input.Password
+            allowClear={true}
             iconRender={false}
             visibilityToggle={false}
             id="password"
