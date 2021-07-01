@@ -15,14 +15,13 @@ export const Interests = ({interests, setInterest}) => {
     <>
       <Header title="Interests" LeftComponent={Icon} />
       <main className={styles.main}>
-        <span className={styles.description}>
+        <span className={styles.recommendations}>
           Choose your interests to get better challenge recomendations
         </span>
         <form className={styles.interests}>
           {Object.entries(interests).map(([name, value], i) => (
-            <>
+            <React.Fragment key={i}>
               <Checkbox
-                key={i}
                 name={name}
                 checked={value}
                 onChange={onCheckChange}
@@ -31,7 +30,7 @@ export const Interests = ({interests, setInterest}) => {
                 {name}
               </Checkbox>
               <div className={styles.divider} />
-            </>
+            </React.Fragment>
           ))}
           <Button className={styles.button}>Save Interests</Button>
         </form>

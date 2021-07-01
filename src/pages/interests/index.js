@@ -1,9 +1,9 @@
 import {Interests} from "./component";
 import {connect} from "react-redux";
-import {setInterestAction} from "../../redux/actions/interests/setInterest";
+import {setInterestAction} from "../../redux/actions/signUpDetails/interests";
 
 export const mapStateToProps = (state) => ({
-  interests: state.interests,
+  interests: state.signUpDetails.interests,
 });
 
 export const mapDispatchToProps = (dispatch) => ({

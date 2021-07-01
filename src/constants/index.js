@@ -1,11 +1,11 @@
 import user from "./user";
 import routes from "./routes";
-import interests from "./interests";
+import signUpDetails from "./signUpDetails";
 
 const CNST = {
   USER: user,
   ROUTES: routes,
-  INTERESTS: interests,
+  SIGN_UP_DETAILS: signUpDetails,
 };
 
 export default CNST;
