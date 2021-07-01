@@ -16,7 +16,7 @@ export const Interests = ({interests, setInterest}) => {
       <Header title="Interests" LeftComponent={Icon} />
       <main className={styles.main}>
         <span className={styles.recommendations}>
-          Choose your interests to get better challenge recomendations
+          Choose your interests to get better challenge recommendations
         </span>
         <form className={styles.interests}>
           {Object.entries(interests).map(([name, value], i) => (
