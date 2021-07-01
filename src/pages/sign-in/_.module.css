@@ -21,22 +21,22 @@
   margin-bottom: auto;
 }
 
-:global(.ant-input) {
+.body :global(.ant-input) {
   text-align: right;
 }
 
-:global(.label) {
+.body :global(.label) {
   margin-right: 10px;
 }
 
-:global(#root) {
+.body :global(#root) {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 .footer {
-  margin-bottom: 50px;
+  padding-bottom: 50px;
   text-align: center;
 }
 

@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {Button, Input} from "antd";
 import styles from "./_.module.css";
 import Header from "../../components/header";
+import {Helmet} from "react-helmet";
 
 export const SignIn = ({signIn}) => {
   const [password, setPassword] = useState("");
@@ -17,6 +18,9 @@ export const SignIn = ({signIn}) => {
   };
   return (
     <>
+      <Helmet>
+        <body className={styles.body} />
+      </Helmet>
       <Header title="Sign in" />
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.row}>

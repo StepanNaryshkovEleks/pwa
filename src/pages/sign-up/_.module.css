@@ -1,4 +1,4 @@
-:global(.ant-tabs-tab) {
+.body :global(.ant-tabs-tab) {
   width: 50%;
 }
 
@@ -14,7 +14,13 @@
   text-indent: -999px;
 }
 
-:global(.ant-input) {
+.body :global(#root) {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.body :global(.ant-input) {
   text-align: right;
 }
 
@@ -66,7 +72,7 @@
 }
 
 .footer {
-  margin-bottom: 50px;
+  padding-bottom: 50px;
   text-align: center;
 }
 

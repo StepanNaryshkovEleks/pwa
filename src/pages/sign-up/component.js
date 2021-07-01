@@ -6,6 +6,7 @@ import {UserOutlined} from "@ant-design/icons";
 import {DatePicker, Select} from "antd";
 import {Link} from "react-router-dom";
 import CNST from "../../constants";
+import {Helmet} from "react-helmet";
 
 const {Option} = Select;
 const {TabPane} = Tabs;
@@ -30,6 +31,9 @@ export const SignUp = () => {
   };
   return (
     <>
+      <Helmet>
+        <body className={styles.body} />
+      </Helmet>
       <Header title="Account Details" />
       <Tabs defaultActiveKey="1" onChange={callback} centered={true}>
         <TabPane tab="User" key="1">
@@ -78,7 +82,7 @@ export const SignUp = () => {
             Date of Birth
           </label>
           <DatePicker
-            suffixIcon={() => {}}
+            suffixIcon={React.Fragment}
             bordered={false}
             allowClear={true}
             placeholder="please input"
