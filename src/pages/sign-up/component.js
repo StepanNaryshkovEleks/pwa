@@ -11,11 +11,98 @@ import {Helmet} from "react-helmet";
 const {Option} = Select;
 const {TabPane} = Tabs;
 
-function callback(key) {
-  console.log(key);
-}
+const GeneralInputs = ({onImageChange, isUserTab, signUpDetails, handleChange}) => {
+  return (
+    <>
+      <div className={styles.img}>
+        <Avatar size={64} icon={<UserOutlined />} />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={onImageChange}
+          className={styles.input}
+        />
+      </div>
+      <div className={styles.row}>
+        <label htmlFor="name" className="label">
+          Name
+        </label>
+        <Input
+          value={
+            isUserTab ? signUpDetails.userDetails.name : signUpDetails.companyDetails.name
+          }
+          name="name"
+          allowClear={true}
+          type="text"
+          id="name"
+          placeholder="please input"
+          onChange={handleChange}
+        />
+      </div>
+      <div className={styles.row}>
+        <label htmlFor="address" className="label">
+          Postal address
+        </label>
+        <Input
+          value={
+            isUserTab
+              ? signUpDetails.userDetails.address
+              : signUpDetails.companyDetails.address
+          }
+          type="text"
+          id="address"
+          allowClear={true}
+          placeholder="please input"
+          onChange={handleChange}
+        />
+      </div>
+      <div className={styles.row}>
+        <label htmlFor="email" className="label">
+          Email
+        </label>
+        <Input
+          type="email"
+          key="email"
+          onChange={handleChange}
+          value={
+            isUserTab
+              ? signUpDetails.userDetails.email
+              : signUpDetails.companyDetails.email
+          }
+          id="email"
+          allowClear={true}
+          placeholder="please input"
+        />
+      </div>
+      <div className={styles.row}>
+        <label htmlFor="tel" className="label">
+          Phone number
+        </label>
+        <Input
+          type="tel"
+          value={
+            isUserTab
+              ? signUpDetails.userDetails.phoneNumber
+              : signUpDetails.companyDetails.phoneNumber
+          }
+          name="phoneNumber"
+          onChange={handleChange}
+          id="tel"
+          allowClear={true}
+          placeholder="please input"
+        />
+      </div>
+    </>
+  );
+};
 
-export const SignUp = () => {
+export const SignUp = ({
+  signUpDetails,
+  setUserDetailsAction,
+  setCompanyDetailsAction,
+  setAccountDetailsTabAction,
+}) => {
+  const isUserTab = signUpDetails.activeAccountDetailsTab === "user";
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
@@ -30,45 +117,18 @@ export const SignUp = () => {
     }
   };
 
-  const GeneralInputs = () => {
-    return (
-      <>
-        <div className={styles.img}>
-          <Avatar size={64} icon={<UserOutlined />} />
-          <input
-            type="file"
-            accept="image/*"
-            onChange={onImageChange}
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.row}>
-          <label htmlFor="name" className="label">
-            Name
-          </label>
-          <Input type="text" id="name" placeholder="please input" allowClear={true} />
-        </div>
-        <div className={styles.row}>
-          <label htmlFor="address" className="label">
-            Postal address
-          </label>
-          <Input type="text" id="address" allowClear={true} placeholder="please input" />
-        </div>
-        <div className={styles.row}>
-          <label htmlFor="email" className="label">
-            Email
-          </label>
-          <Input type="email" id="email" allowClear={true} placeholder="please input" />
-        </div>
-        <div className={styles.row}>
-          <label htmlFor="tel" className="label">
-            Phone number
-          </label>
-          <Input type="tel" id="tel" allowClear={true} placeholder="please input" />
-        </div>
-      </>
-    );
+  const handleChange = (ev) => {
+    const data = {
+      key: ev.target.name,
+      value: ev.target.value,
+    };
+    if (isUserTab) {
+      setUserDetailsAction(data);
+    } else {
+      setCompanyDetailsAction(data);
+    }
   };
+
   return (
     <>
       <Helmet>
@@ -76,9 +136,18 @@ export const SignUp = () => {
       </Helmet>
       <Header title="Account Details" />
       <form className={styles.form}>
-        <Tabs defaultActiveKey="1" onChange={callback} centered={true}>
-          <TabPane tab="User" key="1">
-            <GeneralInputs />
+        <Tabs
+          defaultActiveKey={signUpDetails.activeAccountDetailsTab}
+          onChange={setAccountDetailsTabAction}
+          centered={true}
+        >
+          <TabPane tab="User" key="user">
+            <GeneralInputs
+              onImageChange={onImageChange}
+              signUpDetails={signUpDetails}
+              isUserTab={isUserTab}
+              handleChange={handleChange}
+            />
             <div className={styles.row}>
               <label htmlFor="date" className="label">
                 Date of Birth
@@ -101,7 +170,7 @@ export const SignUp = () => {
               </Select>
             </div>
           </TabPane>
-          <TabPane tab="Company" key="2">
+          <TabPane tab="Company" key="company">
             <GeneralInputs />
             <div className={styles.row}>
               <label htmlFor="website" className="label">
