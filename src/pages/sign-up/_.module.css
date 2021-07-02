@@ -23,21 +23,27 @@
 .body :global(.ant-input) {
   text-align: right;
 }
+.body :global(.ant-tabs-content) {
+  flex-direction: column;
+}
+
+.body :global(.ant-btn-primary) {
+  margin-top: 35px;
+}
 
 .row {
   display: flex;
   align-items: center;
   width: 100%;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 .img {
   position: relative;
   width: 84px;
   height: 64px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 20px auto 25px;
 }
 
 .img::after {

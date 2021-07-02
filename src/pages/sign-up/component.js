@@ -29,21 +29,10 @@ export const SignUp = () => {
       reader.readAsDataURL(event.target.files[0]);
     }
   };
-  return (
-    <>
-      <Helmet>
-        <body className={styles.body} />
-      </Helmet>
-      <Header title="Account Details" />
-      <Tabs defaultActiveKey="1" onChange={callback} centered={true}>
-        <TabPane tab="User" key="1">
-          User
-        </TabPane>
-        <TabPane tab="Company" key="2">
-          Company
-        </TabPane>
-      </Tabs>
-      <form className={styles.form}>
+
+  const GeneralInputs = () => {
+    return (
+      <>
         <div className={styles.img}>
           <Avatar size={64} icon={<UserOutlined />} />
           <input
@@ -63,7 +52,7 @@ export const SignUp = () => {
           <label htmlFor="address" className="label">
             Postal address
           </label>
-          <Input type="email" id="address" allowClear={true} placeholder="please input" />
+          <Input type="text" id="address" allowClear={true} placeholder="please input" />
         </div>
         <div className={styles.row}>
           <label htmlFor="email" className="label">
@@ -77,27 +66,56 @@ export const SignUp = () => {
           </label>
           <Input type="tel" id="tel" allowClear={true} placeholder="please input" />
         </div>
-        <div className={styles.row}>
-          <label htmlFor="date" className="label">
-            Date of Birth
-          </label>
-          <DatePicker
-            suffixIcon={React.Fragment}
-            bordered={false}
-            allowClear={true}
-            placeholder="please input"
-            id="date"
-            className={styles.date}
-          />
-        </div>
-        <div className={styles.row}>
-          <label htmlFor="date" className="label">
-            Gender
-          </label>
-          <Select showArrow={false} bordered={false} className={styles.select}>
-            <Option value="jack">Prefer not to disclose</Option>
-          </Select>
-        </div>
+      </>
+    );
+  };
+  return (
+    <>
+      <Helmet>
+        <body className={styles.body} />
+      </Helmet>
+      <Header title="Account Details" />
+      <form className={styles.form}>
+        <Tabs defaultActiveKey="1" onChange={callback} centered={true}>
+          <TabPane tab="User" key="1">
+            <GeneralInputs />
+            <div className={styles.row}>
+              <label htmlFor="date" className="label">
+                Date of Birth
+              </label>
+              <DatePicker
+                suffixIcon={React.Fragment}
+                bordered={false}
+                allowClear={true}
+                placeholder="please input"
+                id="date"
+                className={styles.date}
+              />
+            </div>
+            <div className={styles.row}>
+              <label htmlFor="date" className="label">
+                Gender
+              </label>
+              <Select showArrow={false} bordered={false} className={styles.select}>
+                <Option value="jack">Prefer not to disclose</Option>
+              </Select>
+            </div>
+          </TabPane>
+          <TabPane tab="Company" key="2">
+            <GeneralInputs />
+            <div className={styles.row}>
+              <label htmlFor="website" className="label">
+                Website
+              </label>
+              <Input
+                type="text"
+                id="website"
+                placeholder="please input"
+                allowClear={true}
+              />
+            </div>
+          </TabPane>
+        </Tabs>
         <Button type="primary">Set Account Details</Button>
       </form>
       <footer className={styles.footer}>
