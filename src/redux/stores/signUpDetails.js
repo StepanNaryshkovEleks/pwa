@@ -1,5 +1,6 @@
 const signUpDetails = {
   activeAccountDetailsTab: "user",
+  password: "",
   userDetails: {
     name: "",
     postalAddress: "",

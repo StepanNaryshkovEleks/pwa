@@ -11,9 +11,9 @@ export const mapStateToProps = (state) => ({
 });
 
 export const mapDispatchToProps = (dispatch) => ({
-  setUserDetailsAction: (props) => dispatch(setUserDetailsAction(props)),
-  setCompanyDetailsAction: (props) => dispatch(setCompanyDetailsAction(props)),
-  setAccountDetailsTabAction: (props) => dispatch(setAccountDetailsTabAction(props)),
+  setUserDetails: (props) => dispatch(setUserDetailsAction(props)),
+  setCompanyDetails: (props) => dispatch(setCompanyDetailsAction(props)),
+  setAccountDetailsTab: (props) => dispatch(setAccountDetailsTabAction(props)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

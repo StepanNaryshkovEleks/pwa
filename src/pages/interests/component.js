@@ -3,8 +3,14 @@ import Header from "../../components/header";
 import {Checkbox, Button} from "antd";
 import styles from "./_.module.css";
 import chevronLeft from "./../../images/chevron-left.svg";
+import {Link} from "react-router-dom";
+import CNST from "../../constants";
 
-const Icon = ({className}) => <img src={chevronLeft} alt="Back" className={className} />;
+const Icon = ({className}) => (
+  <Link to={CNST.ROUTES.CREATING_PASSWORD}>
+    <img src={chevronLeft} alt="Back" className={className} />
+  </Link>
+);
 
 export const Interests = ({interests, setInterest}) => {
   const onCheckChange = (ev) => {
