@@ -12,6 +12,11 @@ export default function reducer(state = signUpDetails, action) {
           ...action.interest,
         },
       };
+    case CNST.SIGN_UP_DETAILS.PASSWORD.CREATE_PASSWORD:
+      return {
+        ...state,
+        password: action.payload,
+      };
     case CNST.SIGN_UP_DETAILS.DETAILS.SET_ACCOUNT_DETAILS_TAB:
       return {
         ...state,

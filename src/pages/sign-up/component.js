@@ -98,9 +98,9 @@ const GeneralInputs = ({onImageChange, isUserTab, signUpDetails, handleChange}) 
 
 export const SignUp = ({
   signUpDetails,
-  setUserDetailsAction,
-  setCompanyDetailsAction,
-  setAccountDetailsTabAction,
+  setUserDetails,
+  setCompanyDetails,
+  setAccountDetailsTab,
 }) => {
   const isUserTab = signUpDetails.activeAccountDetailsTab === "user";
   const onImageChange = (event) => {
@@ -123,9 +123,9 @@ export const SignUp = ({
       value: ev.target.value,
     };
     if (isUserTab) {
-      setUserDetailsAction(data);
+      setUserDetails(data);
     } else {
-      setCompanyDetailsAction(data);
+      setCompanyDetails(data);
     }
   };
 
@@ -138,7 +138,7 @@ export const SignUp = ({
       <form className={styles.form}>
         <Tabs
           defaultActiveKey={signUpDetails.activeAccountDetailsTab}
-          onChange={setAccountDetailsTabAction}
+          onChange={setAccountDetailsTab}
           centered={true}
         >
           <TabPane tab="User" key="user">
@@ -211,7 +211,9 @@ export const SignUp = ({
             </div>
           </TabPane>
         </Tabs>
-        <Button type="primary">Set Account Details</Button>
+        <Link to={CNST.ROUTES.CREATING_PASSWORD} className="link link--primary">
+          Set Account Details
+        </Link>
       </form>
       <footer className={styles.footer}>
         <span className={styles.footerText}>I have an account.</span>{" "}
