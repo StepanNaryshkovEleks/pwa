@@ -1,4 +1,20 @@
 const signUpDetails = {
+  activeAccountDetailsTab: "user",
+  userDetails: {
+    name: "",
+    postalAddress: "",
+    email: "",
+    phoneNumber: "",
+    date: "",
+    gender: "",
+  },
+  companyDetails: {
+    name: "",
+    postalAddress: "",
+    email: "",
+    phoneNumber: "",
+    website: "",
+  },
   interests: {
     Sports: false,
     Entertainment: false,
