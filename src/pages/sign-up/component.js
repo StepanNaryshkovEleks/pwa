@@ -62,7 +62,7 @@ const GeneralInputs = ({onImageChange, isUserTab, signUpDetails, handleChange}) 
         </label>
         <Input
           type="email"
-          key="email"
+          name="email"
           onChange={handleChange}
           value={
             isUserTab
@@ -159,6 +159,20 @@ export const SignUp = ({
                 placeholder="please input"
                 id="date"
                 className={styles.date}
+                name="date"
+                onChange={(value) =>
+                  handleChange({
+                    target: {
+                      value,
+                      name: "date",
+                    },
+                  })
+                }
+                value={
+                  isUserTab
+                    ? signUpDetails.userDetails.date
+                    : signUpDetails.companyDetails.date
+                }
               />
             </div>
             <div className={styles.row}>
@@ -171,12 +185,24 @@ export const SignUp = ({
             </div>
           </TabPane>
           <TabPane tab="Company" key="company">
-            <GeneralInputs />
+            <GeneralInputs
+              onImageChange={onImageChange}
+              signUpDetails={signUpDetails}
+              isUserTab={isUserTab}
+              handleChange={handleChange}
+            />
             <div className={styles.row}>
               <label htmlFor="website" className="label">
                 Website
               </label>
               <Input
+                value={
+                  isUserTab
+                    ? signUpDetails.userDetails.website
+                    : signUpDetails.companyDetails.website
+                }
+                name="website"
+                onChange={handleChange}
                 type="text"
                 id="website"
                 placeholder="please input"
