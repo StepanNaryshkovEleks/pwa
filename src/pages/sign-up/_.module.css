@@ -1,0 +1,93 @@
+.body :global(.ant-tabs-tab) {
+  width: 50%;
+}
+
+.input {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  overflow: hidden;
+  text-indent: -999px;
+}
+
+.body :global(#root) {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.body :global(.ant-input) {
+  text-align: right;
+}
+.body :global(.ant-tabs-content) {
+  flex-direction: column;
+}
+
+.body :global(.link--primary) {
+  margin-top: 35px;
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  margin-bottom: 15px;
+}
+
+.img {
+  position: relative;
+  width: 84px;
+  height: 64px;
+  margin: 20px auto 25px;
+}
+
+.img::after {
+  content: "Edit";
+  position: absolute;
+  right: 10px;
+  top: -5px;
+  color: #000;
+  background: #ddd;
+  border: 1px solid white;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px white;
+  font-size: 12px;
+  padding: 0 8px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px 20px 15px;
+  margin-bottom: auto;
+}
+
+.select,
+.date {
+  width: 100%;
+}
+
+.select :global(.ant-select-selection-item) {
+  text-align: right;
+  padding-right: 16px;
+}
+
+.footer {
+  padding-bottom: 50px;
+  text-align: center;
+}
+
+.link {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.footerText {
+  color: #888;
+}

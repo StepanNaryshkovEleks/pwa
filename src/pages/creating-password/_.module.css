@@ -1,0 +1,62 @@
+.row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  margin-bottom: 25px;
+}
+
+.row:last-of-type {
+  margin-bottom: 20px;
+}
+
+.recommendations {
+  margin-top: 70px;
+  padding: 200px 15px 0;
+  line-height: 1.4;
+  font-size: 16px;
+  color: #888888;
+  text-align: center;
+  display: block;
+  background-image: url("../../images/lock.svg");
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-top: 40px;
+  padding-bottom: 20px;
+  margin-bottom: auto;
+}
+
+.form :global(.link--primary) {
+  margin-top: 35px;
+  text-align: center;
+}
+
+.form :global(.ant-input) {
+  text-align: right;
+}
+
+.form :global(.label) {
+  margin-right: 10px;
+}
+
+.footer {
+  padding-bottom: 50px;
+  text-align: center;
+}
+
+.link {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.footerText {
+  color: #888;
+}
