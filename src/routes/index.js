@@ -8,6 +8,8 @@ import SignIn from "../pages/sign-in";
 import SignUp from "../pages/sign-up";
 import Home from "../pages/home";
 import CreatingPassword from "../pages/creating-password";
+import Settings from "../pages/settings";
+import Dashboard from "../pages/dashboard";
 
 export const AppRouter = () => (
   <Switch>
@@ -20,6 +22,8 @@ export const AppRouter = () => (
       component={CreatingPassword}
     />
     <IsNotAuthUser exact path={CNST.ROUTES.INTERESTS} component={Interests} />
+    <IsNotAuthUser exact path={CNST.ROUTES.SETTINGS} component={Settings} />
+    <IsNotAuthUser exact path={CNST.ROUTES.DASHBOARD} component={Dashboard} />
   </Switch>
 );
 
