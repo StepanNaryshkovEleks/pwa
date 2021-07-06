@@ -1,0 +1,17 @@
+.wrap {
+  background-color: #006dff;
+  color: white;
+}
+
+.title {
+  background-color: #e6f0ff;
+  text-align: center;
+  font-size: 18px;
+  line-height: 22px;
+  margin-bottom: 0;
+  padding: 12px 0;
+}
+
+.row {
+  position: relative;
+}
