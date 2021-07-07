@@ -1,0 +1,31 @@
+.search {
+  background-color: #efeff4;
+  padding: 8px;
+}
+
+.search :global(.ant-input) {
+  height: 28px;
+  border-radius: 3px;
+}
+
+.emptyInput :global(.ant-input) {
+  text-align: center;
+}
+
+.search :global(.ant-input-affix-wrapper) {
+  height: 28px;
+  align-items: center;
+}
+
+.emptyInput :global(.ant-input-prefix) {
+  position: absolute;
+  z-index: 100;
+  top: 6px;
+  left: calc(50% - 47px);
+  transform: translate(-50%, 0);
+}
+
+.search :global(.anticon-close-circle) svg {
+  width: 15px;
+  height: 15px;
+}
