@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../../components/header";
+import Footer from "../../components/footer";
 import {Link} from "react-router-dom";
 import CNST from "../../constants";
 import settingsIcon from "../../images/settings.svg";
@@ -22,6 +23,7 @@ export const Dashboard = ({userImg}) => {
         LeftComponent={SettingsIcon}
         RightComponent={(props) => UserImage({...props, userImg})}
       />
+      <Footer />
     </>
   );
 };
