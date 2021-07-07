@@ -7,7 +7,7 @@ const Prefix = () => <img src={searchIcon} alt="Search" className={styles.prefix
 
 export const Search = ({value, setValue}) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.search}>
       <Input
         placeholder={"Search"}
         prefix={<Prefix />}
