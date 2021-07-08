@@ -4,6 +4,7 @@ import Footer from "../../components/footer";
 import {Link} from "react-router-dom";
 import CNST from "../../constants";
 import settingsIcon from "../../images/settings.svg";
+import userImg from "../../images/user.png";
 
 const SettingsIcon = ({className}) => (
   <Link to={CNST.ROUTES.SETTINGS}>
@@ -15,7 +16,7 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
-export const Dashboard = ({userImg}) => {
+export const Dashboard = () => {
   return (
     <>
       <Header
