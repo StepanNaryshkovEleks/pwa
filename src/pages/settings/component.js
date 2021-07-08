@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import {Switch} from "antd";
 import {useHistory} from "react-router-dom";
 
+import userImg from "../../images/user.png";
 import closeIcon from "../../images/close.svg";
 import chevronRight from "../../images/chevron-right.svg";
 import interestsIcon from "../../images/my-interests.svg";
@@ -35,7 +36,7 @@ const Setting = ({icon, iconStyles, title, RightComponent}) => (
 
 const SwitchComponent = () => <Switch defaultChecked />;
 
-export const Settings = ({userImg}) => {
+export const Settings = () => {
   const history = useHistory();
 
   return (
