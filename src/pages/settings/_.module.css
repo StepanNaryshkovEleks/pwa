@@ -2,31 +2,11 @@
   padding: 40px 15px;
 }
 
-.setting {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #eeeeee;
-  padding: 9px 17px;
-}
-
-.icon {
-  width: 22px;
-  height: 22px;
-}
-
 .profileImg {
   width: 26px;
   height: 26px;
   border-radius: 50%;
   object-fit: cover;
-}
-
-.title {
-  flex: auto;
-  font-size: 16px;
-  color: black;
-  margin-left: 15px;
 }
 
 .button {

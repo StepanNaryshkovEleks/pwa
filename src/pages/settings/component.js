@@ -7,7 +7,6 @@ import {useHistory} from "react-router-dom";
 
 import userImg from "../../images/user.png";
 import closeIcon from "../../images/close.svg";
-import chevronRight from "../../images/chevron-right.svg";
 import interestsIcon from "../../images/my-interests.svg";
 import friendsIcon from "../../images/my-friends.svg";
 import permissionsIcon from "../../images/permissions.svg";
@@ -15,6 +14,7 @@ import privateModeIcon from "../../images/private-mode.svg";
 import rulesIcon from "../../images/our-rules.svg";
 import privacyIcon from "../../images/privacy.svg";
 import logoutIcon from "../../images/logout.svg";
+import Setting from "../../components/settings";
 
 const CloseIcon = ({className, onClick}) => (
   <button className={styles.backButton} onClick={onClick}>
@@ -24,14 +24,6 @@ const CloseIcon = ({className, onClick}) => (
 
 const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
-);
-
-const Setting = ({icon, iconStyles, title, RightComponent}) => (
-  <div className={styles.setting}>
-    <img className={iconStyles || styles.icon} src={icon} alt={title} />
-    <span className={styles.title}>{title}</span>
-    {RightComponent ? <RightComponent /> : <img src={chevronRight} alt="Link" />}
-  </div>
 );
 
 const SwitchComponent = () => <Switch defaultChecked />;
