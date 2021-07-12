@@ -1,0 +1,87 @@
+.challenge {
+  background-color: white;
+  margin-bottom: 6px;
+  border-radius: 10px;
+}
+
+.header {
+  padding: 11px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.userImg {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+
+.username {
+  font-size: 16px;
+  margin-right: auto;
+  margin-left: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 15px;
+}
+
+.challengeImg {
+  height: 375px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.footer {
+  color: black;
+  font-size: 12px;
+  padding: 15px;
+  padding-top: 4px;
+  line-height: 14px;
+}
+
+.votesContainer {
+  display: flex;
+  align-items: center;
+  padding: 9px 0;
+}
+
+.id {
+  background-color: #efeff4;
+  padding: 2px 6px;
+  font-weight: bold;
+}
+
+.votes {
+  font-size: 12px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.button {
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.winnerImg {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-left: 9px;
+}
+
+.winnerName {
+  color: #006dff;
+  margin-left: 6px;
+}
+
+.name {
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.description {
+  display: block;
+}
