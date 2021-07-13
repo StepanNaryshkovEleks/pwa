@@ -12,7 +12,7 @@ const Icon = ({className}) => (
   </Link>
 );
 
-export const Interests = ({interests, setInterest}) => {
+export const Interests = ({interests, setInterest, signUp}) => {
   const onCheckChange = (ev) => {
     setInterest({[ev.target.name]: ev.target.checked});
   };
@@ -38,7 +38,12 @@ export const Interests = ({interests, setInterest}) => {
               <div className={styles.divider} />
             </React.Fragment>
           ))}
-          <Button className={styles.button}>Save Interests</Button>
+          <Button
+            disabled={!Object.values(interests).some((value) => value)}
+            onClick={signUp}
+          >
+            Save Interests
+          </Button>
         </form>
       </main>
     </>

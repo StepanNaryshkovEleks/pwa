@@ -82,6 +82,14 @@ export function* signIn(props) {
   }
 }
 
+export function* signUp(props) {
+  try {
+    const {signUpDetails} = yield select();
+
+    console.log("hahaha", signUpDetails.activeAccountDetailsTab);
+  } catch (error) {}
+}
+
 export const signOutRequest = () =>
   axios.get("application/vee/signout").catch((error) => {
     throw error.response.data;
