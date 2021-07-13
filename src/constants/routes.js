@@ -7,6 +7,7 @@ const ROUTES = {
   CREATING_PASSWORD: "/create-password",
   SETTINGS: "/settings",
   DASHBOARD: "/dashboard",
+  CREATE_CHALLENGE: "/create-challenge",
 };
 
 export default ROUTES;
