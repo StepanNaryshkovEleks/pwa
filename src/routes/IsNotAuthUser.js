@@ -1,14 +1,15 @@
 import React from "react";
 import {Route} from "react-router-dom";
 import {connect} from "react-redux";
-import AuthLayout from "../layouts/auth";
+import {Redirect} from "react-router-dom";
+import CNST from "../constants";
 
 const IsNotAuthUser = ({component: Component, isLoggedIn, ...rest}) => {
   return (
     <Route
       {...rest}
       render={(props) =>
-        !isLoggedIn ? <Component {...props} /> : <AuthLayout permissions={[]} />
+        !isLoggedIn ? <Component {...props} /> : <Redirect to={CNST.ROUTES.DASHBOARD} />
       }
     />
   );

@@ -1,7 +1,7 @@
 ﻿import React from "react";
-import {Route} from "react-router-dom";
+import {Route, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
-import AuthLayout from "../layouts/auth";
+import CNST from "../constants";
 
 const IsAuthUser = ({
   component: Component,
@@ -14,11 +14,9 @@ const IsAuthUser = ({
   return (
     <Route
       {...rest}
-      render={(props) => (
-        <AuthLayout permissions={permissions}>
-          <Component {...props} />
-        </AuthLayout>
-      )}
+      render={(props) =>
+        isLoggedIn ? <Component {...props} /> : <Redirect to={CNST.ROUTES.HOME} />
+      }
     />
   );
 };
@@ -27,6 +25,4 @@ export const mapStateToProps = (state) => ({
   isLoggedIn: state.user.isLoggedIn,
 });
 
-export const mapDispatchToProps = (dispatch) => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(IsAuthUser);
+export default connect(mapStateToProps, null)(IsAuthUser);

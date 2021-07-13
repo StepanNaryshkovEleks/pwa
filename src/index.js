@@ -7,6 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import initStore from "./redux/createStore";
 import {Provider} from "react-redux";
 import {BrowserRouter as Router} from "react-router-dom";
+import "./axios.config";
 
 const store = initStore();
 
