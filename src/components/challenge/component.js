@@ -8,9 +8,9 @@ import userImg from "../../images/user.png";
 import dotsIcon from "../../images/dots.svg";
 import voteIcon from "../../images/vote.svg";
 
-export const Challenge = ({isOpen = true, data}) => {
+export const Challenge = ({isOpen = true, data, challengeIndex}) => {
   const {name, description, username} = data;
-  const challengeImg = getRandomImage();
+  const challengeImg = getRandomImage(challengeIndex);
 
   return (
     <section className={styles.challenge}>

@@ -18,9 +18,5 @@ const challengeImages = [
   challenge8,
 ];
 
-export const getRandomImage = () => {
-  const imagesAmount = challengeImages.length;
-  const randomIndex = Math.floor(Math.random() * imagesAmount);
-
-  return challengeImages[randomIndex];
-};
+export const getRandomImage = (challengeIndex) =>
+  challengeImages[challengeIndex % challengeImages.length];
