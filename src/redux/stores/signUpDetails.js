@@ -7,7 +7,7 @@ const signUpDetails = {
     email: "",
     phoneNumber: "",
     date: "",
-    gender: "",
+    gender: "unknown",
   },
   companyDetails: {
     name: "",
