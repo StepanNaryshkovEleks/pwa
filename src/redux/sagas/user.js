@@ -16,11 +16,11 @@ export const initUserRequest = () =>
       throw error;
     });
 
-export const signInRequest = ({password, userName}) =>
+export const signInRequest = ({password, email}) =>
   axios
     .post("application/vee/signin", "", {
       headers: {
-        "realm-id": "vee." + userName,
+        "realm-id": "vee." + email,
         "realm-secret": password,
       },
     })
@@ -82,7 +82,7 @@ export function* signIn(props) {
   }
 }
 
-export function* signUp(props) {
+export function* signUp() {
   try {
     const {signUpDetails} = yield select();
 
