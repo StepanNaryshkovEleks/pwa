@@ -8,12 +8,12 @@ import {Helmet} from "react-helmet";
 
 export const SignIn = ({signIn}) => {
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
 
   const handleSubmit = () => {
     signIn({
       password,
-      email,
+      name,
     });
   };
   return (
@@ -24,14 +24,14 @@ export const SignIn = ({signIn}) => {
       <Header title="I already have an account" />
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.row}>
-          <label htmlFor="email" className="label">
-            Email
+          <label htmlFor="name" className="label">
+            Name
           </label>
           <Input
             allowClear={true}
-            type="email"
-            id="email"
-            onChange={(event) => setEmail(event.target.value)}
+            type="name"
+            id="name"
+            onChange={(event) => setName(event.target.value)}
           />
         </div>
         <div className={styles.row}>
@@ -52,7 +52,7 @@ export const SignIn = ({signIn}) => {
         <Button
           type="primary"
           onClick={handleSubmit}
-          disabled={!email.length || !password.length}
+          disabled={!name.length || !password.length}
         >
           Log In
         </Button>

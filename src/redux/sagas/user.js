@@ -16,12 +16,13 @@ export const initUserRequest = () =>
       throw error;
     });
 
-export const signInRequest = ({password, email}) =>
+export const signInRequest = ({password, name, securityToken}) =>
   axios
     .post("application/vee/signin", "", {
       headers: {
-        "realm-id": "vee." + email,
+        "realm-id": "vee." + name,
         "realm-secret": password,
+        "security-token": securityToken,
       },
     })
     .catch((error) => {
@@ -57,12 +58,15 @@ export function* initUser() {
 
 export function* signIn(props) {
   try {
-    const response = yield call(signInRequest, props.payload);
+    const {user} = yield select();
+    const response = yield call(signInRequest, {
+      ...props.payload,
+      securityToken: user.securityToken,
+    });
     if (isResponseOk(response)) {
       const token = response.data || "";
       const cutFrom = ":";
       const realmToken = token.slice(token.indexOf(cutFrom) + cutFrom.length);
-      const {user} = yield select();
 
       setToken(realmToken);
       yield put({
@@ -82,10 +86,31 @@ export function* signIn(props) {
   }
 }
 
+export const signUpRequest = ({password, name, realmType}) =>
+  axios
+    .post("application/vee/signup", "", {
+      headers: {
+        "realm-id": "vee." + name,
+        "realm-secret": password,
+        "realm-type": "vee.Custodian",
+      },
+    })
+    .catch((error) => {
+      throw error.response.data;
+    });
+
 export function* signUp() {
   try {
     const {signUpDetails} = yield select();
-
+    const shouldCreateNewUser = signUpDetails.activeAccountDetailsTab === "user";
+    const realmType = shouldCreateNewUser ? "vee.Individual" : "vee.Business";
+    const signUpResponse = yield call(signUpRequest, {
+      realmType,
+      password: signUpDetails.password,
+      name: shouldCreateNewUser
+        ? signUpDetails.userDetails.name
+        : signUpDetails.companyDetails.name,
+    });
     console.log("hahaha", signUpDetails.activeAccountDetailsTab);
   } catch (error) {}
 }

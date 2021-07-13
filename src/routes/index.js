@@ -2,6 +2,7 @@ import React from "react";
 import {Switch} from "react-router-dom";
 import CNST from "../constants";
 import IsNotAuthUser from "./IsNotAuthUser";
+import IsAuthUser from "./IsAuthUser";
 
 import Interests from "../pages/interests";
 import SignIn from "../pages/sign-in";
@@ -23,13 +24,9 @@ export const AppRouter = () => (
       component={CreatingPassword}
     />
     <IsNotAuthUser exact path={CNST.ROUTES.INTERESTS} component={Interests} />
-    <IsNotAuthUser exact path={CNST.ROUTES.SETTINGS} component={Settings} />
-    <IsNotAuthUser exact path={CNST.ROUTES.DASHBOARD} component={Dashboard} />
-    <IsNotAuthUser
-      exact
-      path={CNST.ROUTES.CREATE_CHALLENGE}
-      component={CreateChallenge}
-    />
+    <IsAuthUser exact path={CNST.ROUTES.SETTINGS} component={Settings} />
+    <IsAuthUser exact path={CNST.ROUTES.DASHBOARD} component={Dashboard} />
+    <IsAuthUser exact path={CNST.ROUTES.CREATE_CHALLENGE} component={CreateChallenge} />
   </Switch>
 );
 
