@@ -31,7 +31,7 @@ const UserImage = ({userImg, className}) => (
 );
 
 export const CreateChallenge = () => {
-  const [isChecked, handleChange] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   return (
     <>
       <Helmet>
@@ -67,7 +67,7 @@ export const CreateChallenge = () => {
           <label htmlFor="forfeit" className="label">
             Add forfeit?
           </label>
-          <Switch onChange={handleChange} />
+          <Switch onChange={setIsChecked} />
         </div>
         {isChecked && (
           <div className={styles.row}>
