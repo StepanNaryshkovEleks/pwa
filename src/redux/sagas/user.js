@@ -16,6 +16,21 @@ export const initUserRequest = () =>
       throw error;
     });
 
+export const recordRequest = ({data, name}) => {
+  const reqPayload = {
+    jsonType: "vee.RecordProfileForm",
+    profileDefinition: {
+      profileReference: {
+        profileId: "QqguEece2l/rpw==",
+      },
+      propertyDataArray: data,
+    },
+  };
+  return axios.post("rs/application/form/vee", reqPayload).catch((error) => {
+    throw error.response.data;
+  });
+};
+
 export const signInRequest = ({password, name, securityToken}) =>
   axios
     .post("application/vee/signin", "", {
@@ -92,7 +107,7 @@ export const signUpRequest = ({password, name, realmType}) =>
       headers: {
         "realm-id": "vee." + name,
         "realm-secret": password,
-        "realm-type": "vee.Custodian",
+        "realm-type": realmType,
       },
     })
     .catch((error) => {
