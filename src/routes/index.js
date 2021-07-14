@@ -10,6 +10,7 @@ import Home from "../pages/home";
 import CreatingPassword from "../pages/creating-password";
 import Settings from "../pages/settings";
 import Dashboard from "../pages/dashboard";
+import CreateChallenge from "../pages/creating-challenge";
 
 export const AppRouter = () => (
   <Switch>
@@ -24,6 +25,11 @@ export const AppRouter = () => (
     <IsNotAuthUser exact path={CNST.ROUTES.INTERESTS} component={Interests} />
     <IsNotAuthUser exact path={CNST.ROUTES.SETTINGS} component={Settings} />
     <IsNotAuthUser exact path={CNST.ROUTES.DASHBOARD} component={Dashboard} />
+    <IsNotAuthUser
+      exact
+      path={CNST.ROUTES.CREATE_CHALLENGE}
+      component={CreateChallenge}
+    />
   </Switch>
 );
 

@@ -21,7 +21,7 @@ export const SignIn = ({signIn}) => {
       <Helmet>
         <body className={styles.body} />
       </Helmet>
-      <Header title="Sign in" />
+      <Header title="I already have an account" />
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.row}>
           <label htmlFor="email" className="label">
