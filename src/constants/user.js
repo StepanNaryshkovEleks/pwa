@@ -9,7 +9,7 @@ const USER = {
     SUCCESS: "SIGN_OUT_SUCCESS",
   },
   SIGN_UP: {
-    FETCH: "SIGN_UPT_FETCH",
+    FETCH: "SIGN_UP_FETCH",
     SUCCESS: "SIGN_UP_SUCCESS",
     ERROR: "SIGN_UP_ERROR",
   },

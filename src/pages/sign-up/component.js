@@ -33,11 +33,12 @@ const GeneralInputs = ({isUserTab, signUpDetails, handleChange}) => {
           onChange={handleChange}
         />
       </div>
-      <div className={styles.row}>
+      <div className={`${styles.row} ${styles.rowDisabled}`}>
         <label htmlFor="address" className="label">
           Postal address
         </label>
         <Input
+          disabled
           name="postalAddress"
           value={
             isUserTab
@@ -51,11 +52,12 @@ const GeneralInputs = ({isUserTab, signUpDetails, handleChange}) => {
           onChange={handleChange}
         />
       </div>
-      <div className={styles.row}>
+      <div className={`${styles.row} ${styles.rowDisabled}`}>
         <label htmlFor="email" className="label">
           Email
         </label>
         <Input
+          disabled
           type="email"
           name="email"
           onChange={handleChange}
@@ -69,11 +71,12 @@ const GeneralInputs = ({isUserTab, signUpDetails, handleChange}) => {
           placeholder="please input"
         />
       </div>
-      <div className={styles.row}>
+      <div className={`${styles.row} ${styles.rowDisabled}`}>
         <label htmlFor="tel" className="label">
           Phone number
         </label>
         <Input
+          disabled
           type="tel"
           value={
             isUserTab
@@ -113,19 +116,9 @@ export const SignUp = ({
 
   let disabledNextStep = false;
   if (isUserTab) {
-    disabledNextStep =
-      signUpDetails.userDetails.name &&
-      signUpDetails.userDetails.postalAddress &&
-      signUpDetails.userDetails.email &&
-      signUpDetails.userDetails.phoneNumber &&
-      signUpDetails.userDetails.date;
+    disabledNextStep = signUpDetails.userDetails.name && signUpDetails.userDetails.date;
   } else {
-    disabledNextStep =
-      signUpDetails.companyDetails.name &&
-      signUpDetails.companyDetails.postalAddress &&
-      signUpDetails.companyDetails.email &&
-      signUpDetails.companyDetails.phoneNumber &&
-      signUpDetails.companyDetails.website;
+    disabledNextStep = signUpDetails.companyDetails.name;
   }
 
   return (
@@ -195,11 +188,12 @@ export const SignUp = ({
               isUserTab={isUserTab}
               handleChange={handleChange}
             />
-            <div className={styles.row}>
+            <div className={`${styles.row} ${styles.rowDisabled}`}>
               <label htmlFor="website" className="label">
                 Website
               </label>
               <Input
+                disabled
                 value={
                   isUserTab
                     ? signUpDetails.userDetails.website
