@@ -3,18 +3,11 @@ const signUpDetails = {
   password: "",
   userDetails: {
     name: "",
-    postalAddress: "",
-    email: "",
-    phoneNumber: "",
     date: "",
-    gender: "",
+    gender: "unknown",
   },
   companyDetails: {
     name: "",
-    postalAddress: "",
-    email: "",
-    phoneNumber: "",
-    website: "",
   },
   interests: {
     Sports: false,

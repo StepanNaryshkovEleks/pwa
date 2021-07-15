@@ -7,7 +7,10 @@
     "@craco/craco": "6.1.2",
     "antd": "^4.16.3",
     "axios": "^0.21.1",
+    "crypto-js": "^4.0.0",
     "history": "^5.0.0",
+    "local-cors-proxy": "^1.1.0",
+    "local-storage": "^2.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
@@ -51,7 +54,8 @@
   "scripts": {
     "start": "craco  start",
     "build": "craco  build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "proxy": "lcp --proxyUrl https://bucha.click:46407"
   },
   "eslintConfig": {
     "extends": [
