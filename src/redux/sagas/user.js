@@ -148,13 +148,10 @@ export function* signUp() {
     const token = signUpResponse.data || "";
     const cutFrom = ":";
     const realmToken = token.slice(token.indexOf(cutFrom) + cutFrom.length);
-
     setToken(realmToken);
-
-    yield call(getUser, {
-      shouldShareProfile: true,
+    yield put({
+      type: CNST.USER.GET_PROFILE.FETCH,
     });
-
     yield put({type: CNST.USER.SIGN_UP.SUCCESS});
   } catch (error) {
     yield put({type: CNST.USER.SIGN_UP.ERROR});
