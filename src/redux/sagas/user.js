@@ -155,9 +155,9 @@ export function* signUp() {
       shouldShareProfile: true,
     });
 
-    // end fetch
+    yield put({type: CNST.USER.SIGN_UP.SUCCESS});
   } catch (error) {
-    console.log(error);
+    yield put({type: CNST.USER.SIGN_UP.ERROR});
   }
 }
 
@@ -171,8 +171,8 @@ export function* signOut() {
     const response = yield call(signOutRequest);
     if (isResponseOk(response)) {
       removeToken();
-      yield put({type: CNST.USER.SIGN_OUT.SUCCESS});
       document.location.reload();
+      yield put({type: CNST.USER.SIGN_OUT.SUCCESS});
     } else {
       yield put({
         type: CNST.USER.SIGN_OUT.ERROR,
@@ -255,6 +255,7 @@ export function* getUser({shouldShareProfile = false}) {
       yield put({type: CNST.USER.GET_PROFILE.SUCCESS, payload: response.data});
 
       if (shouldShareProfile) {
+        yield put({type: CNST.USER.SHARING_PROFILE.FETCH});
         const shouldCreateNewUser = signUpDetails.activeAccountDetailsTab === "user";
         const name = shouldCreateNewUser
           ? signUpDetails.userDetails.name
@@ -290,13 +291,16 @@ export function* getUser({shouldShareProfile = false}) {
             data.push(item.actorId)
           );
         }
+        yield put({type: CNST.USER.SHARING_PROFILE.SUCCESS});
       }
     } else {
+      yield put({type: CNST.USER.SHARING_PROFILE.ERROR});
       yield put({
         type: CNST.USER.GET_PROFILE.ERROR,
       });
     }
   } catch (error) {
+    yield put({type: CNST.USER.SHARING_PROFILE.ERROR});
     yield put({
       type: CNST.USER.GET_PROFILE.ERROR,
     });

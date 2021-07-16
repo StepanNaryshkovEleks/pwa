@@ -1,6 +1,12 @@
 import axios from "axios";
-import {signOutAction} from "../../redux/actions/user/signOut";
-import {store} from "./../../index";
+import {notification} from "antd";
+
+const openNotificationWithIcon = (code) => {
+  notification["error"]({
+    message: "Error",
+    description: "Something went wrong, " + code + " error.",
+  });
+};
 
 axios.interceptors.response.use(
   (response) => response,
@@ -10,7 +16,11 @@ axios.interceptors.response.use(
     }
 
     if (error.response.status >= 400) {
-      store.dispatch(signOutAction());
+      // we call het profile each time after refreshing the page to check if user can log in
+      // so, in this case it is not necessary to show an error
+      if (error.response.config.data !== '{"jsonType":"vee.FetchIdentificationForm"}') {
+        openNotificationWithIcon(error.response.status);
+      }
       throw error;
     }
 

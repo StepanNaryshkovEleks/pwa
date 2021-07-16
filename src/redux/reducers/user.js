@@ -7,6 +7,9 @@ export default function reducer(state = user, action) {
     case CNST.USER.INIT_ADMIN_USER.FETCH:
     case CNST.USER.SIGN_OUT.FETCH:
     case CNST.USER.SIGN_IN.FETCH:
+    case CNST.USER.SIGN_UP.FETCH:
+    case CNST.USER.GET_PROFILE.FETCH:
+    case CNST.USER.SHARING_PROFILE.FETCH:
       return {
         ...state,
         fetching: true,
@@ -15,6 +18,7 @@ export default function reducer(state = user, action) {
       return {
         ...state,
         isUserInitialized: true,
+        fetching: false,
         securityToken: action.payload,
       };
     }
@@ -22,6 +26,7 @@ export default function reducer(state = user, action) {
       return {
         ...state,
         isUserInitialized: false,
+        fetching: false,
       };
     }
     case CNST.USER.SIGN_IN.SUCCESS:
@@ -31,6 +36,10 @@ export default function reducer(state = user, action) {
         isLoggedIn: true,
       };
     case CNST.USER.SIGN_IN.ERROR:
+    case CNST.USER.SIGN_UP.SUCCESS:
+    case CNST.USER.SIGN_UP.ERROR:
+    case CNST.USER.SHARING_PROFILE.ERROR:
+    case CNST.USER.SHARING_PROFILE.SUCCESS:
       return {
         ...state,
         fetching: false,
@@ -39,11 +48,7 @@ export default function reducer(state = user, action) {
       return {
         ...user,
         isLoggedIn: false,
-      };
-    case CNST.USER.GET_PROFILE.FETCH:
-      return {
-        ...state,
-        fetching: true,
+        fetching: false,
       };
     case CNST.USER.GET_PROFILE.SUCCESS:
       return {
