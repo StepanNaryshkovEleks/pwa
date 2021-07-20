@@ -1,2 +1,8 @@
 import {Dashboard} from "./component";
-export default Dashboard;
+import {connect} from "react-redux";
+
+export const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(Dashboard);

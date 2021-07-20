@@ -28,7 +28,7 @@ const UserImage = ({userImg, className}) => (
 
 const SwitchComponent = () => <Switch defaultChecked />;
 
-export const Settings = () => {
+export const Settings = ({signOut, realmToken}) => {
   const history = useHistory();
 
   return (
@@ -62,7 +62,7 @@ export const Settings = () => {
         <Link to="/">
           <Setting icon={privacyIcon} title="Privacy" />
         </Link>
-        <button className={styles.button}>
+        <button className={styles.button} onClick={() => signOut(realmToken)}>
           <Setting icon={logoutIcon} title="Log Out" />
         </button>
       </main>

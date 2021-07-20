@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../components/header";
 import styles from "./_.module.css";
-import {Tabs, Avatar, Button, Input} from "antd";
+import {Tabs, Avatar, Input} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import {DatePicker, Select} from "antd";
 import {Link} from "react-router-dom";
@@ -11,17 +11,11 @@ import {Helmet} from "react-helmet";
 const {Option} = Select;
 const {TabPane} = Tabs;
 
-const GeneralInputs = ({onImageChange, isUserTab, signUpDetails, handleChange}) => {
+const GeneralInputs = ({isUserTab, signUpDetails, handleChange}) => {
   return (
     <>
       <div className={styles.img}>
         <Avatar size={64} icon={<UserOutlined />} />
-        <input
-          type="file"
-          accept="image/*"
-          onChange={onImageChange}
-          className={styles.input}
-        />
       </div>
       <div className={styles.row}>
         <label htmlFor="name" className="label">
@@ -39,11 +33,13 @@ const GeneralInputs = ({onImageChange, isUserTab, signUpDetails, handleChange}) 
           onChange={handleChange}
         />
       </div>
-      <div className={styles.row}>
+      <div className={`${styles.row} ${styles.rowDisabled}`}>
         <label htmlFor="address" className="label">
           Postal address
         </label>
         <Input
+          disabled
+          name="postalAddress"
           value={
             isUserTab
               ? signUpDetails.userDetails.address
@@ -56,11 +52,12 @@ const GeneralInputs = ({onImageChange, isUserTab, signUpDetails, handleChange}) 
           onChange={handleChange}
         />
       </div>
-      <div className={styles.row}>
+      <div className={`${styles.row} ${styles.rowDisabled}`}>
         <label htmlFor="email" className="label">
           Email
         </label>
         <Input
+          disabled
           type="email"
           name="email"
           onChange={handleChange}
@@ -74,11 +71,12 @@ const GeneralInputs = ({onImageChange, isUserTab, signUpDetails, handleChange}) 
           placeholder="please input"
         />
       </div>
-      <div className={styles.row}>
+      <div className={`${styles.row} ${styles.rowDisabled}`}>
         <label htmlFor="tel" className="label">
           Phone number
         </label>
         <Input
+          disabled
           type="tel"
           value={
             isUserTab
@@ -103,19 +101,6 @@ export const SignUp = ({
   setAccountDetailsTab,
 }) => {
   const isUserTab = signUpDetails.activeAccountDetailsTab === "user";
-  const onImageChange = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let reader = new FileReader();
-      reader.onload = (e) => {
-        console.log(e.target.result);
-        // setImage(dispatch, {
-        //   frontImage: e.target.result,
-        //   backImage: event.target.files[0]
-        // });
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  };
 
   const handleChange = (ev) => {
     const data = {
@@ -128,6 +113,13 @@ export const SignUp = ({
       setCompanyDetails(data);
     }
   };
+
+  let disabledNextStep = false;
+  if (isUserTab) {
+    disabledNextStep = signUpDetails.userDetails.name && signUpDetails.userDetails.date;
+  } else {
+    disabledNextStep = signUpDetails.companyDetails.name;
+  }
 
   return (
     <>
@@ -143,7 +135,6 @@ export const SignUp = ({
         >
           <TabPane tab="User" key="user">
             <GeneralInputs
-              onImageChange={onImageChange}
               signUpDetails={signUpDetails}
               isUserTab={isUserTab}
               handleChange={handleChange}
@@ -179,23 +170,30 @@ export const SignUp = ({
               <label htmlFor="date" className="label">
                 Gender
               </label>
-              <Select showArrow={false} bordered={false} className={styles.select}>
-                <Option value="jack">Prefer not to disclose</Option>
+              <Select
+                defaultValue={signUpDetails.userDetails.gender}
+                showArrow={false}
+                bordered={false}
+                className={styles.select}
+              >
+                <Option value="man">Woman</Option>
+                <Option value="woman">Man</Option>
+                <Option value="unknown">Prefer not to disclose</Option>
               </Select>
             </div>
           </TabPane>
           <TabPane tab="Company" key="company">
             <GeneralInputs
-              onImageChange={onImageChange}
               signUpDetails={signUpDetails}
               isUserTab={isUserTab}
               handleChange={handleChange}
             />
-            <div className={styles.row}>
+            <div className={`${styles.row} ${styles.rowDisabled}`}>
               <label htmlFor="website" className="label">
                 Website
               </label>
               <Input
+                disabled
                 value={
                   isUserTab
                     ? signUpDetails.userDetails.website
@@ -211,7 +209,11 @@ export const SignUp = ({
             </div>
           </TabPane>
         </Tabs>
-        <Link to={CNST.ROUTES.CREATING_PASSWORD} className="link link--primary">
+        <Link
+          disabled={!disabledNextStep}
+          to={CNST.ROUTES.CREATING_PASSWORD}
+          className="link link--primary"
+        >
           Set Account Details
         </Link>
       </form>

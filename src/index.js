@@ -7,8 +7,10 @@ import reportWebVitals from "./reportWebVitals";
 import initStore from "./redux/createStore";
 import {Provider} from "react-redux";
 import {BrowserRouter as Router} from "react-router-dom";
+import "./axios.config";
+import "./helpers/axios-interceptors/response";
 
-const store = initStore();
+export const store = initStore();
 
 ReactDOM.render(
   <React.StrictMode>
