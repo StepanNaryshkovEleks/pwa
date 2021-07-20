@@ -13,12 +13,20 @@
   margin-right: 10px;
 }
 
-.btn {
-  margin-bottom: 25px;
-}
-
 .next {
   margin-top: 40px;
+}
+
+.form .next:disabled {
+  background-color: #006dff;
+  color: white;
+  opacity: 0.4;
+}
+
+.form .next:disabled:hover {
+  background-color: #006dff;
+  color: white;
+  opacity: 0.4;
 }
 
 .title {
