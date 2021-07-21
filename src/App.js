@@ -2,17 +2,23 @@ import React, {useEffect} from "react";
 import AppRouter from "./routes";
 import {initUserAction} from "./redux/actions/user/initUser";
 import {connect} from "react-redux";
+import Spinner from "./components/spinner";
 
-function App({initUser}) {
+function App({initUser, fetching}) {
   useEffect(() => {
     initUser();
   }, [initUser]);
-  return <AppRouter />;
+  return (
+    <>
+      {fetching && <Spinner />}
+      <AppRouter />
+    </>
+  );
 }
 
 export const mapStateToProps = (state) => ({
   isUserInitialized: state.user.isUserInitialized,
-  isFetchingProfile: state.user.isFetchingProfile,
+  fetching: state.user.fetching,
 });
 
 export const mapDispatchToProps = (dispatch) => ({

@@ -29,26 +29,33 @@ const NavItem = ({path, image, activeImage, title}) => {
 
 export const Footer = () => {
   return (
-    <div className={styles.footer}>
-      <NavItem
-        path={CNST.ROUTES.DASHBOARD}
-        image={homeIcon}
-        activeImage={homeActiveIcon}
-        title={"Home"}
-      />
-      <NavItem path={CNST.ROUTES.CREATE_CHALLENGE} image={createIcon} title={"Create"} />
-      <NavItem
-        path={CNST.ROUTES.HOME}
-        image={challengesIcon}
-        activeImage={challengesActiveIcon}
-        title={"Challenges"}
-      />
-      <NavItem
-        path={CNST.ROUTES.HOME}
-        image={discoverIcon}
-        activeImage={discoverActiveIcon}
-        title={"Discover"}
-      />
-    </div>
+    <>
+      <div className={styles.placeholder} />
+      <div className={styles.footer}>
+        <NavItem
+          path={CNST.ROUTES.DASHBOARD}
+          image={homeIcon}
+          activeImage={homeActiveIcon}
+          title={"Home"}
+        />
+        <NavItem
+          path={CNST.ROUTES.CREATE_CHALLENGE}
+          image={createIcon}
+          title={"Create"}
+        />
+        <NavItem
+          path={CNST.ROUTES.HOME}
+          image={challengesIcon}
+          activeImage={challengesActiveIcon}
+          title={"Challenges"}
+        />
+        <NavItem
+          path={CNST.ROUTES.HOME}
+          image={discoverIcon}
+          activeImage={discoverActiveIcon}
+          title={"Discover"}
+        />
+      </div>
+    </>
   );
 };
