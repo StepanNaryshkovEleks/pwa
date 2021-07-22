@@ -1,0 +1,11 @@
+.dashboard :global(.ant-tabs-tab) {
+  width: 50%;
+}
+
+main.dashboard :global(.ant-tabs-nav) {
+  margin-bottom: 0;
+}
+
+.challenges {
+  background-color: #f5f5f5;
+}
