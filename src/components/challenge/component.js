@@ -9,7 +9,7 @@ import dotsIcon from "../../images/dots.svg";
 import voteIcon from "../../images/vote.svg";
 
 export const Challenge = ({isOpen = true, data, challengeIndex}) => {
-  const {name, description, username} = data;
+  const {challengeName, challengeDescription, username, challengeId} = data;
   const challengeImg = getRandomImage(challengeIndex);
 
   return (
@@ -23,23 +23,22 @@ export const Challenge = ({isOpen = true, data, challengeIndex}) => {
       <Link to={CNST.ROUTES.HOME}>
         <div className={styles.footer}>
           <div className={styles.votesContainer}>
-            <span className={styles.id}>#100245</span>
+            <span className={styles.id}>{challengeId}</span>
             {!isOpen && (
               <>
                 <img src={userImg} alt="Winner" className={styles.winnerImg} />
                 <span className={styles.winnerName}>Loulou won the challenge</span>
               </>
             )}
-            <span className={styles.votes}>155345 votes</span>
+            <span className={styles.votes}>0 votes</span>
             {isOpen && (
               <button className={styles.button}>
                 <img src={voteIcon} alt="Vote" />
               </button>
             )}
           </div>
-          <span className={styles.name}>{name}</span>
-          <span className={styles.description}>{description}</span>
-          <span>#adidassuperfly #chapionsleaguefinal</span>
+          <span className={styles.name}>{challengeName}</span>
+          <span className={styles.description}>{challengeDescription}</span>
         </div>
       </Link>
     </section>
