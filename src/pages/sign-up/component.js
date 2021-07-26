@@ -116,7 +116,7 @@ export const SignUp = ({
 
   let disabledNextStep = false;
   if (isUserTab) {
-    disabledNextStep = signUpDetails.userDetails.name && signUpDetails.userDetails.date;
+    disabledNextStep = signUpDetails.userDetails.name;
   } else {
     disabledNextStep = signUpDetails.companyDetails.name;
   }
@@ -139,7 +139,7 @@ export const SignUp = ({
               isUserTab={isUserTab}
               handleChange={handleChange}
             />
-            <div className={styles.row}>
+            <div className={`${styles.row} ${styles.rowDisabled}`}>
               <label htmlFor="date" className="label">
                 Date of Birth
               </label>
@@ -147,6 +147,7 @@ export const SignUp = ({
                 suffixIcon={React.Fragment}
                 bordered={false}
                 allowClear={true}
+                disabled={true}
                 placeholder="please input"
                 id="date"
                 className={styles.date}
@@ -166,7 +167,7 @@ export const SignUp = ({
                 }
               />
             </div>
-            <div className={styles.row}>
+            <div className={`${styles.row} ${styles.rowDisabled}`}>
               <label htmlFor="date" className="label">
                 Gender
               </label>
@@ -174,6 +175,7 @@ export const SignUp = ({
                 defaultValue={signUpDetails.userDetails.gender}
                 showArrow={false}
                 bordered={false}
+                disabled={true}
                 className={styles.select}
               >
                 <Option value="man">Woman</Option>
