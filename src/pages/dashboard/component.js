@@ -29,17 +29,6 @@ const UserImage = ({userImg, className}) => (
 export const Dashboard = ({fetchChallenges, challenges, fetching, user}) => {
   const [tab, setTab] = useState();
 
-  // useEffect(async () => {
-  //   if (user?.actorHandle?.actorId) {
-  //     const data = await listLocalProfileHandlesFormRequest({
-  //       realmToken: getToken(),
-  //       securityToken: user.securityToken,
-  //       actorId: user.actorHandle.actorId,
-  //     })
-  //     console.log('data', data.profileHandleArray)
-  //   }
-  // }, [user]);
-
   useEffect(() => {
     if (!fetching && !challenges) {
       fetchChallenges();
