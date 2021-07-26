@@ -355,15 +355,23 @@ export function* getUser({shouldShareProfile = false}) {
         if (actorHandleArray.length > 0) {
           actorHandleArray.forEach((item) => usersForSharing.push(item.actorId));
         }
-        console.log(usersForSharing);
+
+        const dataForSharing = {};
+
+        if (shouldCreateNewUser) {
+          dataForSharing.name = signUpDetails.userDetails.name;
+          dataForSharing.age = getAge(signUpDetails.userDetails.date);
+          dataForSharing.gender = signUpDetails.userDetails.gender;
+        } else {
+          dataForSharing.name = signUpDetails.companyDetails.name;
+        }
+
         yield call(shareProfileRequest, {
           securityToken: user.securityToken,
           realmToken,
           actionIdentityDepositId: profileId,
           targetIdentityDepositIdArray: usersForSharing,
-          name: signUpDetails.userDetails.name,
-          age: getAge(signUpDetails.userDetails.date),
-          gender: signUpDetails.userDetails.gender,
+          ...dataForSharing,
           interestArray,
         });
         yield put({type: CNST.USER.SHARING_PROFILE.SUCCESS});
