@@ -87,12 +87,19 @@ export function* signIn(props) {
   }
 }
 
-export const getListLocalActorRequest = ({securityToken, realmToken}) =>
+export const compileLocalProfilePotentialFormRequest = ({
+  securityToken,
+  realmToken,
+  actorId,
+  profileId,
+}) =>
   axios
     .put(
       "/rs/application/form/vee",
       {
-        jsonType: "vee.ListLocalActorHandlesForm",
+        profileId,
+        actorId,
+        jsonType: "vee.CompileLocalProfilePotentialForm",
       },
       {
         headers: {
@@ -307,17 +314,7 @@ export function* getUser({shouldShareProfile = false}) {
             },
           },
         });
-        const getListOfUsersResponse = yield call(getListLocalActorRequest, {
-          securityToken: user.securityToken,
-          realmToken,
-        });
-        const usersForSharing = [];
-        if (getListOfUsersResponse.data.actorHandleArray.length > 0) {
-          getListOfUsersResponse.data.actorHandleArray.forEach((item) =>
-            usersForSharing.push(item.actorId)
-          );
-        }
-        yield put({type: CNST.USER.SHARING_PROFILE.SUCCESS});
+
         const getProfileIdResponse = yield call(listLocalProfileHandlesFormRequest, {
           securityToken: user.securityToken,
           realmToken,
@@ -330,6 +327,7 @@ export function* getUser({shouldShareProfile = false}) {
         for (let i = 0; i < getProfileIdResponse.data.profileHandleArray?.length; i++) {
           if (getProfileIdResponse.data.profileHandleArray[i]?.assetId?.id === assetId) {
             profileId = getProfileIdResponse.data.profileHandleArray[i].profileId;
+            break;
           }
         }
         const {signUpDetails: signUpDetailsAfterUpdating} = yield select();
@@ -341,7 +339,24 @@ export function* getUser({shouldShareProfile = false}) {
           }
         }
 
-        const sharedProfile = yield call(shareProfileRequest, {
+        const getListOfUsersResponse = yield call(
+          compileLocalProfilePotentialFormRequest,
+          {
+            securityToken: user.securityToken,
+            realmToken,
+            actorId: userAfterUpdating?.actorHandle?.actorId,
+            profileId,
+          }
+        );
+        const usersForSharing = [];
+        const actorHandleArray =
+          getListOfUsersResponse.data?.profilePotential?.toShareProfileAction
+            ?.toActorHandleArray;
+        if (actorHandleArray.length > 0) {
+          actorHandleArray.forEach((item) => usersForSharing.push(item.actorId));
+        }
+        console.log(usersForSharing);
+        yield call(shareProfileRequest, {
           securityToken: user.securityToken,
           realmToken,
           actionIdentityDepositId: profileId,
@@ -351,17 +366,16 @@ export function* getUser({shouldShareProfile = false}) {
           gender: signUpDetails.userDetails.gender,
           interestArray,
         });
-        console.log(sharedProfile);
+        yield put({type: CNST.USER.SHARING_PROFILE.SUCCESS});
+        yield put({type: CNST.USER.SIGN_UP.SUCCESS});
       }
     } else {
-      console.log("error");
       yield put({type: CNST.USER.SHARING_PROFILE.ERROR});
       yield put({
         type: CNST.USER.GET_PROFILE.ERROR,
       });
     }
   } catch (error) {
-    console.log(error);
     yield put({type: CNST.USER.SHARING_PROFILE.ERROR});
     yield put({
       type: CNST.USER.GET_PROFILE.ERROR,
