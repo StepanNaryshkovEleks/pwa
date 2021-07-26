@@ -8,6 +8,11 @@ import CNST from "../../constants";
 import settingsIcon from "../../images/settings.svg";
 import userImg from "../../images/user.png";
 import styles from "./_.module.css";
+import {
+  listLocalProfileHandlesFormRequest,
+  shareProfileRequest,
+} from "../../redux/sagas/user";
+import {getToken} from "../../helpers/local-storage-service";
 
 const {TabPane} = Tabs;
 
@@ -23,6 +28,17 @@ const UserImage = ({userImg, className}) => (
 
 export const Dashboard = ({fetchChallenges, challenges, fetching, user}) => {
   const [tab, setTab] = useState();
+
+  // useEffect(async () => {
+  //   if (user?.actorHandle?.actorId) {
+  //     const data = await listLocalProfileHandlesFormRequest({
+  //       realmToken: getToken(),
+  //       securityToken: user.securityToken,
+  //       actorId: user.actorHandle.actorId,
+  //     })
+  //     console.log('data', data.profileHandleArray)
+  //   }
+  // }, [user]);
 
   useEffect(() => {
     if (!fetching && !challenges) {
