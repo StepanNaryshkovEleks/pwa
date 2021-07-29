@@ -1,0 +1,51 @@
+.wrap {
+  background-color: #006dff;
+  color: white;
+}
+
+.backButton {
+  background-color: transparent;
+  border: none;
+}
+
+.user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 15px;
+  padding-left: 0;
+  margin-left: 15px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.userImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.userName {
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: auto;
+  margin-left: 12px;
+}
+
+.main :global(.ant-btn) {
+  height: 30px;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  padding: 0 15px;
+}
+
+.main :global(.ant-btn).invited {
+  background-color: white;
+  color: black;
+  border-color: #dddddd;
+}
+
+.inviteImg {
+  margin-right: 10px;
+}

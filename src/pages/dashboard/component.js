@@ -28,7 +28,7 @@ export const Dashboard = ({fetchChallenges, challenges, fetching, user}) => {
     if (!fetching && !challenges) {
       fetchChallenges();
     }
-  });
+  }, [fetching, challenges]);
 
   return (
     <main className={styles.dashboard}>
