@@ -1,0 +1,43 @@
+.title {
+  background-color: #e6f0ff;
+  text-align: center;
+  font-size: 18px;
+  line-height: 22px;
+  margin-bottom: 25px;
+  padding: 12px 0;
+}
+
+.camera {
+  margin-right: 10px;
+}
+
+.files {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  padding: 0 3px;
+}
+
+.item {
+  height: 150px;
+  width: 107px;
+  margin: 6px;
+  object-fit: cover;
+}
+
+.wrap {
+  background-color: #006dff;
+  color: white;
+}
+
+.input {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  overflow: hidden;
+  text-indent: -999px;
+}

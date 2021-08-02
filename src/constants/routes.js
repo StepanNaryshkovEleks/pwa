@@ -8,6 +8,7 @@ const ROUTES = {
   SETTINGS: "/settings",
   DASHBOARD: "/dashboard",
   CREATE_CHALLENGE: "/create-challenge",
+  UPLOAD_MEDIA: "/upload-media",
 };
 
 export default ROUTES;
