@@ -51,7 +51,7 @@ export function* createChallenge(props) {
 
     const challenge = response.data.challengeDefinition;
     if (isResponseOk(response)) {
-      props.payload.history.push("/invitation/audience");
+      props.payload.history.push(CNST.ROUTES.INVITATION);
       yield put({type: CNST.CHALLENGE.CREATE.SUCCESS, payload: challenge});
     } else {
       yield put({

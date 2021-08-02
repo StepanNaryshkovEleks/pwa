@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import styles from "./_.module.css";
 import {Helmet} from "react-helmet";
 import Header from "../../components/header";
@@ -21,7 +21,7 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
-export const UsersInvitation = ({
+export const InviteByName = ({
   fetchChallenge,
   challenge = {},
   fetching,
@@ -31,13 +31,16 @@ export const UsersInvitation = ({
   uninviteUser,
 }) => {
   const history = useHistory();
+  const [search, setSearch] = useState("");
   const {invitationType} = useParams();
   const isAudience = invitationType === "audience";
   const invitedlist = isAudience ? observers : challengers;
   const notAllowedToInvite = isAudience ? challengers : observers;
   const users = challenge.inviteParticipantsAction
     ? challenge.inviteParticipantsAction.participantArray.filter(
-        (user) => !notAllowedToInvite.includes(user.participantId)
+        (user) =>
+          !notAllowedToInvite.includes(user.participantId) &&
+          user.participantName.toLowerCase().includes(search.toLowerCase())
       )
     : [];
 
@@ -60,7 +63,7 @@ export const UsersInvitation = ({
         }
         RightComponent={(props) => UserImage({...props, userImg})}
       />
-      <Search />
+      <Search value={search} setValue={setSearch} />
       {users &&
         users.map((user, i) => {
           const isInvited = invitedlist.includes(user.participantId);

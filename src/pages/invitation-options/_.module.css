@@ -8,6 +8,11 @@
   color: white;
 }
 
+.backButton {
+  background-color: transparent;
+  border: none;
+}
+
 .title {
   background-color: #e6f0ff;
   text-align: center;
@@ -15,8 +20,10 @@
   line-height: 22px;
   margin-bottom: 6px;
   padding: 12px 0;
+  text-transform: capitalize;
 }
 
 .next {
   margin: 40px 15px;
+  text-transform: capitalize;
 }

@@ -1,4 +1,4 @@
-import {UsersInvitation} from "./component";
+import {InviteByName} from "./component";
 import {connect} from "react-redux";
 import {getChallengeAction} from "../../redux/actions/challenge/getChallenge";
 import {
@@ -30,4 +30,4 @@ export const mapDispatchToProps = (dispatch, props) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersInvitation);
+export default connect(mapStateToProps, mapDispatchToProps)(InviteByName);
