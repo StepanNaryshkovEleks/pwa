@@ -14,6 +14,7 @@ export const createChallengeRequest = ({
   const reqPayload = {
     jsonType: "vee.RecordChallengeForm",
     challengeDefinition: {
+      challengeCategoryArray: [],
       challengeVersion: 1,
       challengeOwnerHandle: {
         actorId,

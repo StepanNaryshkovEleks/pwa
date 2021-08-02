@@ -35,17 +35,17 @@ export const UsersInvitation = ({
   const isAudience = invitationType === "audience";
   const invitedlist = isAudience ? observers : challengers;
   const notAllowedToInvite = isAudience ? challengers : observers;
-  const users =
-    challenge.inviteParticipantsAction &&
-    challenge.inviteParticipantsAction.participantArray.filter(
-      (user) => !notAllowedToInvite.includes(user.participantId)
-    );
+  const users = challenge.inviteParticipantsAction
+    ? challenge.inviteParticipantsAction.participantArray.filter(
+        (user) => !notAllowedToInvite.includes(user.participantId)
+      )
+    : [];
 
   useEffect(() => {
     if (!fetching && !challenge.inviteParticipantsAction) {
       fetchChallenge({challengeId: challenge.challengeReference.challengeId});
     }
-  }, [fetching, challenge]);
+  }, [fetching, challenge, fetchChallenge]);
 
   return (
     <main className={styles.main}>

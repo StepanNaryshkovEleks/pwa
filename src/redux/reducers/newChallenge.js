@@ -4,7 +4,7 @@ import newChallenge from "../stores/newChallenge";
 export default function reducer(state = newChallenge, action) {
   switch (action.type) {
     case CNST.CHALLENGE.CREATE.FETCH:
-    case CNST.CHALLENGE.CREATE.FETCH: {
+    case CNST.CHALLENGE.GET_CHALLENGE.FETCH: {
       return {
         ...state,
         fetching: true,
