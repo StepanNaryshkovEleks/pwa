@@ -175,6 +175,14 @@ export const SignUp = ({
                 showArrow={false}
                 bordered={false}
                 className={styles.select}
+                onChange={(ev) => {
+                  handleChange({
+                    target: {
+                      name: "gender",
+                      value: ev,
+                    },
+                  });
+                }}
               >
                 <Option value="man">Woman</Option>
                 <Option value="woman">Man</Option>

@@ -8,6 +8,11 @@ import CNST from "../../constants";
 import settingsIcon from "../../images/settings.svg";
 import userImg from "../../images/user.png";
 import styles from "./_.module.css";
+import {
+  listLocalProfileHandlesFormRequest,
+  shareProfileRequest,
+} from "../../redux/sagas/user";
+import {getToken} from "../../helpers/local-storage-service";
 
 const {TabPane} = Tabs;
 
