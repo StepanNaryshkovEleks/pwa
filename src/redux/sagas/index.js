@@ -1,7 +1,13 @@
 import {takeLatest} from "redux-saga/effects";
 import CNST from "../../constants";
 import {getUser, signIn, signOut, initUser, signUp} from "./user";
-import {createChallenge, getChallenges, getChallenge, inviteUsers} from "./challenge";
+import {
+  createChallenge,
+  getChallenges,
+  getChallenge,
+  inviteUsers,
+  engageChallenge,
+} from "./challenge";
 
 export default function* rootSaga() {
   yield takeLatest(CNST.USER.SIGN_IN.FETCH, signIn);
@@ -13,4 +19,5 @@ export default function* rootSaga() {
   yield takeLatest(CNST.CHALLENGE.GET_CHALLENGES.FETCH, getChallenges);
   yield takeLatest(CNST.CHALLENGE.GET_CHALLENGE.FETCH, getChallenge);
   yield takeLatest(CNST.CHALLENGE.INVITE_USERS.FETCH, inviteUsers);
+  yield takeLatest(CNST.CHALLENGE.ENGAGE.FETCH, engageChallenge);
 }

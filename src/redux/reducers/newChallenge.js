@@ -62,6 +62,13 @@ export default function reducer(state = newChallenge, action) {
         challengers: state.challengers.filter((el) => el !== action.user),
       };
     }
+    case CNST.CHALLENGE.INVITE_USERS.SUCCESS: {
+      return {
+        ...state,
+        challengers: [],
+        observers: [],
+      };
+    }
     default:
       return state;
   }

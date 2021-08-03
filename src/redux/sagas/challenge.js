@@ -214,3 +214,60 @@ export function* inviteUsers(props) {
     });
   }
 }
+
+export const engageChallengeRequest = ({
+  securityToken,
+  actorId,
+  challengeReference,
+  participantRole,
+  participantStatus,
+}) => {
+  const reqPayload = {
+    jsonType: "vee.UpdateChallengeParticipationForm",
+    challengeReference,
+    participant: {
+      participantId: actorId,
+      participantRole,
+      participantStatus,
+    },
+  };
+
+  return axios
+    .put("rs/application/form/vee", reqPayload, {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "realm-token": getToken(),
+        "security-token": securityToken,
+      },
+    })
+    .catch((error) => {
+      throw error.response.data;
+    });
+};
+
+export function* engageChallenge(props) {
+  try {
+    const {user} = yield select();
+
+    const response = yield call(engageChallengeRequest, {
+      ...props.payload,
+      securityToken: user.securityToken,
+      actorId: user.actorHandle.actorId,
+    });
+
+    if (isResponseOk(response)) {
+      yield put({
+        type: CNST.CHALLENGE.ENGAGE.SUCCESS,
+        payload: response.data.participant,
+      });
+    } else {
+      yield put({
+        type: CNST.CHALLENGE.ENGAGE.ERROR,
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: CNST.CHALLENGE.ENGAGE.ERROR,
+    });
+  }
+}

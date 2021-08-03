@@ -11,6 +11,7 @@ const ROUTES = {
   INVITATION: "/invitation",
   INVITATION_OPTIONS: "/invitation-options/:invitationType",
   INVITE_BY_NAME: "/invite-by-name/:invitationType",
+  CHALLENGE: "/challenge/:id",
 };
 
 export default ROUTES;
