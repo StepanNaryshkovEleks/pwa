@@ -20,7 +20,7 @@ export const Challenge = ({isOpen = true, data, challengeIndex}) => {
         <img src={dotsIcon} alt="More" />
       </header>
       <img src={challengeImg} alt="Challenge" className={styles.challengeImg} />
-      <Link to={`${CNST.ROUTES.UPLOAD_MEDIA}/${challengeId}`}>
+      <Link to={CNST.ROUTES.HOME}>
         <div className={styles.footer}>
           <div className={styles.votesContainer}>
             <span className={styles.id}>{challengeId}</span>

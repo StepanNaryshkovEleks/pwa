@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Helmet} from "react-helmet";
 import Header from "../../components/header";
 import styles from "./_.module.css";
@@ -26,8 +26,9 @@ const openNotificationWithIcon = (description) => {
   });
 };
 
-export const UploadMedia = ({match}) => {
+export const UploadMedia = ({match, uploadMedia}) => {
   const [files, setFiles] = useState([]);
+  const [activeFile, setActiveFile] = useState(0);
   const handleFileInput = async (e) => {
     // handle validations
     const file = e.target.files[0];
@@ -39,13 +40,12 @@ export const UploadMedia = ({match}) => {
 
     const type = file.type.indexOf("image") >= 0 ? "img" : "video";
     const url = URL.createObjectURL(file);
-
+    console.log(file.type);
     if (type === "video") {
       var video = document.createElement("video");
       video.src = url;
-      video.addEventListener("loadedmetadata", () => {
-        const duration = video.duration.toFixed(2);
-
+      video.addEventListener("durationchange", () => {
+        const duration = video.duration.toFixed(0);
         if (duration > 30) {
           openNotificationWithIcon("The duration should be less than 30sec");
           return;
@@ -56,6 +56,7 @@ export const UploadMedia = ({match}) => {
             url,
             duration,
             type,
+            mediaExtension: "." + file.type.slice("video/".length),
           },
         ]);
       });
@@ -66,11 +67,16 @@ export const UploadMedia = ({match}) => {
           url,
           duration: 0,
           type,
+          mediaExtension: "." + file.type.slice("image/".length),
         },
       ]);
     }
   };
-  console.log("files", files);
+
+  const handleSubmit = () => {
+    uploadMedia(files[activeFile]);
+  };
+
   return (
     <>
       <Helmet>
@@ -84,15 +90,28 @@ export const UploadMedia = ({match}) => {
       />
       <h1 className={styles.title}>Select Video</h1>
       <div className={styles.files}>
-        {files.map((file) => {
-          return file.type === "img" ? (
-            <img key={file.url} src={file.url} alt="" className={styles.item} />
-          ) : (
-            <video key={file.url} src={file.url} className={styles.item} />
+        {files.map((file, index) => {
+          return (
+            <div
+              key={file.url}
+              onClick={() => setActiveFile(index)}
+              className={`${styles.media} ${
+                activeFile === index ? styles.activeMedia : ""
+              }`}
+            >
+              {file.type === "img" ? (
+                <img src={file.url} alt="" className={styles.item} />
+              ) : (
+                <>
+                  <video src={file.url} className={styles.item} />
+                  <span className={styles.duration}>00:{file.duration}</span>
+                </>
+              )}
+            </div>
           );
         })}
       </div>
-      <Button>
+      <Button className={styles.btn} disabled={files.length === 5}>
         <input
           className={styles.input}
           type="file"
@@ -100,7 +119,15 @@ export const UploadMedia = ({match}) => {
           onChange={handleFileInput}
         />
         <img src={VideoCamera} className={styles.camera} alt="Content" />
-        Add Content
+        Add New Video/Photo
+      </Button>
+      <Button
+        className={styles.btn}
+        onClick={handleSubmit}
+        type="primary"
+        disabled={files.length === 0}
+      >
+        Upload
       </Button>
     </>
   );

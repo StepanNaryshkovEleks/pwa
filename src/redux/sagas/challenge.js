@@ -3,6 +3,7 @@ import axios from "axios";
 import CNST from "../../constants";
 import {isResponseOk} from "../../helpers/api/isResponseOk";
 import {getToken} from "../../helpers/local-storage-service";
+import getMediaId from "../../helpers/getMediaId";
 import {notification} from "antd";
 
 const openNotification = () => {
@@ -114,5 +115,56 @@ export function* getChallenges() {
     yield put({
       type: CNST.CHALLENGE.GET_CHALLENGES.ERROR,
     });
+  }
+}
+
+export const uploadMediaRequest = ({
+  securityToken,
+  actorId,
+  challengeId,
+  mediaExtension,
+  length = 0,
+}) => {
+  const reqPayload = {
+    jsonType: "vee.ListChallengeHandlesForm",
+    actorId,
+  };
+
+  return axios
+    .put(
+      `/rs/application/file/local/vee/media/${challengeId}/${actorId}/${
+        getMediaId() + mediaExtension
+      }`,
+      reqPayload,
+      {
+        headers: {
+          "Content-Type": "application/octet-stream",
+          Accept: "application/json",
+          "realm-token": getToken(),
+          "File-Length": length,
+          "security-token": securityToken,
+        },
+      }
+    )
+    .catch((error) => {
+      throw error.response.data;
+    });
+};
+
+export function* uploadMedia(props) {
+  try {
+    const {user} = yield select();
+    const response = yield call(uploadMediaRequest, {
+      securityToken: user.securityToken,
+      actorId: user.actorHandle.actorId,
+      length: props.payload.duration * 1000,
+      mediaExtension: props.payload.mediaExtension,
+    });
+
+    if (isResponseOk(response)) {
+      console.log("response", response);
+    }
+  } catch (error) {
+    console.log(error);
   }
 }
