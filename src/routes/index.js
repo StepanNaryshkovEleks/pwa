@@ -33,11 +33,6 @@ export const AppRouter = () => (
       path={`${CNST.ROUTES.UPLOAD_MEDIA}/:challengeId`}
       component={UploadMedia}
     />
-    <IsAuthUser
-      exact
-      path={`${CNST.ROUTES.UPLOAD_MEDIA}/:challengeId`}
-      component={UploadMedia}
-    />
     <IsAuthUser exact path={CNST.ROUTES.SETTINGS} component={Settings} />
     <IsAuthUser exact path={CNST.ROUTES.DASHBOARD} component={Dashboard} />
     <IsAuthUser exact path={CNST.ROUTES.CREATE_CHALLENGE} component={CreateChallenge} />
