@@ -40,7 +40,7 @@ export const UploadMedia = ({match, uploadMedia}) => {
 
     const type = file.type.indexOf("image") >= 0 ? "img" : "video";
     const url = URL.createObjectURL(file);
-    console.log(file.type);
+
     if (type === "video") {
       var video = document.createElement("video");
       video.src = url;
@@ -53,9 +53,11 @@ export const UploadMedia = ({match, uploadMedia}) => {
         setFiles([
           ...files,
           {
+            file,
             url,
             duration,
             type,
+            fileSize: file.size,
             mediaExtension: "." + file.type.slice("video/".length),
           },
         ]);
@@ -64,9 +66,11 @@ export const UploadMedia = ({match, uploadMedia}) => {
       setFiles([
         ...files,
         {
+          file,
           url,
           duration: 0,
           type,
+          fileSize: file.size,
           mediaExtension: "." + file.type.slice("image/".length),
         },
       ]);
@@ -74,7 +78,10 @@ export const UploadMedia = ({match, uploadMedia}) => {
   };
 
   const handleSubmit = () => {
-    uploadMedia(files[activeFile]);
+    uploadMedia({
+      ...files[activeFile],
+      challengeId: match.params.challengeId,
+    });
   };
 
   return (

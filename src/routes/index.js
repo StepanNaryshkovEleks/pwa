@@ -16,7 +16,7 @@ import UploadMedia from "../pages/upload-media";
 
 export const AppRouter = () => (
   <Switch>
-    <IsNotAuthUser exact path={CNST.ROUTES.HOME} component={UploadMedia} />
+    <IsNotAuthUser exact path={CNST.ROUTES.HOME} component={Home} />
     <IsNotAuthUser exact path={CNST.ROUTES.SIGN_IN} component={SignIn} />
     <IsNotAuthUser exact path={CNST.ROUTES.SIGN_UP} component={SignUp} />
     <IsNotAuthUser

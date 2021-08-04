@@ -5,6 +5,7 @@ import {isResponseOk} from "../../helpers/api/isResponseOk";
 import {getToken} from "../../helpers/local-storage-service";
 import getMediaId from "../../helpers/getMediaId";
 import {notification} from "antd";
+import base64ToHexString from "../../helpers/base64ToHexString";
 
 const openNotification = () => {
   notification.info({
@@ -118,7 +119,7 @@ export function* getChallenges() {
   }
 }
 
-export const uploadMediaRequest = ({
+export const submitChallengeStriveEntryRequest = ({
   securityToken,
   actorId,
   challengeId,
@@ -126,7 +127,7 @@ export const uploadMediaRequest = ({
   length = 0,
 }) => {
   const reqPayload = {
-    jsonType: "vee.ListChallengeHandlesForm",
+    jsonType: "vee.UpdateChallengeParticipationForm",
     actorId,
   };
 
@@ -136,6 +137,34 @@ export const uploadMediaRequest = ({
         getMediaId() + mediaExtension
       }`,
       reqPayload,
+      {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          Accept: "application/json",
+          "realm-token": getToken(),
+          "security-token": securityToken,
+        },
+      }
+    )
+    .catch((error) => {
+      throw error.response.data;
+    });
+};
+
+export const uploadMediaRequest = ({
+  securityToken,
+  actorId,
+  challengeId,
+  mediaExtension,
+  length = 0,
+  file,
+}) => {
+  return axios
+    .post(
+      `/rs/application/file/local/vee/media/${challengeId}/${base64ToHexString(
+        actorId
+      )}/${getMediaId() + mediaExtension}`,
+      file,
       {
         headers: {
           "Content-Type": "application/octet-stream",
@@ -154,11 +183,14 @@ export const uploadMediaRequest = ({
 export function* uploadMedia(props) {
   try {
     const {user} = yield select();
+
     const response = yield call(uploadMediaRequest, {
       securityToken: user.securityToken,
       actorId: user.actorHandle.actorId,
-      length: props.payload.duration * 1000,
+      length: props.payload.fileSize,
       mediaExtension: props.payload.mediaExtension,
+      file: props.payload.file,
+      challengeId: props.payload.challengeId,
     });
 
     if (isResponseOk(response)) {
