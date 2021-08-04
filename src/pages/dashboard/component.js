@@ -55,7 +55,7 @@ export const Dashboard = ({fetchChallenges, challenges, fetching, user}) => {
               ))}
           </section>
         </TabPane>
-        <TabPane tab="Closed Challenges" key="closed"></TabPane>
+        <TabPane tab="Closed Challenges" key="closed" />
       </Tabs>
       <Footer />
     </main>

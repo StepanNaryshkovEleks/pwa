@@ -3,6 +3,9 @@ import axios from "axios";
 import CNST from "../../constants";
 import {isResponseOk} from "../../helpers/api/isResponseOk";
 import {getToken} from "../../helpers/local-storage-service";
+import getMediaId from "../../helpers/getMediaId";
+import {notification} from "antd";
+import base64ToHexString from "../../helpers/base64ToHexString";
 
 export const createChallengeRequest = ({
   name,
@@ -212,5 +215,101 @@ export function* inviteUsers(props) {
     yield put({
       type: CNST.CHALLENGE.INVITE_USERS.ERROR,
     });
+  }
+}
+
+export const submitChallengeStriveEntryRequest = ({
+  securityToken,
+  challengeId,
+  participantId,
+  striveMediaId,
+}) => {
+  const reqPayload = {
+    jsonType: "vee.UpdateChallengeParticipationForm",
+    challengeReference: {
+      challengeId,
+    },
+    participantEntry: {
+      participantId,
+      striveMediaId: {
+        id: striveMediaId,
+      },
+    },
+  };
+
+  return axios
+    .put(`rs/application/form/vee`, reqPayload, {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        "realm-token": getToken(),
+        "security-token": securityToken,
+      },
+    })
+    .catch((error) => {
+      throw error.response.data;
+    });
+};
+
+export const uploadMediaRequest = ({
+  securityToken,
+  actorId,
+  challengeId,
+  mediaExtension,
+  length = 0,
+  file,
+  mediaId,
+}) => {
+  return axios
+    .post(
+      `/rs/application/file/local/vee/media/${challengeId}/${base64ToHexString(
+        actorId
+      )}/${mediaId + mediaExtension}`,
+      file,
+      {
+        headers: {
+          "Content-Type": "application/octet-stream",
+          Accept: "application/json",
+          "realm-token": getToken(),
+          "File-Length": length,
+          "security-token": securityToken,
+        },
+      }
+    )
+    .catch((error) => {
+      throw error.response.data;
+    });
+};
+
+export function* uploadMedia(props) {
+  try {
+    const {user} = yield select();
+    const mediaId = getMediaId();
+
+    const response = yield call(uploadMediaRequest, {
+      securityToken: user.securityToken,
+      actorId: user.actorHandle.actorId,
+      length: props.payload.fileSize,
+      mediaExtension: props.payload.mediaExtension,
+      file: props.payload.file,
+      challengeId: props.payload.challengeId,
+      mediaId,
+    });
+
+    if (isResponseOk(response)) {
+      yield call(submitChallengeStriveEntryRequest, {
+        securityToken: user.securityToken,
+        challengeId: props.payload.originChallengeId,
+        striveMediaId: mediaId,
+        participantId: user.actorHandle.actorId,
+      });
+      notification.info({
+        message: "You successfully submitted your file",
+        placement: "topLeft",
+      });
+      window.history.push(CNST.ROUTES.DASHBOARD);
+    }
+  } catch (error) {
+    console.log(error);
   }
 }
