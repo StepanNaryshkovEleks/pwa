@@ -121,31 +121,32 @@ export function* getChallenges() {
 
 export const submitChallengeStriveEntryRequest = ({
   securityToken,
-  actorId,
   challengeId,
-  mediaExtension,
-  length = 0,
+  participantId,
+  striveMediaId,
 }) => {
   const reqPayload = {
     jsonType: "vee.UpdateChallengeParticipationForm",
-    actorId,
+    challengeReference: {
+      challengeId,
+    },
+    participantEntry: {
+      participantId,
+      striveMediaId: {
+        id: striveMediaId,
+      },
+    },
   };
 
   return axios
-    .put(
-      `/rs/application/file/local/vee/media/${challengeId}/${actorId}/${
-        getMediaId() + mediaExtension
-      }`,
-      reqPayload,
-      {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          Accept: "application/json",
-          "realm-token": getToken(),
-          "security-token": securityToken,
-        },
-      }
-    )
+    .put(`rs/application/form/vee`, reqPayload, {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        "realm-token": getToken(),
+        "security-token": securityToken,
+      },
+    })
     .catch((error) => {
       throw error.response.data;
     });
@@ -158,12 +159,13 @@ export const uploadMediaRequest = ({
   mediaExtension,
   length = 0,
   file,
+  mediaId,
 }) => {
   return axios
     .post(
       `/rs/application/file/local/vee/media/${challengeId}/${base64ToHexString(
         actorId
-      )}/${getMediaId() + mediaExtension}`,
+      )}/${mediaId + mediaExtension}`,
       file,
       {
         headers: {
@@ -183,6 +185,7 @@ export const uploadMediaRequest = ({
 export function* uploadMedia(props) {
   try {
     const {user} = yield select();
+    const mediaId = getMediaId();
 
     const response = yield call(uploadMediaRequest, {
       securityToken: user.securityToken,
@@ -191,10 +194,21 @@ export function* uploadMedia(props) {
       mediaExtension: props.payload.mediaExtension,
       file: props.payload.file,
       challengeId: props.payload.challengeId,
+      mediaId,
     });
 
     if (isResponseOk(response)) {
-      console.log("response", response);
+      yield call(submitChallengeStriveEntryRequest, {
+        securityToken: user.securityToken,
+        challengeId: props.payload.originChallengeId,
+        striveMediaId: mediaId,
+        participantId: user.actorHandle.actorId,
+      });
+      notification.info({
+        message: "You successfully submitted your file",
+        placement: "topLeft",
+      });
+      window.history.back();
     }
   } catch (error) {
     console.log(error);

@@ -11,6 +11,45 @@
   margin-right: 10px;
 }
 
+.modalWrap :global(.ant-modal-content) {
+  text-align: center;
+}
+
+.modalWrap :global(.ant-modal-header) {
+  border-bottom: none;
+}
+
+.modalWrap :global(.ant-modal-footer) {
+  justify-content: space-between;
+  display: flex;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.modalWrap :global(.ant-modal-footer .ant-btn) {
+  width: 50%;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.modalWrap :global(.ant-modal-footer .ant-btn-primary) {
+  color: #006dff;
+  border-left: 1px solid #f0f0f0;
+}
+
+.modalWrap :global(.ant-modal-body) {
+  font-size: 15px;
+  line-height: 22px;
+  color: #888888;
+  padding-top: 10px;
+}
+
+.modalWrap :global(.ant-modal-title) {
+  font-size: 18px;
+  line-height: 18px;
+}
+
 .media {
   margin: 2px;
   border: 3px solid transparent;

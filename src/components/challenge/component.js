@@ -7,7 +7,6 @@ import {getRandomImage} from "../../helpers/getRandomImage.js";
 import userImg from "../../images/user.png";
 import dotsIcon from "../../images/dots.svg";
 import voteIcon from "../../images/vote.svg";
-import base64ToHexString from "../../helpers/base64ToHexString";
 
 export const Challenge = ({isOpen = true, data, challengeIndex}) => {
   const {challengeName, challengeDescription, username, challengeId} = data;
@@ -21,7 +20,7 @@ export const Challenge = ({isOpen = true, data, challengeIndex}) => {
         <img src={dotsIcon} alt="More" />
       </header>
       <img src={challengeImg} alt="Challenge" className={styles.challengeImg} />
-      <Link to={`${CNST.ROUTES.UPLOAD_MEDIA}/${base64ToHexString(challengeId)}`}>
+      <Link to={CNST.ROUTES.HOME}>
         <div className={styles.footer}>
           <div className={styles.votesContainer}>
             <span className={styles.id}>{challengeId}</span>

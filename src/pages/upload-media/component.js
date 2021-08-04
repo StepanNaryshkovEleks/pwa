@@ -6,13 +6,13 @@ import userImg from "../../images/user.png";
 import {Link} from "react-router-dom";
 import CNST from "../../constants";
 import closeIcon from "../../images/close-white.svg";
-import {Button, notification} from "antd";
+import {Button, notification, Modal} from "antd";
 import VideoCamera from "../../images/video-camera.svg";
 
-const SettingsIcon = ({className}) => (
-  <Link to={CNST.ROUTES.DASHBOARD}>
+const SettingsIcon = ({className, onClick}) => (
+  <span onClick={onClick}>
     <img src={closeIcon} alt="Go back" className={className} />
-  </Link>
+  </span>
 );
 
 const UserImage = ({userImg, className}) => (
@@ -25,14 +25,15 @@ const openNotificationWithIcon = (description) => {
     description,
   });
 };
-
-export const UploadMedia = ({match, uploadMedia}) => {
+//  <Link to={{pathname:`${CNST.ROUTES.UPLOAD_MEDIA}/${base64ToHexString(challengeId)}`, state: {challengeId}}}>
+export const UploadMedia = ({match, uploadMedia, location}) => {
   const [files, setFiles] = useState([]);
+  const [isVisibleModal, setModalState] = useState(false);
   const [activeFile, setActiveFile] = useState(0);
-  const handleFileInput = async (e) => {
+  const handleFileInput = (e) => {
     // handle validations
     const file = e.target.files[0];
-
+    if (!file) return;
     if ((file.size / (1024 * 1024)).toFixed(2) >= 500) {
       openNotificationWithIcon("The size should be less than 500mb");
       return;
@@ -81,6 +82,7 @@ export const UploadMedia = ({match, uploadMedia}) => {
     uploadMedia({
       ...files[activeFile],
       challengeId: match.params.challengeId,
+      originChallengeId: location.state.challengeId,
     });
   };
 
@@ -92,9 +94,24 @@ export const UploadMedia = ({match, uploadMedia}) => {
       <Header
         classes={styles.wrap}
         title={`Vee Challenge #${match.params.challengeId}`}
-        LeftComponent={SettingsIcon}
+        LeftComponent={(props) =>
+          SettingsIcon({...props, onClick: () => setModalState(true)})
+        }
         RightComponent={(props) => UserImage({...props, userImg})}
       />
+      <Modal
+        wrapClassName={styles.modalWrap}
+        title="Do you want to exit?"
+        visible={isVisibleModal}
+        centered
+        okText="Stay"
+        cancelText={<Link to={CNST.ROUTES.DASHBOARD}>Leave</Link>}
+        onOk={() => setModalState(false)}
+        closable={false}
+        width={270}
+      >
+        It will interrupt video uploading and will delete all videos
+      </Modal>
       <h1 className={styles.title}>Select Video</h1>
       <div className={styles.files}>
         {files.map((file, index) => {
