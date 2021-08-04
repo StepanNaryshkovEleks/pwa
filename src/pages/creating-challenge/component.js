@@ -9,6 +9,7 @@ import userImg from "../../images/user.png";
 import VideoCamera from "../../images/video-camera.svg";
 import {Helmet} from "react-helmet";
 import Spinner from "../../components/spinner";
+import {useHistory} from "react-router-dom";
 const {TextArea} = Input;
 
 const openNotification = () => {
@@ -28,16 +29,18 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
-export const CreateChallenge = ({createChallenge, fetching, error}) => {
+export const CreateChallenge = ({createChallenge, fetching}) => {
   const [isChecked, setIsChecked] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [forfeit, setForfeit] = useState("");
+  const history = useHistory();
 
   const handleSubmit = () => {
     createChallenge({
       name,
       description,
+      history,
     });
   };
 

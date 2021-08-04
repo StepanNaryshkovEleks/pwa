@@ -1,0 +1,22 @@
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrap {
+  background-color: #006dff;
+  color: white;
+}
+
+.title {
+  background-color: #e6f0ff;
+  text-align: center;
+  font-size: 18px;
+  line-height: 22px;
+  margin-bottom: 6px;
+  padding: 12px 0;
+}
+
+.next {
+  margin: 40px 15px;
+}
