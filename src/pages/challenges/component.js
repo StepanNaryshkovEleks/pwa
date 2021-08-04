@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
+import Search from "../../components/search";
 import ChallengeDetails from "../../components/challengeDetails";
 import {Tabs} from "antd";
 import {Link} from "react-router-dom";
@@ -23,12 +24,21 @@ const UserImage = ({userImg, className}) => (
 
 export const Challenges = ({fetchChallenges, challenges, fetching}) => {
   const [tab, setTab] = useState();
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     if (!fetching && !challenges) {
       fetchChallenges();
     }
   }, [fetching, challenges, fetchChallenges]);
+
+  const data = challenges
+    ? challenges.filter(
+        (el) =>
+          el.challengeName.toLowerCase().includes(search.toLowerCase()) ||
+          el.challengeDescription.toLowerCase().includes(search.toLowerCase())
+      )
+    : [];
 
   return (
     <main className={styles.challenges}>
@@ -37,6 +47,7 @@ export const Challenges = ({fetchChallenges, challenges, fetching}) => {
         LeftComponent={SettingsIcon}
         RightComponent={(props) => UserImage({...props, userImg})}
       />
+      <Search value={search} setValue={setSearch} />
       <Tabs
         className={styles.tabs}
         defaultActiveKey={tab}
@@ -45,10 +56,9 @@ export const Challenges = ({fetchChallenges, challenges, fetching}) => {
         centered={true}
       >
         <TabPane tab="All" key="all">
-          {challenges &&
-            challenges.map((challenge, i) => (
-              <ChallengeDetails key={i} data={challenge} />
-            ))}
+          {data.map((challenge, i) => (
+            <ChallengeDetails key={i} data={challenge} />
+          ))}
         </TabPane>
         <TabPane tab="Created" key="created"></TabPane>
         <TabPane
