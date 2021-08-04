@@ -208,7 +208,7 @@ export function* uploadMedia(props) {
         message: "You successfully submitted your file",
         placement: "topLeft",
       });
-      window.history.back();
+      window.history.push(CNST.ROUTES.DASHBOARD);
     }
   } catch (error) {
     console.log(error);
