@@ -1,0 +1,25 @@
+.challenges :global(.ant-tabs-tab) {
+  width: calc(100vw / 5);
+}
+
+.challenges :global(.ant-tabs) > :global(.ant-tabs-nav) :global(.ant-tabs-nav-list),
+.challenges
+  :global(.ant-tabs)
+  > div
+  > :global(.ant-tabs-nav)
+  :global(.ant-tabs-nav-list) {
+  width: auto;
+}
+
+.challenges .tabs :global(.ant-tabs-nav-operations) {
+  display: none !important;
+}
+
+.invitesIndicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-left: 3px;
+  background: linear-gradient(4.11deg, #00efff 1.47%, #006dff 88.68%);
+  border-radius: 100%;
+}

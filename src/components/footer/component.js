@@ -44,7 +44,7 @@ export const Footer = () => {
           title={"Create"}
         />
         <NavItem
-          path={"/challenge/0203"}
+          path={CNST.ROUTES.CHALLENGES}
           image={challengesIcon}
           activeImage={challengesActiveIcon}
           title={"Challenges"}

@@ -8,10 +8,12 @@ const ROUTES = {
   SETTINGS: "/settings",
   DASHBOARD: "/dashboard",
   CREATE_CHALLENGE: "/create-challenge",
+  UPLOAD_MEDIA: "/upload-media",
   INVITATION: "/invitation",
   INVITATION_OPTIONS: "/invitation-options/:invitationType",
   INVITE_BY_NAME: "/invite-by-name/:invitationType",
-  CHALLENGE: "/challenge/:id",
+  CHALLENGE: "/challenges/:id",
+  CHALLENGES: "/challenges",
 };
 
 export default ROUTES;

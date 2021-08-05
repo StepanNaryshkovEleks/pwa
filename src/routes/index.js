@@ -12,10 +12,12 @@ import CreatingPassword from "../pages/creating-password";
 import Settings from "../pages/settings";
 import Dashboard from "../pages/dashboard";
 import CreateChallenge from "../pages/creating-challenge";
+import UploadMedia from "../pages/upload-media";
 import Invitation from "../pages/invitation";
 import InvitationOptions from "../pages/invitation-options";
 import InviteByName from "../pages/invite-by-name";
 import Challenge from "../pages/challenge";
+import Challenges from "../pages/challenges";
 
 export const AppRouter = () => (
   <Switch>
@@ -28,6 +30,11 @@ export const AppRouter = () => (
       component={CreatingPassword}
     />
     <IsNotAuthUser exact path={CNST.ROUTES.INTERESTS} component={Interests} />
+    <IsAuthUser
+      exact
+      path={`${CNST.ROUTES.UPLOAD_MEDIA}/:challengeId`}
+      component={UploadMedia}
+    />
     <IsAuthUser exact path={CNST.ROUTES.SETTINGS} component={Settings} />
     <IsAuthUser exact path={CNST.ROUTES.DASHBOARD} component={Dashboard} />
     <IsAuthUser exact path={CNST.ROUTES.CREATE_CHALLENGE} component={CreateChallenge} />
@@ -39,6 +46,7 @@ export const AppRouter = () => (
     />
     <IsAuthUser exact path={CNST.ROUTES.INVITE_BY_NAME} component={InviteByName} />
     <IsAuthUser exact path={CNST.ROUTES.CHALLENGE} component={Challenge} />
+    <IsAuthUser exact path={CNST.ROUTES.CHALLENGES} component={Challenges} />
   </Switch>
 );
 

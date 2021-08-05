@@ -9,6 +9,13 @@ export default function reducer(state = challenges, action) {
         fetching: true,
         error: false,
       };
+    case CNST.CHALLENGE.GET_CHALLENGES.SUCCESS_WITH_DETAILS: {
+      return {
+        ...state,
+        challengesWithDetails: action.payload,
+        fetching: false,
+      };
+    }
     case CNST.CHALLENGE.GET_CHALLENGES.SUCCESS: {
       return {
         ...state,

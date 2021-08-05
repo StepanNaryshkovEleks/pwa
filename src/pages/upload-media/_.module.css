@@ -1,0 +1,110 @@
+.title {
+  background-color: #e6f0ff;
+  text-align: center;
+  font-size: 18px;
+  line-height: 22px;
+  margin-bottom: 25px;
+  padding: 12px 0;
+}
+
+.camera {
+  margin-right: 10px;
+}
+
+.modalWrap :global(.ant-modal-content) {
+  text-align: center;
+}
+
+.modalWrap :global(.ant-modal-header) {
+  border-bottom: none;
+}
+
+.modalWrap :global(.ant-modal-footer) {
+  justify-content: space-between;
+  display: flex;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.modalWrap :global(.ant-modal-footer .ant-btn) {
+  width: 50%;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.modalWrap :global(.ant-modal-footer .ant-btn-primary) {
+  color: #006dff;
+  border-left: 1px solid #f0f0f0;
+}
+
+.modalWrap :global(.ant-modal-body) {
+  font-size: 15px;
+  line-height: 22px;
+  color: #888888;
+  padding-top: 10px;
+}
+
+.modalWrap :global(.ant-modal-title) {
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.media {
+  margin: 2px;
+  border: 3px solid transparent;
+  position: relative;
+}
+
+.duration {
+  color: white;
+  position: absolute;
+  bottom: 0;
+  left: 35px;
+}
+
+.activeMedia {
+  border-radius: 5px;
+  border: 3px solid #006dff;
+}
+
+.files {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  padding: 0 10px;
+  margin-bottom: 40px;
+}
+
+.item {
+  height: 150px;
+  width: 107px;
+  display: block;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.wrap {
+  background-color: #006dff;
+  color: white;
+}
+
+.input {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  overflow: hidden;
+  text-indent: -999px;
+  z-index: 10;
+}
+
+.btn {
+  width: calc(100% - 30px);
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 20px;
+}

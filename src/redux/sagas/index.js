@@ -7,6 +7,7 @@ import {
   getChallenge,
   inviteUsers,
   engageChallenge,
+  uploadMedia,
 } from "./challenge";
 
 export default function* rootSaga() {
@@ -17,6 +18,7 @@ export default function* rootSaga() {
   yield takeLatest(CNST.USER.INIT_ADMIN_USER.FETCH, initUser);
   yield takeLatest(CNST.CHALLENGE.CREATE.FETCH, createChallenge);
   yield takeLatest(CNST.CHALLENGE.GET_CHALLENGES.FETCH, getChallenges);
+  yield takeLatest(CNST.CHALLENGE.UPLOAD_MEDIA.FETCH, uploadMedia);
   yield takeLatest(CNST.CHALLENGE.GET_CHALLENGE.FETCH, getChallenge);
   yield takeLatest(CNST.CHALLENGE.INVITE_USERS.FETCH, inviteUsers);
   yield takeLatest(CNST.CHALLENGE.ENGAGE.FETCH, engageChallenge);
