@@ -1,0 +1,42 @@
+.challenge {
+  margin: 0 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.header {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  margin-bottom: 7px;
+}
+
+.challenge :global(.ant-btn) {
+  min-height: 30px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.btnImg {
+  margin-right: 9px;
+}
+
+.id {
+  font-size: 18px;
+  color: black;
+  font-weight: bold;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.description {
+  font-size: 12px;
+  display: block;
+  line-height: 14px;
+  margin-top: -3px;
+}

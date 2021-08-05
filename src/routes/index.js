@@ -16,6 +16,7 @@ import UploadMedia from "../pages/upload-media";
 import Invitation from "../pages/invitation";
 import InvitationOptions from "../pages/invitation-options";
 import InviteByName from "../pages/invite-by-name";
+import Challenges from "../pages/challenges";
 
 export const AppRouter = () => (
   <Switch>
@@ -43,6 +44,7 @@ export const AppRouter = () => (
       component={InvitationOptions}
     />
     <IsAuthUser exact path={CNST.ROUTES.INVITE_BY_NAME} component={InviteByName} />
+    <IsAuthUser exact path={CNST.ROUTES.CHALLENGES} component={Challenges} />
   </Switch>
 );
 

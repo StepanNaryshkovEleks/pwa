@@ -26,14 +26,12 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
-export const Dashboard = ({fetchChallenges, challenges, fetching, user}) => {
+export const Dashboard = ({fetchChallenges, challenges, user}) => {
   const [tab, setTab] = useState();
 
   useEffect(() => {
-    if (!fetching && !challenges) {
-      fetchChallenges();
-    }
-  }, [fetching, challenges, fetchChallenges]);
+    fetchChallenges();
+  }, [fetchChallenges]);
 
   return (
     <main className={styles.dashboard}>
