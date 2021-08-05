@@ -4,6 +4,7 @@ import user from "./user";
 import signUpDetails from "./signUpDetails";
 import newChallenge from "./newChallenge";
 import challenges from "./challenges";
+import challenge from "./challenge";
 
 const reducers = combineReducers({
   router: routerReducer,
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   signUpDetails,
   newChallenge,
   challenges,
+  challenge,
 });
 
 export default reducers;

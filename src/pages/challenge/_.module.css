@@ -1,0 +1,52 @@
+.goBack {
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.actionsBlock {
+  width: 100%;
+  border-top: 1px solid #f2f2f2;
+  position: absolute;
+  bottom: 86px;
+  display: flex;
+  padding: 9px;
+  justify-content: space-between;
+}
+
+.actionsBlock.engaged {
+  background-color: #f6fdf7;
+}
+
+.actionsBlock.disengaged {
+  background-color: #fef5f6;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.main :global(.ant-btn) {
+  flex: auto;
+  height: 30px;
+  min-height: 30px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+}
+
+.main .rejectBtn:global(.ant-btn) {
+  margin-right: 9px;
+}
+
+.buttonImg {
+  margin-right: 9px;
+}
