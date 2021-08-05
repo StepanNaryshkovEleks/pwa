@@ -13,6 +13,8 @@ import checkBlackIcon from "../../images/check-black.svg";
 import checkWhiteIcon from "../../images/check-white.svg";
 import backIcon from "../../images/chevron-left.svg";
 import userImg from "../../images/user.png";
+import CNST from "../../constants";
+import base64ToHexString from "../../helpers/base64ToHexString";
 
 const BackIcon = ({className, onClick}) => (
   <button className={styles.goBack} onClick={onClick}>
@@ -24,10 +26,15 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
-export const ChallengePage = ({fetchChallenge, challenge, engageChallenge, user}) => {
+export const ChallengePage = ({
+  fetchChallenge,
+  challenge,
+  engageChallenge,
+  user,
+  location,
+}) => {
+  const challengeId = location.state.challengeId;
   const history = useHistory();
-  let {id} = useParams();
-  const challengeId = decodeURIComponent(id);
   const username =
     challenge &&
     challenge.challengeState.challengeDefinition.challengeOwnerHandle.assetId.id;
@@ -94,7 +101,14 @@ export const ChallengePage = ({fetchChallenge, challenge, engageChallenge, user}
                 <img className={styles.buttonImg} src={checkBlackIcon} alt="Accepted" />
                 Challenge Accepted
               </span>
-              <Link to="/">
+              <Link
+                to={{
+                  pathname: `${CNST.ROUTES.UPLOAD_MEDIA}/${base64ToHexString(
+                    challengeId
+                  )}`,
+                  state: {challengeId},
+                }}
+              >
                 <Button type="primary">
                   <img className={styles.buttonImg} src={cameraIcon} alt="Add content" />
                   Add Content

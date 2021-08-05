@@ -45,7 +45,11 @@ export const AppRouter = () => (
       component={InvitationOptions}
     />
     <IsAuthUser exact path={CNST.ROUTES.INVITE_BY_NAME} component={InviteByName} />
-    <IsAuthUser exact path={CNST.ROUTES.CHALLENGE} component={Challenge} />
+    <IsAuthUser
+      exact
+      path={`${CNST.ROUTES.CHALLENGE}/:challengeId`}
+      component={Challenge}
+    />
     <IsAuthUser exact path={CNST.ROUTES.CHALLENGES} component={Challenges} />
   </Switch>
 );

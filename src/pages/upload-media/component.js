@@ -8,6 +8,7 @@ import CNST from "../../constants";
 import closeIcon from "../../images/close-white.svg";
 import {Button, notification, Modal} from "antd";
 import VideoCamera from "../../images/video-camera.svg";
+import {Redirect} from "react-router";
 
 const SettingsIcon = ({className, onClick}) => (
   <span onClick={onClick}>
@@ -25,9 +26,10 @@ const openNotificationWithIcon = (description) => {
     description,
   });
 };
-//  <Link to={{pathname:`${CNST.ROUTES.UPLOAD_MEDIA}/${base64ToHexString(challengeId)}`, state: {challengeId}}}>
+
 export const UploadMedia = ({match, uploadMedia, location}) => {
   const [files, setFiles] = useState([]);
+  const [shouldBeRedirected, setRedirect] = useState(false);
   const [isVisibleModal, setModalState] = useState(false);
   const [activeFile, setActiveFile] = useState(0);
   const handleFileInput = (e) => {
@@ -83,9 +85,13 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
       ...files[activeFile],
       challengeId: match.params.challengeId,
       originChallengeId: location.state.challengeId,
+      callback: () => setRedirect(true),
     });
   };
 
+  if (shouldBeRedirected) {
+    return <Redirect to={CNST.ROUTES.DASHBOARD} />;
+  }
   return (
     <>
       <Helmet>

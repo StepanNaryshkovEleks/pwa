@@ -1,4 +1,10 @@
 const CHALLENGE = {
+  ACTIVE: "active",
+  CREATED: "created",
+  INVITES: "invites",
+  REJECTED: "rejected",
+  VOTING: "voting",
+  FORFEIT: "forfeit",
   CREATE: {
     FETCH: "CREATE_CHALLENGE_FETCH",
     SUCCESS: "CREATE_CHALLENGE_SUCCESS",

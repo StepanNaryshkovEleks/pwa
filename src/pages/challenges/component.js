@@ -54,7 +54,7 @@ export const Challenges = ({fetchChallenges, challengesWithDetails, fetching}) =
             <ChallengeDetails key={i} data={challenge} />
           ))}
         </TabPane>
-        <TabPane tab="Created" key="created">
+        <TabPane tab="Created" key={CNST.CHALLENGE.CREATED}>
           {challengesWithDetails.created.map((challenge, i) => (
             <ChallengeDetails key={i} data={challenge} />
           ))}
@@ -66,24 +66,24 @@ export const Challenges = ({fetchChallenges, challengesWithDetails, fetching}) =
               <div className={styles.invitesIndicator} />
             </>
           }
-          key="invites"
+          key={CNST.CHALLENGE.INVITES}
         >
           {challengesWithDetails.invites.map((challenge, i) => (
-            <ChallengeDetails key={i} data={challenge} />
+            <ChallengeDetails type={CNST.CHALLENGE.INVITES} key={i} data={challenge} />
           ))}
         </TabPane>
-        <TabPane tab="Active" key="active">
+        <TabPane tab="Active" key={CNST.CHALLENGE.ACTIVE}>
           {challengesWithDetails.active.map((challenge, i) => (
             <ChallengeDetails key={i} data={challenge} />
           ))}
         </TabPane>
-        <TabPane tab="Rejected" key="rejected">
+        <TabPane tab="Rejected" key={CNST.CHALLENGE.REJECTED}>
           {challengesWithDetails.rejected.map((challenge, i) => (
             <ChallengeDetails key={i} data={challenge} />
           ))}
         </TabPane>
-        <TabPane tab="Voting" key="voting" />
-        <TabPane tab="Forfeit" key="forfeit" />
+        <TabPane tab="Voting" key={CNST.CHALLENGE.VOTING} />
+        <TabPane tab="Forfeit" key={CNST.CHALLENGE.FORFEIT} />
       </Tabs>
       <Footer />
     </main>

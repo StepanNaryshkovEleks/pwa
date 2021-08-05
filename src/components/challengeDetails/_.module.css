@@ -1,6 +1,7 @@
 .challenge {
   margin: 0 15px;
   padding: 15px 0;
+  display: block;
   border-bottom: 1px solid #f2f2f2;
 }
 

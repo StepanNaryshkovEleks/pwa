@@ -382,7 +382,7 @@ export function* uploadMedia(props) {
         message: "You successfully submitted your file",
         placement: "topLeft",
       });
-      window.history.push(CNST.ROUTES.DASHBOARD);
+      props.payload.callback();
     }
   } catch (error) {
     console.log(error);
