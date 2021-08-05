@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {getChallengesAction} from "../../redux/actions/challenge/getChallenges";
 
 export const mapStateToProps = (state) => ({
-  challenges: state.challenges.data,
+  challengesWithDetails: state.challenges.challengesWithDetails,
   fetching: state.challenges.fetching,
 });
 

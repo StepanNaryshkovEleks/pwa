@@ -9,6 +9,7 @@ import CNST from "../../constants";
 import settingsIcon from "../../images/settings.svg";
 import userImg from "../../images/user.png";
 import styles from "./_.module.css";
+import Spinner from "../../components/spinner";
 
 const {TabPane} = Tabs;
 
@@ -22,26 +23,19 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
-export const Challenges = ({fetchChallenges, challenges, fetching}) => {
+export const Challenges = ({fetchChallenges, challengesWithDetails, fetching}) => {
   const [tab, setTab] = useState();
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    if (!fetching && !challenges) {
-      fetchChallenges();
-    }
-  }, [fetching, challenges, fetchChallenges]);
-
-  const data = challenges
-    ? challenges.filter(
-        (el) =>
-          el.challengeName.toLowerCase().includes(search.toLowerCase()) ||
-          el.challengeDescription.toLowerCase().includes(search.toLowerCase())
-      )
-    : [];
+    fetchChallenges({
+      withDetails: true,
+    });
+  }, [fetchChallenges]);
 
   return (
     <main className={styles.challenges}>
+      {fetching && <Spinner />}
       <Header
         title="Challenges"
         LeftComponent={SettingsIcon}
@@ -56,11 +50,15 @@ export const Challenges = ({fetchChallenges, challenges, fetching}) => {
         centered={true}
       >
         <TabPane tab="All" key="all">
-          {data.map((challenge, i) => (
+          {challengesWithDetails.all.map((challenge, i) => (
             <ChallengeDetails key={i} data={challenge} />
           ))}
         </TabPane>
-        <TabPane tab="Created" key="created"></TabPane>
+        <TabPane tab="Created" key="created">
+          {challengesWithDetails.created.map((challenge, i) => (
+            <ChallengeDetails key={i} data={challenge} />
+          ))}
+        </TabPane>
         <TabPane
           tab={
             <>
@@ -69,11 +67,23 @@ export const Challenges = ({fetchChallenges, challenges, fetching}) => {
             </>
           }
           key="invites"
-        ></TabPane>
-        <TabPane tab="Active" key="active"></TabPane>
-        <TabPane tab="Rejected" key="rejected"></TabPane>
-        <TabPane tab="Voting" key="voting"></TabPane>
-        <TabPane tab="Forfeit" key="forfeit"></TabPane>
+        >
+          {challengesWithDetails.invites.map((challenge, i) => (
+            <ChallengeDetails key={i} data={challenge} />
+          ))}
+        </TabPane>
+        <TabPane tab="Active" key="active">
+          {challengesWithDetails.active.map((challenge, i) => (
+            <ChallengeDetails key={i} data={challenge} />
+          ))}
+        </TabPane>
+        <TabPane tab="Rejected" key="rejected">
+          {challengesWithDetails.rejected.map((challenge, i) => (
+            <ChallengeDetails key={i} data={challenge} />
+          ))}
+        </TabPane>
+        <TabPane tab="Voting" key="voting" />
+        <TabPane tab="Forfeit" key="forfeit" />
       </Tabs>
       <Footer />
     </main>
