@@ -3,6 +3,7 @@ import styles from "./_.module.css";
 import {Link} from "react-router-dom";
 import videoCamera from "../../images/video-camera-white.svg";
 import voteIcon from "../../images/vote-white.svg";
+import voteIconBlack from "../../images/vote.svg";
 import CNST from "../../constants";
 import base64ToHexString from "../../helpers/base64ToHexString";
 
@@ -68,7 +69,7 @@ export const ChallengeDetails = ({data, type, actorId}) => {
                 )}`,
                 state: {challengeId: challengeReference.challengeId},
               }}
-              className="link link--primary"
+              className="link link--primary link--small"
             >
               <img className={styles.btnImg} src={videoCamera} />
               Add content
@@ -78,7 +79,7 @@ export const ChallengeDetails = ({data, type, actorId}) => {
           indxInVoting === -1 &&
           data.challengePotential.challengeState.participantArray[indx]
             .participantRole === "OBSERVER" && (
-            <Link to={"/"} className="link link--primary">
+            <Link to={"/"} className="link link--primary link--small">
               <img className={styles.btnImg} src={voteIcon} />
               Vote
             </Link>
@@ -87,8 +88,8 @@ export const ChallengeDetails = ({data, type, actorId}) => {
           indxInVoting !== -1 &&
           data.challengePotential.challengeState.participantArray[indx]
             .participantRole === "OBSERVER" && (
-            <Link to={"/"} className="link link--secondary">
-              <img className={styles.btnImg} src={voteIcon} />
+            <Link to={"/"} className="link link--secondary link--bordered link--small">
+              <img className={styles.btnImg} src={voteIconBlack} />
               Voted
             </Link>
           )}
@@ -102,7 +103,8 @@ export const ChallengeDetails = ({data, type, actorId}) => {
     <span className={styles.challenge}>
       <header className={styles.header}>
         <span className={styles.id}>{challengeReference.challengeId} (Created)</span>
-        {/*<span className={styles.endeded}>Endeded</span>*/}
+        {data.challengePotential.challengeState.selectParticipantEntryArray.length >
+          0 && <span className={styles.endeded}>Endeded</span>}
       </header>
       <span className={styles.name}>{challengeName}</span>
       <span className={styles.description}>{challengeDescription}</span>

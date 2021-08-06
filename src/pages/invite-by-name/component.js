@@ -32,6 +32,7 @@ export const InviteByName = ({
 }) => {
   const history = useHistory();
   const [search, setSearch] = useState("");
+  const [isFetched, setFetched] = useState(false);
   const {invitationType} = useParams();
   const isAudience = invitationType === "audience";
   const invitedlist = isAudience ? observers : challengers;
@@ -45,10 +46,11 @@ export const InviteByName = ({
     : [];
 
   useEffect(() => {
-    if (!fetching && !challenge.inviteParticipantsAction) {
+    if (!isFetched && !challenge.inviteParticipantsAction) {
+      setFetched(true);
       fetchChallenge({challengeId: challenge.challengeReference.challengeId});
     }
-  }, [fetching, challenge, fetchChallenge]);
+  }, [isFetched, challenge, fetchChallenge]);
 
   return (
     <main className={styles.main}>
