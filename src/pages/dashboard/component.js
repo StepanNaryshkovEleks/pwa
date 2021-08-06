@@ -8,11 +8,6 @@ import CNST from "../../constants";
 import settingsIcon from "../../images/settings.svg";
 import userImg from "../../images/user.png";
 import styles from "./_.module.css";
-import {
-  listLocalProfileHandlesFormRequest,
-  shareProfileRequest,
-} from "../../redux/sagas/user";
-import {getToken} from "../../helpers/local-storage-service";
 
 const {TabPane} = Tabs;
 
@@ -28,10 +23,14 @@ const UserImage = ({userImg, className}) => (
 
 export const Dashboard = ({fetchChallenges, challenges, user}) => {
   const [tab, setTab] = useState();
+  const [isChallengeFetched, setChallengeFetch] = useState(false);
 
   useEffect(() => {
-    fetchChallenges();
-  }, [fetchChallenges]);
+    if (user?.actorHandle?.actorId && !isChallengeFetched) {
+      fetchChallenges();
+      setChallengeFetch(true);
+    }
+  }, [fetchChallenges, user, isChallengeFetched]);
 
   return (
     <main className={styles.dashboard}>

@@ -159,13 +159,10 @@ export function* getChallenges(props) {
           })
         );
         const newData = {
-          all: [],
           created: [],
           active: [],
           invites: [],
           rejected: [],
-          voting: [],
-          forfeit: [],
         };
 
         detailedChallengesResponse = detailedChallengesResponse
@@ -227,6 +224,7 @@ export function* getChallenges(props) {
       });
     }
   } catch (error) {
+    console.log(error);
     yield put({
       type: CNST.CHALLENGE.GET_CHALLENGES.ERROR,
     });
