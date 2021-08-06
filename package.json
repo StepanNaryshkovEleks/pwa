@@ -55,7 +55,7 @@
     "start": "craco  start",
     "build": "craco  build",
     "eject": "react-scripts eject",
-    "proxy": "lcp --proxyUrl https://api.bucha.click:37677"
+    "proxy": "lcp --proxyUrl https://api.bucha.click:40457"
   },
   "eslintConfig": {
     "extends": [

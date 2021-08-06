@@ -3,9 +3,11 @@
   padding: 15px 0;
   display: block;
   border-bottom: 1px solid #f2f2f2;
+  color: black;
 }
 
 .header {
+  flex-wrap: wrap-reverse;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -29,6 +31,22 @@
   font-size: 18px;
   color: black;
   font-weight: bold;
+}
+
+.endeded {
+  background: linear-gradient(4.11deg, #00efff 1.47%, #006dff 88.68%);
+  border-radius: 12px;
+  padding: 0 5px;
+  color: white;
+}
+
+.rejected {
+  font-size: 12px;
+  line-height: 18px;
+  color: white;
+  background: #ff5b05;
+  border-radius: 12px;
+  padding: 0 5px;
 }
 
 .name {

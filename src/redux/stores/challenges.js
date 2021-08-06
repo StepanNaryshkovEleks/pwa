@@ -3,13 +3,10 @@ const challenges = {
   error: false,
   data: false,
   challengesWithDetails: {
-    all: [],
     created: [],
     active: [],
     invites: [],
     rejected: [],
-    voting: [],
-    forfeit: [],
   },
 };
 

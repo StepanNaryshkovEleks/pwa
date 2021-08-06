@@ -23,7 +23,12 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
-export const Challenges = ({fetchChallenges, challengesWithDetails, fetching}) => {
+export const Challenges = ({
+  fetchChallenges,
+  challengesWithDetails,
+  fetching,
+  actorId,
+}) => {
   const [tab, setTab] = useState();
   const [search, setSearch] = useState("");
 
@@ -49,14 +54,9 @@ export const Challenges = ({fetchChallenges, challengesWithDetails, fetching}) =
         onChange={setTab}
         centered={true}
       >
-        <TabPane tab="All" key="all">
-          {challengesWithDetails.all.map((challenge, i) => (
-            <ChallengeDetails key={i} data={challenge} />
-          ))}
-        </TabPane>
         <TabPane tab="Created" key={CNST.CHALLENGE.CREATED}>
           {challengesWithDetails.created.map((challenge, i) => (
-            <ChallengeDetails key={i} data={challenge} />
+            <ChallengeDetails key={i} data={challenge} actorId={actorId} />
           ))}
         </TabPane>
         <TabPane
@@ -69,21 +69,34 @@ export const Challenges = ({fetchChallenges, challengesWithDetails, fetching}) =
           key={CNST.CHALLENGE.INVITES}
         >
           {challengesWithDetails.invites.map((challenge, i) => (
-            <ChallengeDetails type={CNST.CHALLENGE.INVITES} key={i} data={challenge} />
+            <ChallengeDetails
+              type={CNST.CHALLENGE.INVITES}
+              key={i}
+              data={challenge}
+              actorId={actorId}
+            />
           ))}
         </TabPane>
         <TabPane tab="Active" key={CNST.CHALLENGE.ACTIVE}>
           {challengesWithDetails.active.map((challenge, i) => (
-            <ChallengeDetails key={i} data={challenge} />
+            <ChallengeDetails
+              key={i}
+              data={challenge}
+              type={CNST.CHALLENGE.ACTIVE}
+              actorId={actorId}
+            />
           ))}
         </TabPane>
         <TabPane tab="Rejected" key={CNST.CHALLENGE.REJECTED}>
           {challengesWithDetails.rejected.map((challenge, i) => (
-            <ChallengeDetails key={i} data={challenge} />
+            <ChallengeDetails
+              key={i}
+              data={challenge}
+              type={CNST.CHALLENGE.REJECTED}
+              actorId={actorId}
+            />
           ))}
         </TabPane>
-        <TabPane tab="Voting" key={CNST.CHALLENGE.VOTING} />
-        <TabPane tab="Forfeit" key={CNST.CHALLENGE.FORFEIT} />
       </Tabs>
       <Footer />
     </main>
