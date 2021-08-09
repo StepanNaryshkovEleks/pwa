@@ -63,7 +63,9 @@ export const Challenges = ({
           tab={
             <>
               <span>Invites</span>
-              <div className={styles.invitesIndicator} />
+              {challengesWithDetails.invites.length > 0 && (
+                <div className={styles.invitesIndicator} />
+              )}
             </>
           }
           key={CNST.CHALLENGE.INVITES}

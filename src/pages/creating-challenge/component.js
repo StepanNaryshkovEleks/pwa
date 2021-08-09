@@ -68,7 +68,7 @@ export const CreateChallenge = ({createChallenge, fetching}) => {
             onChange={(ev) => setName(ev.target.value)}
           />
           <div className={styles.counter}>
-            <bold>{name.length}</bold>/<span>50</span>
+            <strong>{name.length}</strong>/<span>50</span>
           </div>
         </div>
         <div className={`${styles.row} ${styles.rowDesc}`}>
@@ -81,7 +81,7 @@ export const CreateChallenge = ({createChallenge, fetching}) => {
             onChange={(ev) => setDescription(ev.target.value)}
           />
           <div className={styles.counter}>
-            <bold>{description.length}</bold>/<span>150</span>
+            <strong>{description.length}</strong>/<span>150</span>
           </div>
         </div>
         <div className={`${styles.row} ${styles.rowForfeit}`}>
@@ -98,7 +98,7 @@ export const CreateChallenge = ({createChallenge, fetching}) => {
               onChange={(ev) => setForfeit(ev.target.value)}
             />
             <div className={styles.counter}>
-              <bold>{forfeit.length}</bold>/<span>100</span>
+              <strong>{forfeit.length}</strong>/<span>100</span>
             </div>
           </div>
         )}

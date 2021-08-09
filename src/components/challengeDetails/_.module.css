@@ -40,6 +40,25 @@
   color: white;
 }
 
+.winner {
+  margin-top: 5px;
+}
+
+.winnerImg {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+}
+
+.winnerName {
+  color: #006dff;
+  margin-left: 6px;
+  margin-right: 9px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .rejected {
   font-size: 12px;
   line-height: 18px;

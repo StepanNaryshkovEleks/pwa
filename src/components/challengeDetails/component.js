@@ -6,6 +6,8 @@ import voteIcon from "../../images/vote-white.svg";
 import voteIconBlack from "../../images/vote.svg";
 import CNST from "../../constants";
 import base64ToHexString from "../../helpers/base64ToHexString";
+import getWInner from "../../helpers/getWInner";
+import userImg from "../../images/user.png";
 
 export const ChallengeDetails = ({data, type, actorId}) => {
   const {
@@ -88,10 +90,10 @@ export const ChallengeDetails = ({data, type, actorId}) => {
           indxInVoting !== -1 &&
           data.challengePotential.challengeState.participantArray[indx]
             .participantRole === "OBSERVER" && (
-            <Link to={"/"} className="link link--secondary link--bordered link--small">
+            <span className="link link--secondary link--bordered link--small">
               <img className={styles.btnImg} src={voteIconBlack} />
               Voted
-            </Link>
+            </span>
           )}
       </header>
       <span className={styles.name}>{challengeName}</span>
@@ -99,17 +101,25 @@ export const ChallengeDetails = ({data, type, actorId}) => {
     </span>
   );
 
-  const CREATED_CONTENT = () => (
-    <span className={styles.challenge}>
-      <header className={styles.header}>
-        <span className={styles.id}>{challengeReference.challengeId} (Created)</span>
-        {data.challengePotential.challengeState.selectParticipantEntryArray.length >
-          0 && <span className={styles.endeded}>Endeded</span>}
-      </header>
-      <span className={styles.name}>{challengeName}</span>
-      <span className={styles.description}>{challengeDescription}</span>
-    </span>
-  );
+  const CREATED_CONTENT = () => {
+    const winnerName = getWInner(data.challengePotential.challengeState);
+    return (
+      <span className={styles.challenge}>
+        <header className={styles.header}>
+          <span className={styles.id}>{challengeReference.challengeId} (Created)</span>
+          {winnerName && <span className={styles.endeded}>Ended</span>}
+        </header>
+        <span className={styles.name}>{challengeName}</span>
+        <span className={styles.description}>{challengeDescription}</span>
+        {winnerName && (
+          <div className={styles.winner}>
+            <img src={userImg} alt="Winner" className={styles.winnerImg} />
+            <span className={styles.winnerName}>{winnerName} won the challenge</span>
+          </div>
+        )}
+      </span>
+    );
+  };
 
   return type === CNST.CHALLENGE.INVITES
     ? INVITES_CONTENT()

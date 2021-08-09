@@ -101,19 +101,25 @@ export const ChallengePage = ({
                 <img className={styles.buttonImg} src={checkBlackIcon} alt="Accepted" />
                 Challenge Accepted
               </span>
-              <Link
-                to={{
-                  pathname: `${CNST.ROUTES.UPLOAD_MEDIA}/${base64ToHexString(
-                    challengeId
-                  )}`,
-                  state: {challengeId},
-                }}
-              >
-                <Button type="primary">
-                  <img className={styles.buttonImg} src={cameraIcon} alt="Add content" />
-                  Add Content
-                </Button>
-              </Link>
+              {participant.participantRole === "CHALLENGER" && (
+                <Link
+                  to={{
+                    pathname: `${CNST.ROUTES.UPLOAD_MEDIA}/${base64ToHexString(
+                      challengeId
+                    )}`,
+                    state: {challengeId},
+                  }}
+                >
+                  <Button type="primary">
+                    <img
+                      className={styles.buttonImg}
+                      src={cameraIcon}
+                      alt="Add content"
+                    />
+                    Add Content
+                  </Button>
+                </Link>
+              )}
             </>
           )}
           {isDisengaged && (

@@ -15,6 +15,7 @@
   border-top: 1px solid #f2f2f2;
   position: absolute;
   bottom: 86px;
+  background-color: rgba(255, 255, 255, 0.6);
   display: flex;
   padding: 9px;
   justify-content: space-between;
