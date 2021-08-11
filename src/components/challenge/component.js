@@ -9,7 +9,7 @@ import userImg from "../../images/user.png";
 import dotsIcon from "../../images/dots.svg";
 import voteIcon from "../../images/vote.svg";
 
-export const Challenge = ({data, challengeIndex}) => {
+export const Challenge = ({data, challengeIndex, userId}) => {
   const {
     challengeName,
     challengeDescription,
@@ -18,6 +18,12 @@ export const Challenge = ({data, challengeIndex}) => {
   } = data.challengeDefinition;
   const challengeImg = getRandomImage(challengeIndex);
   const winnerName = getWInner(data);
+  const isObserver = data.participantArray.find(
+    (challenger) =>
+      challenger.participantId === userId &&
+      challenger.participantRole === "OBSERVER" &&
+      challenger.participantStatus === "ENGAGED"
+  );
 
   return (
     <section className={styles.challenge}>
@@ -38,7 +44,7 @@ export const Challenge = ({data, challengeIndex}) => {
               </>
             )}
             <span className={styles.votes}>0 votes</span>
-            {!winnerName && (
+            {!winnerName && isObserver && (
               <button className={styles.button}>
                 <img src={voteIcon} alt="Vote" />
               </button>

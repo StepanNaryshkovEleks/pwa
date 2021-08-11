@@ -44,9 +44,13 @@ export const Dashboard = ({fetchChallenges, challenges, user}) => {
           <section className={styles.challenges}>
             {challenges.active.map((challenge, i) => (
               <Challenge
-                key={i}
+                key={
+                  challenge.challengePotential.challengeState.challengeDefinition
+                    .challengeReference.challengeId
+                }
                 data={challenge.challengePotential.challengeState}
                 challengeIndex={i}
+                userId={user.actorHandle.actorId}
               />
             ))}
           </section>
@@ -55,9 +59,13 @@ export const Dashboard = ({fetchChallenges, challenges, user}) => {
           <section className={styles.challenges}>
             {challenges.closed.map((challenge, i) => (
               <Challenge
-                key={i}
+                key={
+                  challenge.challengePotential.challengeState.challengeDefinition
+                    .challengeReference.challengeId
+                }
                 data={challenge.challengePotential.challengeState}
                 challengeIndex={i + 5} //to avoid the same sequence of images in both tabs
+                userId={user.actorHandle.actorId}
               />
             ))}
           </section>

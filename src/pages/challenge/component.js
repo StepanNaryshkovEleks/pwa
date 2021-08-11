@@ -65,7 +65,13 @@ export const ChallengePage = ({
         RightComponent={(props) => UserImage({...props, userImg})}
       />
       <main className={styles.main}>
-        {challenge && <Challenge data={challenge.challengeState} challengeIndex={1} />}
+        {challenge && (
+          <Challenge
+            data={challenge.challengeState}
+            challengeIndex={1}
+            userId={user.actorHandle.actorId}
+          />
+        )}
         <div
           className={`${styles.actionsBlock} ${isEngaged && styles.engaged} ${
             isDisengaged && styles.disengaged
