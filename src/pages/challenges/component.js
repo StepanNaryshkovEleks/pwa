@@ -47,9 +47,7 @@ export const Challenges = ({
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetchChallenges({
-      withDetails: true,
-    });
+    fetchChallenges();
   }, [fetchChallenges]);
 
   return (

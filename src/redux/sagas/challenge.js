@@ -142,82 +142,82 @@ export function* getChallenges(props) {
     });
 
     if (isResponseOk(response)) {
-      if (props?.payload?.withDetails) {
-        let detailedChallengesResponse = yield all(
-          response.data.challengeHandleArray.map((challenge) => {
-            return (function* () {
-              try {
-                return yield call(getChallengeRequest, {
-                  securityToken: user.securityToken,
-                  actorId: user.actorHandle.actorId,
-                  challengeId: challenge.challengeId,
-                });
-              } catch (e) {
-                return e;
-              }
-            })();
-          })
+      let detailedChallengesResponse = yield all(
+        response.data.challengeHandleArray.map((challenge) => {
+          return (function* () {
+            try {
+              return yield call(getChallengeRequest, {
+                securityToken: user.securityToken,
+                actorId: user.actorHandle.actorId,
+                challengeId: challenge.challengeId,
+              });
+            } catch (e) {
+              return e;
+            }
+          })();
+        })
+      );
+      const newData = {
+        created: [],
+        active: [],
+        invites: [],
+        rejected: [],
+        closed: [],
+      };
+
+      detailedChallengesResponse = detailedChallengesResponse
+        .filter((data) => data.status === 200)
+        .map((data) => {
+          return {
+            challengePotential: data.data.challengePotential,
+            challengeReference: data.data.challengeReference,
+            actorHandle: data.data.actorHandle,
+          };
+        });
+
+      const myId = user.actorHandle.actorId;
+
+      for (let i = 0; i < detailedChallengesResponse.length; i++) {
+        const indx = detailedChallengesResponse[
+          i
+        ].challengePotential.challengeState.participantArray.findIndex(
+          (el) => el.participantId === myId
         );
-        const newData = {
-          created: [],
-          active: [],
-          invites: [],
-          rejected: [],
-        };
-
-        detailedChallengesResponse = detailedChallengesResponse
-          .filter((data) => data.status === 200)
-          .map((data) => {
-            return {
-              challengePotential: data.data.challengePotential,
-              challengeReference: data.data.challengeReference,
-              actorHandle: data.data.actorHandle,
-            };
-          });
-
-        const myId = user.actorHandle.actorId;
-
-        for (let i = 0; i < detailedChallengesResponse.length; i++) {
-          const indx = detailedChallengesResponse[
-            i
-          ].challengePotential.challengeState.participantArray.findIndex(
-            (el) => el.participantId === myId
-          );
-          if (
-            detailedChallengesResponse[i].challengePotential.challengeState
-              .challengeDefinition.challengeOwnerHandle.actorId === myId
-          ) {
-            newData.created.push(detailedChallengesResponse[i]);
-          } else if (
-            indx >= 0 &&
-            detailedChallengesResponse[i].challengePotential.challengeState
-              .participantArray[indx].participantStatus === "INVITED"
-          ) {
-            newData.invites.push(detailedChallengesResponse[i]);
-          } else if (
-            indx >= 0 &&
-            detailedChallengesResponse[i].challengePotential.challengeState
-              .participantArray[indx].participantStatus === "ENGAGED"
-          ) {
-            newData.active.push(detailedChallengesResponse[i]);
-          } else if (
-            indx >= 0 &&
-            detailedChallengesResponse[i].challengePotential.challengeState
-              .participantArray[indx].participantStatus === "DISENGAGED"
-          ) {
-            newData.rejected.push(detailedChallengesResponse[i]);
-          }
+        if (
+          detailedChallengesResponse[i].challengePotential.challengeState
+            .challengeDefinition.challengeOwnerHandle.actorId === myId
+        ) {
+          newData.created.push(detailedChallengesResponse[i]);
+        } else if (
+          indx >= 0 &&
+          detailedChallengesResponse[i].challengePotential.challengeState
+            .participantArray[indx].participantStatus === "INVITED"
+        ) {
+          newData.invites.push(detailedChallengesResponse[i]);
+        } else if (
+          indx >= 0 &&
+          detailedChallengesResponse[i].challengePotential.challengeState
+            .selectParticipantEntryArray.length !== 0
+        ) {
+          newData.closed.push(detailedChallengesResponse[i]);
+        } else if (
+          indx >= 0 &&
+          detailedChallengesResponse[i].challengePotential.challengeState
+            .participantArray[indx].participantStatus === "ENGAGED"
+        ) {
+          newData.active.push(detailedChallengesResponse[i]);
+        } else if (
+          indx >= 0 &&
+          detailedChallengesResponse[i].challengePotential.challengeState
+            .participantArray[indx].participantStatus === "DISENGAGED"
+        ) {
+          newData.rejected.push(detailedChallengesResponse[i]);
         }
-        yield put({
-          type: CNST.CHALLENGE.GET_CHALLENGES.SUCCESS_WITH_DETAILS,
-          payload: newData,
-        });
-      } else {
-        yield put({
-          type: CNST.CHALLENGE.GET_CHALLENGES.SUCCESS,
-          payload: response.data.challengeHandleArray,
-        });
       }
+      yield put({
+        type: CNST.CHALLENGE.GET_CHALLENGES.SUCCESS_WITH_DETAILS,
+        payload: newData,
+      });
     } else {
       yield put({
         type: CNST.CHALLENGE.GET_CHALLENGES.ERROR,
@@ -430,9 +430,6 @@ export function* engageChallenge(props) {
       if (shouldRefreshChallenges) {
         yield put({
           type: CNST.CHALLENGE.GET_CHALLENGES.FETCH,
-          payload: {
-            withDetails: true,
-          },
         });
         notification.info({
           message: "You successfully changed a status of the challenge",

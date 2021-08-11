@@ -1,12 +1,12 @@
 const challenges = {
   fetching: false,
   error: false,
-  data: false,
   challengesWithDetails: {
     created: [],
     active: [],
     invites: [],
     rejected: [],
+    closed: [],
   },
 };
 

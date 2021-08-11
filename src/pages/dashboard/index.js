@@ -4,7 +4,7 @@ import {getChallengesAction} from "../../redux/actions/challenge/getChallenges";
 
 export const mapStateToProps = (state) => ({
   user: state.user,
-  challenges: state.challenges.data,
+  challenges: state.challenges.challengesWithDetails,
   fetching: state.challenges.fetching,
 });
 

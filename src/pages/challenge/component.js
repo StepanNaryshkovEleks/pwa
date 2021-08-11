@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {useHistory, useParams} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Challenge from "../../components/challenge";
@@ -35,9 +35,6 @@ export const ChallengePage = ({
 }) => {
   const challengeId = location.state.challengeId;
   const history = useHistory();
-  const username =
-    challenge &&
-    challenge.challengeState.challengeDefinition.challengeOwnerHandle.assetId.id;
   const participant = challenge
     ? challenge.challengeState.participantArray.find(
         (el) => el.participantId === user.actorHandle.actorId
@@ -68,16 +65,7 @@ export const ChallengePage = ({
         RightComponent={(props) => UserImage({...props, userImg})}
       />
       <main className={styles.main}>
-        {challenge && (
-          <Challenge
-            data={{
-              ...challenge.challengeState.challengeDefinition,
-              challengeId,
-              username,
-            }}
-            challengeIndex={1}
-          />
-        )}
+        {challenge && <Challenge data={challenge.challengeState} challengeIndex={1} />}
         <div
           className={`${styles.actionsBlock} ${isEngaged && styles.engaged} ${
             isDisengaged && styles.disengaged
