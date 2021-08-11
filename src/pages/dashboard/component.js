@@ -42,17 +42,34 @@ export const Dashboard = ({fetchChallenges, challenges, user}) => {
       <Tabs defaultActiveKey={tab} onChange={setTab} centered={true}>
         <TabPane tab="Active Challenges" key="active">
           <section className={styles.challenges}>
-            {challenges &&
-              challenges.map((challenge, i) => (
-                <Challenge
-                  key={i}
-                  data={{...challenge, username: user.actorHandle.assetId.id}}
-                  challengeIndex={i}
-                />
-              ))}
+            {challenges.active.map((challenge, i) => (
+              <Challenge
+                key={
+                  challenge.challengePotential.challengeState.challengeDefinition
+                    .challengeReference.challengeId
+                }
+                data={challenge.challengePotential.challengeState}
+                challengeIndex={i}
+                userId={user.actorHandle.actorId}
+              />
+            ))}
           </section>
         </TabPane>
-        <TabPane tab="Closed Challenges" key="closed" />
+        <TabPane tab="Closed Challenges" key="closed">
+          <section className={styles.challenges}>
+            {challenges.closed.map((challenge, i) => (
+              <Challenge
+                key={
+                  challenge.challengePotential.challengeState.challengeDefinition
+                    .challengeReference.challengeId
+                }
+                data={challenge.challengePotential.challengeState}
+                challengeIndex={i + 5} //to avoid the same sequence of images in both tabs
+                userId={user.actorHandle.actorId}
+              />
+            ))}
+          </section>
+        </TabPane>
       </Tabs>
       <Footer />
     </main>
