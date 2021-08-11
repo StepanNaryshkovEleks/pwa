@@ -224,7 +224,6 @@ export function* getChallenges(props) {
       });
     }
   } catch (error) {
-    console.log(error);
     yield put({
       type: CNST.CHALLENGE.GET_CHALLENGES.ERROR,
     });
@@ -420,18 +419,31 @@ export const engageChallengeRequest = ({
 export function* engageChallenge(props) {
   try {
     const {user} = yield select();
-
+    const {shouldRefreshChallenges = false, ...payload} = props.payload;
     const response = yield call(engageChallengeRequest, {
-      ...props.payload,
+      ...payload,
       securityToken: user.securityToken,
       actorId: user.actorHandle.actorId,
     });
 
     if (isResponseOk(response)) {
-      yield put({
-        type: CNST.CHALLENGE.ENGAGE.SUCCESS,
-        payload: response.data.participant,
-      });
+      if (shouldRefreshChallenges) {
+        yield put({
+          type: CNST.CHALLENGE.GET_CHALLENGES.FETCH,
+          payload: {
+            withDetails: true,
+          },
+        });
+        notification.info({
+          message: "You successfully changed a status of the challenge",
+          placement: "topLeft",
+        });
+      } else {
+        yield put({
+          type: CNST.CHALLENGE.ENGAGE.SUCCESS,
+          payload: response.data.participant,
+        });
+      }
     } else {
       yield put({
         type: CNST.CHALLENGE.ENGAGE.ERROR,
