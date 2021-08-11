@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import styles from "./_.module.css";
 import {Link} from "react-router-dom";
 import videoCamera from "../../images/video-camera-white.svg";
+import checkImg from "../../images/check-white.svg";
+import crossImg from "../../images/cross-white.svg";
 import voteIcon from "../../images/vote-white.svg";
 import voteIconBlack from "../../images/vote.svg";
 import CNST from "../../constants";
@@ -9,7 +11,14 @@ import base64ToHexString from "../../helpers/base64ToHexString";
 import getWInner from "../../helpers/getWInner";
 import userImg from "../../images/user.png";
 
-export const ChallengeDetails = ({data, type, actorId}) => {
+export const ChallengeDetails = ({
+  data,
+  type,
+  actorId,
+  engageChallenge,
+  fetchChallenge,
+}) => {
+  const componentRef = useRef();
   const {
     challengeName,
     challengeDescription,
@@ -27,22 +36,60 @@ export const ChallengeDetails = ({data, type, actorId}) => {
     (el) => el.participantId === actorId
   );
 
+  const onEngage = (participantStatus) => {
+    engageChallenge({
+      shouldRefreshChallenges: true,
+      challengeReference: {challengeId: challengeReference.challengeId},
+      participantRole:
+        data.challengePotential.challengeState.participantArray[indx].participantRole,
+      participantStatus,
+    });
+  };
+
+  useEffect(() => {
+    if (componentRef.current) {
+      componentRef.current.scrollLeft = 120;
+    }
+  }, [componentRef]);
+
   const INVITES_CONTENT = () => (
-    <Link
-      className={styles.challenge}
-      to={{
-        pathname: `${CNST.ROUTES.CHALLENGE}/${base64ToHexString(
-          challengeReference.challengeId
-        )}`,
-        state: {challengeId: challengeReference.challengeId},
-      }}
-    >
-      <header className={styles.header}>
-        <span className={styles.id}>{challengeReference.challengeId}</span>
-      </header>
-      <span className={styles.name}>{challengeName}</span>
-      <span className={styles.description}>{challengeDescription}</span>
-    </Link>
+    <div className={styles.swipeContainer} ref={componentRef}>
+      <div className={styles.swipe}>
+        <button
+          className={`${styles.btn} ${styles.btnAccepted}`}
+          onClick={() => onEngage("ENGAGED")}
+        >
+          <div>
+            <img src={checkImg} alt="" width="31" height="31" />
+            Accept
+          </div>
+        </button>
+        <Link
+          className={`${styles.challenge} ${styles.challengeSwiped}`}
+          to={{
+            pathname: `${CNST.ROUTES.CHALLENGE}/${base64ToHexString(
+              challengeReference.challengeId
+            )}`,
+            state: {challengeId: challengeReference.challengeId},
+          }}
+        >
+          <header className={styles.header}>
+            <span className={styles.id}>{challengeReference.challengeId}</span>
+          </header>
+          <span className={styles.name}>{challengeName}</span>
+          <span className={styles.description}>{challengeDescription}</span>
+        </Link>
+        <button
+          onClick={() => onEngage("DISENGAGED")}
+          className={`${styles.btn} ${styles.btnRejected}`}
+        >
+          <div>
+            <img src={crossImg} alt="" width="31" height="31" />
+            Reject
+          </div>
+        </button>
+      </div>
+    </div>
   );
 
   const REJECTED_CONTENT = () => (

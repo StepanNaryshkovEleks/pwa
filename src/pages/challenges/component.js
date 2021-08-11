@@ -23,6 +23,20 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
+function searchHelper(data, search) {
+  return (
+    data.challengePotential.challengeState.challengeDefinition.challengeName
+      .toLowerCase()
+      .includes(search.toLowerCase()) ||
+    data.challengePotential.challengeState.challengeDefinition.challengeDescription
+      .toLowerCase()
+      .includes(search.toLowerCase()) ||
+    data.challengePotential.challengeState.challengeDefinition.challengeReference.challengeId
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+}
+
 export const Challenges = ({
   fetchChallenges,
   challengesWithDetails,
@@ -55,9 +69,18 @@ export const Challenges = ({
         centered={true}
       >
         <TabPane tab="Created" key={CNST.CHALLENGE.CREATED}>
-          {challengesWithDetails.created.map((challenge, i) => (
-            <ChallengeDetails key={i} data={challenge} actorId={actorId} />
-          ))}
+          {challengesWithDetails.created
+            .filter((challenge) => searchHelper(challenge, search))
+            .map((challenge) => (
+              <ChallengeDetails
+                key={
+                  challenge.challengePotential.challengeState.challengeDefinition
+                    .challengeReference.challengeId
+                }
+                data={challenge}
+                actorId={actorId}
+              />
+            ))}
         </TabPane>
         <TabPane
           tab={
@@ -70,34 +93,49 @@ export const Challenges = ({
           }
           key={CNST.CHALLENGE.INVITES}
         >
-          {challengesWithDetails.invites.map((challenge, i) => (
-            <ChallengeDetails
-              type={CNST.CHALLENGE.INVITES}
-              key={i}
-              data={challenge}
-              actorId={actorId}
-            />
-          ))}
+          {challengesWithDetails.invites
+            .filter((challenge) => searchHelper(challenge, search))
+            .map((challenge) => (
+              <ChallengeDetails
+                type={CNST.CHALLENGE.INVITES}
+                key={
+                  challenge.challengePotential.challengeState.challengeDefinition
+                    .challengeReference.challengeId
+                }
+                data={challenge}
+                actorId={actorId}
+              />
+            ))}
         </TabPane>
         <TabPane tab="Active" key={CNST.CHALLENGE.ACTIVE}>
-          {challengesWithDetails.active.map((challenge, i) => (
-            <ChallengeDetails
-              key={i}
-              data={challenge}
-              type={CNST.CHALLENGE.ACTIVE}
-              actorId={actorId}
-            />
-          ))}
+          {challengesWithDetails.active
+            .filter((challenge) => searchHelper(challenge, search))
+            .map((challenge) => (
+              <ChallengeDetails
+                key={
+                  challenge.challengePotential.challengeState.challengeDefinition
+                    .challengeReference.challengeId
+                }
+                data={challenge}
+                type={CNST.CHALLENGE.ACTIVE}
+                actorId={actorId}
+              />
+            ))}
         </TabPane>
         <TabPane tab="Rejected" key={CNST.CHALLENGE.REJECTED}>
-          {challengesWithDetails.rejected.map((challenge, i) => (
-            <ChallengeDetails
-              key={i}
-              data={challenge}
-              type={CNST.CHALLENGE.REJECTED}
-              actorId={actorId}
-            />
-          ))}
+          {challengesWithDetails.rejected
+            .filter((challenge) => searchHelper(challenge, search))
+            .map((challenge) => (
+              <ChallengeDetails
+                key={
+                  challenge.challengePotential.challengeState.challengeDefinition
+                    .challengeReference.challengeId
+                }
+                data={challenge}
+                type={CNST.CHALLENGE.REJECTED}
+                actorId={actorId}
+              />
+            ))}
         </TabPane>
       </Tabs>
       <Footer />
