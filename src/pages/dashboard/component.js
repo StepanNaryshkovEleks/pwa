@@ -43,15 +43,26 @@ export const Dashboard = ({fetchChallenges, challenges, user}) => {
         <TabPane tab="Active Challenges" key="active">
           <section className={styles.challenges}>
             {challenges.active.map((challenge, i) => (
-              <Challenge
+              <Link
                 key={
                   challenge.challengePotential.challengeState.challengeDefinition
                     .challengeReference.challengeId
                 }
-                data={challenge.challengePotential.challengeState}
-                challengeIndex={i}
-                userId={user.actorHandle.actorId}
-              />
+                to={{
+                  pathname: `${CNST.ROUTES.CHALLENGE_SPECIFICS}${CNST.ROUTES.CHALLENGE_ACTIVITIES_TAB}`,
+                  state: {
+                    challengeId:
+                      challenge.challengePotential.challengeState.challengeDefinition
+                        .challengeReference.challengeId,
+                  },
+                }}
+              >
+                <Challenge
+                  data={challenge.challengePotential.challengeState}
+                  challengeIndex={i}
+                  userId={user.actorHandle.actorId}
+                />
+              </Link>
             ))}
           </section>
         </TabPane>

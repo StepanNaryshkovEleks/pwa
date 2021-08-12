@@ -8,6 +8,7 @@ import Interests from "../pages/interests";
 import SignIn from "../pages/sign-in";
 import SignUp from "../pages/sign-up";
 import Home from "../pages/home";
+import ChallengeSpecifics from "../pages/challenge-specifics";
 import CreatingPassword from "../pages/creating-password";
 import Settings from "../pages/settings";
 import Dashboard from "../pages/dashboard";
@@ -34,6 +35,11 @@ export const AppRouter = () => (
       exact
       path={`${CNST.ROUTES.UPLOAD_MEDIA}/:challengeId`}
       component={UploadMedia}
+    />
+    <IsAuthUser
+      exact
+      path={`${CNST.ROUTES.CHALLENGE_SPECIFICS}/:tabId`}
+      component={ChallengeSpecifics}
     />
     <IsAuthUser exact path={CNST.ROUTES.SETTINGS} component={Settings} />
     <IsAuthUser exact path={CNST.ROUTES.DASHBOARD} component={Dashboard} />
