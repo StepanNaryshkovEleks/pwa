@@ -6,6 +6,7 @@ import {useHistory} from "react-router-dom";
 import {Tabs} from "antd";
 import styles from "./_.module.css";
 import CNST from "../../constants";
+import ChallengeActivities from "../../components/challenge-activities";
 
 const {TabPane} = Tabs;
 
@@ -38,7 +39,7 @@ export const ChallengeSpecifics = ({location}) => {
         defaultActiveKey={location.state.defaultTab}
       >
         <TabPane tab="Activities" key={CNST.ROUTES.CHALLENGE_ACTIVITIES_TAB}>
-          Activities
+          <ChallengeActivities />
         </TabPane>
         <TabPane tab="Challengers" key={CNST.ROUTES.CHALLENGE_CHALLENGERS_TAB}>
           Challengers

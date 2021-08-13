@@ -1,5 +1,5 @@
 import React from "react";
 
 export const ChallengeActivities = () => {
-  return <span>LOL</span>;
+  return <span>ChallengeActivities</span>;
 };
