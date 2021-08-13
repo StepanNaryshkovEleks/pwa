@@ -9,3 +9,7 @@ main.dashboard :global(.ant-tabs-nav) {
 .challenges {
   background-color: #f5f5f5;
 }
+
+.link {
+  display: block;
+}

@@ -38,7 +38,7 @@ export const AppRouter = () => (
     />
     <IsAuthUser
       exact
-      path={`${CNST.ROUTES.CHALLENGE_SPECIFICS}/:tabId`}
+      path={CNST.ROUTES.CHALLENGE_SPECIFICS}
       component={ChallengeSpecifics}
     />
     <IsAuthUser exact path={CNST.ROUTES.SETTINGS} component={Settings} />

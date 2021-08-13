@@ -33,27 +33,25 @@ export const Challenge = ({data, challengeIndex, userId}) => {
         <img src={dotsIcon} alt="More" />
       </header>
       <img src={challengeImg} alt="Challenge" className={styles.challengeImg} />
-      <Link to={CNST.ROUTES.HOME}>
-        <div className={styles.footer}>
-          <div className={styles.votesContainer}>
-            <span className={styles.id}>{challengeReference.challengeId}</span>
-            {winnerName && (
-              <>
-                <img src={userImg} alt="Winner" className={styles.winnerImg} />
-                <span className={styles.winnerName}>{winnerName} won the challenge</span>
-              </>
-            )}
-            <span className={styles.votes}>0 votes</span>
-            {!winnerName && isObserver && (
-              <button className={styles.button}>
-                <img src={voteIcon} alt="Vote" />
-              </button>
-            )}
-          </div>
-          <span className={styles.name}>{challengeName}</span>
-          <span className={styles.description}>{challengeDescription}</span>
+      <div className={styles.footer}>
+        <div className={styles.votesContainer}>
+          <span className={styles.id}>{challengeReference.challengeId}</span>
+          {winnerName && (
+            <>
+              <img src={userImg} alt="Winner" className={styles.winnerImg} />
+              <span className={styles.winnerName}>{winnerName} won the challenge</span>
+            </>
+          )}
+          <span className={styles.votes}>0 votes</span>
+          {!winnerName && isObserver && (
+            <button className={styles.button}>
+              <img src={voteIcon} alt="Vote" />
+            </button>
+          )}
         </div>
-      </Link>
+        <span className={styles.name}>{challengeName}</span>
+        <span className={styles.description}>{challengeDescription}</span>
+      </div>
     </section>
   );
 };
