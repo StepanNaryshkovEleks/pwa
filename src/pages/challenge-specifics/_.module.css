@@ -15,6 +15,10 @@
   display: none !important;
 }
 
+.challenges .tabs :global(.ant-tabs-nav) {
+  margin-bottom: 0;
+}
+
 .goBack {
   border: 0;
   background-color: transparent;

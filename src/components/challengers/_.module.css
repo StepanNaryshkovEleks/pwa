@@ -1,0 +1,63 @@
+.challenger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 15px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.userImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.challengerInfo {
+  display: flex;
+  flex-direction: column;
+  margin-right: auto;
+  margin-left: 12px;
+}
+
+.userName {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+.votes {
+  font-size: 12px;
+  font-weight: lighter;
+  line-height: 14px;
+}
+
+.mediaContainer {
+  padding: 1px;
+  background: linear-gradient(#006dff, #00efff);
+  border-radius: 3px;
+  display: inline-flex;
+  margin-right: 20px;
+}
+
+.media {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.main :global(.ant-btn) {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.voteIcon {
+  width: 15px;
+  height: 15px;
+}
+
+.voteWording {
+  font-size: 13px;
+  margin-left: 9px;
+}

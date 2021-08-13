@@ -34,6 +34,15 @@ export default function reducer(state = {}, action) {
         },
       };
     }
+    case CNST.CHALLENGE.GET_MEDIA_FILES.SUCCESS: {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          mediaFiles: action.payload,
+        },
+      };
+    }
     case CNST.CHALLENGE.GET_CHALLENGE.ERROR: {
       return {
         ...state,

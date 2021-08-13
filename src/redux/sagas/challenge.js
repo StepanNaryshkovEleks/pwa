@@ -491,7 +491,6 @@ export function* voteChallenge(props) {
     });
 
     if (isResponseOk(response)) {
-      console.log("voteChallenge");
     } else {
       yield put({
         type: CNST.CHALLENGE.VOTE_CHALLENGE.ERROR,
@@ -500,6 +499,116 @@ export function* voteChallenge(props) {
   } catch (error) {
     yield put({
       type: CNST.CHALLENGE.VOTE_CHALLENGE.ERROR,
+    });
+  }
+}
+
+export const getMediaDetailsRequest = ({
+  securityToken,
+  challengeId,
+  mediaOwnerId,
+  mediaId,
+  challengeOwnerId,
+}) => {
+  const reqPayload = {
+    jsonType: "vee.QueryMediaHandleForm",
+    actorHandle: {actorId: mediaOwnerId},
+    challengeHandle: {challengeId},
+    mediaId: {id: mediaId},
+    queryActorHandle: {actorId: challengeOwnerId},
+  };
+
+  return axios
+    .put("rs/application/form/vee", reqPayload, {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "realm-token": getToken(),
+        "security-token": securityToken,
+      },
+    })
+    .catch((error) => {
+      throw error.response.data;
+    });
+};
+
+export const getMediaRequest = ({
+  securityToken,
+  challengeId,
+  mediaOwnerId,
+  mediaId,
+  mediaExtension,
+}) => {
+  const challengeIdConverted = base64ToHexString(challengeId);
+  const mediaOwnerIdConverted = base64ToHexString(mediaOwnerId);
+
+  return axios
+    .get(
+      `rs/application/file/local/vee/media/${challengeIdConverted}/${mediaOwnerIdConverted}/${mediaId}${mediaExtension}`,
+      {
+        responseType: "blob",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "realm-token": getToken(),
+          "security-token": securityToken,
+        },
+      }
+    )
+    .catch((error) => {
+      throw error.response.data;
+    });
+};
+
+export function* getMediaFiles(props) {
+  const {user} = yield select();
+
+  let mediaResponse = yield all(
+    props.payload.mediaDetails.map((media) => {
+      return (function* () {
+        try {
+          const details = yield call(getMediaDetailsRequest, {
+            ...props.payload,
+            securityToken: user.securityToken,
+            mediaOwnerId: media.participantId,
+            mediaId: media.striveMediaId.id,
+          });
+          if (isResponseOk(details)) {
+            try {
+              return {
+                data: yield call(getMediaRequest, {
+                  ...props.payload,
+                  securityToken: user.securityToken,
+                  mediaOwnerId: media.participantId,
+                  mediaId: media.striveMediaId.id,
+                  mediaExtension: details.data.mediaHandle.mediaExtension,
+                }),
+                details,
+              };
+            } catch (e) {
+              yield put({
+                type: CNST.CHALLENGE.GET_MEDIA_FILES.ERROR,
+              });
+            }
+          }
+        } catch (e) {
+          yield put({
+            type: CNST.CHALLENGE.GET_MEDIA_FILES.ERROR,
+          });
+        }
+      })();
+    })
+  );
+
+  mediaResponse = mediaResponse
+    .filter((data) => data.data.status === 200)
+    .map((data) => ({
+      details: data.details.data,
+      mediaFile: data.data.data,
+    }));
+
+  if (mediaResponse.length > 0) {
+    yield put({
+      type: CNST.CHALLENGE.GET_MEDIA_FILES.SUCCESS,
+      payload: mediaResponse,
     });
   }
 }
