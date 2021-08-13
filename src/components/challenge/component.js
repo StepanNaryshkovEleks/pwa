@@ -16,6 +16,7 @@ export const Challenge = ({data, challengeIndex, userId}) => {
     challengeOwnerHandle,
     challengeReference,
   } = data.challengeDefinition;
+
   const challengeImg = getRandomImage(challengeIndex);
   const winnerName = getWInner(data);
   const isObserver = data.participantArray.find(
@@ -42,7 +43,9 @@ export const Challenge = ({data, challengeIndex, userId}) => {
               <span className={styles.winnerName}>{winnerName} won the challenge</span>
             </>
           )}
-          <span className={styles.votes}>0 votes</span>
+          <span className={styles.votes}>
+            {data.voteParticipantEntryArray.length} votes
+          </span>
           {!winnerName && isObserver && (
             <button className={styles.button}>
               <img src={voteIcon} alt="Vote" />

@@ -452,3 +452,54 @@ export function* engageChallenge(props) {
     });
   }
 }
+
+export const voteChallengeRequest = ({
+  securityToken,
+  actorId,
+  challengeReference,
+  voteEntryId,
+}) => {
+  const reqPayload = {
+    jsonType: "vee.UpdateChallengeParticipationForm",
+    challengeReference,
+    participantEntry: {
+      participantId: actorId,
+      voteEntryId,
+    },
+  };
+
+  return axios
+    .put("rs/application/form/vee", reqPayload, {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "realm-token": getToken(),
+        "security-token": securityToken,
+      },
+    })
+    .catch((error) => {
+      throw error.response.data;
+    });
+};
+
+export function* voteChallenge(props) {
+  try {
+    const {user} = yield select();
+    const response = yield call(voteChallengeRequest, {
+      ...props.payload,
+      securityToken: user.securityToken,
+      actorId: user.actorHandle.actorId,
+    });
+
+    if (isResponseOk(response)) {
+      console.log("voteChallenge");
+    } else {
+      yield put({
+        type: CNST.CHALLENGE.VOTE_CHALLENGE.ERROR,
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: CNST.CHALLENGE.VOTE_CHALLENGE.ERROR,
+    });
+  }
+}
