@@ -121,8 +121,23 @@ export const ChallengeDetails = ({data, type, actorId, engageChallenge}) => {
         {indx >= 0 &&
           indxInVoting === -1 &&
           data.challengePotential.challengeState.participantArray[indx]
-            .participantRole === "OBSERVER" && (
-            <Link to={"/"} className="link link--primary link--small">
+            .participantRole === "OBSERVER" &&
+          data.challengePotential.challengeState.striveParticipantEntryArray.length >
+            0 && (
+            <Link
+              to={{
+                pathname: CNST.ROUTES.CHALLENGE_SPECIFICS,
+                state: {
+                  challengeId: challengeReference.challengeId,
+                  defaultTab: CNST.ROUTES.CHALLENGE_ACTIVITIES_TAB,
+                  isOwner: false,
+                  role:
+                    data.challengePotential.challengeState.participantArray[indx]
+                      .participantRole,
+                },
+              }}
+              className="link link--primary link--small"
+            >
               <img className={styles.btnImg} src={voteIcon} />
               Vote
             </Link>
@@ -130,7 +145,9 @@ export const ChallengeDetails = ({data, type, actorId, engageChallenge}) => {
         {indx >= 0 &&
           indxInVoting !== -1 &&
           data.challengePotential.challengeState.participantArray[indx]
-            .participantRole === "OBSERVER" && (
+            .participantRole === "OBSERVER" &&
+          data.challengePotential.challengeState.striveParticipantEntryArray.length >
+            0 && (
             <span className="link link--secondary link--bordered link--small">
               <img className={styles.btnImg} src={voteIconBlack} />
               Voted
