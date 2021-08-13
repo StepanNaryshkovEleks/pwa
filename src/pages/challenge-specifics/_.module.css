@@ -1,0 +1,34 @@
+.challenges :global(.ant-tabs-tab) {
+  width: calc(100vw / 3);
+}
+
+.challenges :global(.ant-tabs) > :global(.ant-tabs-nav) :global(.ant-tabs-nav-list),
+.challenges
+  :global(.ant-tabs)
+  > div
+  > :global(.ant-tabs-nav)
+  :global(.ant-tabs-nav-list) {
+  width: auto;
+}
+
+.challenges .tabs :global(.ant-tabs-nav-operations) {
+  display: none !important;
+}
+
+.goBack {
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+}
+
+.tabsOwner :global(.ant-tabs-tab:first-child) {
+  order: 2;
+}
+
+.tabsOwner :global(.ant-tabs-tab:last-child) {
+  order: 1;
+}
+
+.tabsOwner :global(.ant-tabs-tab:nth-of-type(2)) {
+  order: 3;
+}

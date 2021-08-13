@@ -42,17 +42,37 @@ export const Dashboard = ({fetchChallenges, challenges, user}) => {
       <Tabs defaultActiveKey={tab} onChange={setTab} centered={true}>
         <TabPane tab="Active Challenges" key="active">
           <section className={styles.challenges}>
-            {challenges.active.map((challenge, i) => (
-              <Challenge
-                key={
-                  challenge.challengePotential.challengeState.challengeDefinition
-                    .challengeReference.challengeId
-                }
-                data={challenge.challengePotential.challengeState}
-                challengeIndex={i}
-                userId={user.actorHandle.actorId}
-              />
-            ))}
+            {challenges.active.map((challenge, i) => {
+              const participant = challenge.challengePotential.challengeState.participantArray.find(
+                (el) => el.participantId === user.actorHandle.actorId
+              );
+              return (
+                <Link
+                  key={
+                    challenge.challengePotential.challengeState.challengeDefinition
+                      .challengeReference.challengeId
+                  }
+                  className={styles.link}
+                  to={{
+                    pathname: CNST.ROUTES.CHALLENGE_SPECIFICS,
+                    state: {
+                      defaultTab: CNST.ROUTES.CHALLENGE_ACTIVITIES_TAB,
+                      role: participant.participantRole,
+                      isOwner: false,
+                      challengeId:
+                        challenge.challengePotential.challengeState.challengeDefinition
+                          .challengeReference.challengeId,
+                    },
+                  }}
+                >
+                  <Challenge
+                    data={challenge.challengePotential.challengeState}
+                    challengeIndex={i}
+                    userId={user.actorHandle.actorId}
+                  />
+                </Link>
+              );
+            })}
           </section>
         </TabPane>
         <TabPane tab="Closed Challenges" key="closed">

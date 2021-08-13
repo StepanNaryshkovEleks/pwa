@@ -11,13 +11,7 @@ import base64ToHexString from "../../helpers/base64ToHexString";
 import getWInner from "../../helpers/getWInner";
 import userImg from "../../images/user.png";
 
-export const ChallengeDetails = ({
-  data,
-  type,
-  actorId,
-  engageChallenge,
-  fetchChallenge,
-}) => {
+export const ChallengeDetails = ({data, type, actorId, engageChallenge}) => {
   const componentRef = useRef();
   const {
     challengeName,
@@ -151,7 +145,20 @@ export const ChallengeDetails = ({
   const CREATED_CONTENT = () => {
     const winnerName = getWInner(data.challengePotential.challengeState);
     return (
-      <span className={styles.challenge}>
+      <Link
+        className={styles.challenge}
+        to={{
+          pathname: CNST.ROUTES.CHALLENGE_SPECIFICS,
+          state: {
+            defaultTab: CNST.ROUTES.CHALLENGE_INFORMATION_TAB,
+            role:
+              data.challengePotential.challengeState.participantArray[indx]
+                ?.participantRole,
+            isOwner: true,
+            challengeId: challengeReference.challengeId,
+          },
+        }}
+      >
         <header className={styles.header}>
           <span className={styles.id}>{challengeReference.challengeId} (Created)</span>
           {winnerName && <span className={styles.endeded}>Ended</span>}
@@ -164,7 +171,7 @@ export const ChallengeDetails = ({
             <span className={styles.winnerName}>{winnerName} won the challenge</span>
           </div>
         )}
-      </span>
+      </Link>
     );
   };
 
