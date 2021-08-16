@@ -7,6 +7,7 @@ import {Tabs} from "antd";
 import styles from "./_.module.css";
 import CNST from "../../constants";
 import ChallengeActivities from "../../components/challenge-activities";
+import Challengers from "../../components/challengers";
 
 const {TabPane} = Tabs;
 
@@ -42,7 +43,7 @@ export const ChallengeSpecifics = ({location}) => {
           <ChallengeActivities />
         </TabPane>
         <TabPane tab="Challengers" key={CNST.ROUTES.CHALLENGE_CHALLENGERS_TAB}>
-          Challengers
+          <Challengers challengeId={challengeId} />
         </TabPane>
         <TabPane tab="Information" key={CNST.ROUTES.CHALLENGE_INFORMATION_TAB}>
           Information

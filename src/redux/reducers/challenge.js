@@ -2,7 +2,8 @@ import CNST from "../../constants";
 
 export default function reducer(state = {}, action) {
   switch (action.type) {
-    case CNST.CHALLENGE.GET_CHALLENGE.FETCH: {
+    case CNST.CHALLENGE.GET_CHALLENGE.FETCH:
+    case CNST.CHALLENGE.GET_MEDIA_FILES.FETCH: {
       return {
         ...state,
         fetching: true,
@@ -12,10 +13,7 @@ export default function reducer(state = {}, action) {
     case CNST.CHALLENGE.GET_CHALLENGE.SUCCESS: {
       return {
         ...state,
-        data: {
-          ...state.data,
-          ...action.payload,
-        },
+        data: action.payload,
         fetching: false,
         error: false,
       };
@@ -34,7 +32,18 @@ export default function reducer(state = {}, action) {
         },
       };
     }
-    case CNST.CHALLENGE.GET_CHALLENGE.ERROR: {
+    case CNST.CHALLENGE.GET_MEDIA_FILES.SUCCESS: {
+      return {
+        ...state,
+        fetching: false,
+        data: {
+          ...state.data,
+          mediaFiles: action.payload,
+        },
+      };
+    }
+    case CNST.CHALLENGE.GET_CHALLENGE.ERROR:
+    case CNST.CHALLENGE.GET_MEDIA_FILES.ERROR: {
       return {
         ...state,
         error: true,
