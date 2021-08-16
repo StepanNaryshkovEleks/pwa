@@ -24,18 +24,6 @@ export default function reducer(state = challenges, action) {
         error: false,
       };
     }
-    case CNST.CHALLENGE.CREATE.SUCCESS: {
-      return {
-        ...state,
-        data: [
-          ...state.data,
-          {
-            ...action.payload,
-            challengeId: action.payload.challengeReference.challengeId,
-          },
-        ],
-      };
-    }
     case CNST.CHALLENGE.GET_CHALLENGES.ERROR: {
       return {
         ...state,

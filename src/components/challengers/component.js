@@ -1,12 +1,19 @@
 import React, {useEffect, useState} from "react";
 import Search from "../../components/search";
 import {Button} from "antd";
+import Spinner from "../spinner";
 import styles from "./_.module.css";
 
 import voteIcon from "../../images/vote.svg";
 import userImg from "../../images/user.png";
 
-export const Challengers = ({fetchChallenge, challenge, getMediaFiles, challengeId}) => {
+export const Challengers = ({
+  fetchChallenge,
+  challenge,
+  getMediaFiles,
+  challengeId,
+  isFetching,
+}) => {
   const [search, setSearch] = useState("");
 
   const mediaDetails = challenge?.challengeState.striveParticipantEntryArray;
@@ -34,6 +41,7 @@ export const Challengers = ({fetchChallenge, challenge, getMediaFiles, challenge
 
   return (
     <main className={styles.main}>
+      {isFetching && <Spinner />}
       <Search value={search} setValue={setSearch} />
       <div className={styles.challengers}>
         {mediaFiles &&
