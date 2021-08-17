@@ -5,5 +5,5 @@ import axios from "axios";
 //   "GET, PUT, POST, DELETE, OPTIONS";
 axios.defaults.baseURL =
   window.location.hostname !== "localhost"
-    ? "https://api.bucha.click:35267"
+    ? "https://api.bucha.click:35215"
     : "http://localhost:8010/proxy";
