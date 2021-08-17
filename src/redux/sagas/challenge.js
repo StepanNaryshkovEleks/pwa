@@ -133,7 +133,7 @@ export const getChallengesRequest = ({securityToken, actorId}) => {
     });
 };
 
-export function* getChallenges(props) {
+export function* getChallenges() {
   try {
     const {user} = yield select();
     const response = yield call(getChallengesRequest, {
@@ -484,6 +484,8 @@ export const voteChallengeRequest = ({
 export function* voteChallenge(props) {
   try {
     const {user} = yield select();
+    console.log("props", props);
+    return;
     const response = yield call(voteChallengeRequest, {
       ...props.payload,
       securityToken: user.securityToken,
@@ -599,7 +601,7 @@ export function* getMediaFiles(props) {
   );
 
   mediaResponse = mediaResponse
-    .filter((data) => data.data.status === 200)
+    .filter((data) => data?.data.status === 200)
     .map((data) => ({
       details: data.details.data,
       mediaFile: data.data.data,

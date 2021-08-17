@@ -20,10 +20,11 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
-export const ChallengeSpecifics = ({location}) => {
+export const ChallengeSpecifics = ({location, voteChallenge, user}) => {
   const history = useHistory();
   const challengeId = location.state.challengeId;
   const isOwner = location.state.isOwner;
+  const role = location.state.role;
   const title = isOwner ? "Created Challenge" : "Vee Challenge";
 
   return (
@@ -43,7 +44,13 @@ export const ChallengeSpecifics = ({location}) => {
           <ChallengeActivities />
         </TabPane>
         <TabPane tab="Challengers" key={CNST.ROUTES.CHALLENGE_CHALLENGERS_TAB}>
-          <Challengers challengeId={challengeId} />
+          <Challengers
+            challengeId={challengeId}
+            actorId={user.actorHandle.actorId}
+            isOwner={isOwner}
+            role={role}
+            voteChallenge={voteChallenge}
+          />
         </TabPane>
         <TabPane tab="Information" key={CNST.ROUTES.CHALLENGE_INFORMATION_TAB}>
           Information

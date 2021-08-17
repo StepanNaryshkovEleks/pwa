@@ -13,9 +13,13 @@ export const Challengers = ({
   getMediaFiles,
   challengeId,
   isFetching,
+  isOwner,
+  role,
+  voteChallenge,
+  actorId,
 }) => {
   const [search, setSearch] = useState("");
-
+  console.log(role);
   const mediaDetails = challenge?.challengeState.striveParticipantEntryArray;
   const challengeOwnerId =
     challenge?.challengeState.challengeDefinition.challengeOwnerHandle.actorId;
@@ -38,7 +42,7 @@ export const Challengers = ({
       });
     }
   }, [challengeId, getMediaFiles, mediaDetails, challengeOwnerId]);
-
+  console.log(mediaFiles);
   return (
     <main className={styles.main}>
       {isFetching && <Spinner />}
@@ -62,10 +66,18 @@ export const Challengers = ({
                   muted
                 />
               </div>
-              <Button>
-                <img src={voteIcon} alt="Vote" className={styles.voteIcon} />
-                <span className={styles.voteWording}>Vote</span>
-              </Button>
+              {!isOwner && role !== "CHALLENGER" && (
+                <Button
+                  onClick={() =>
+                    voteChallenge({
+                      actorId,
+                    })
+                  }
+                >
+                  <img src={voteIcon} alt="Vote" className={styles.voteIcon} />
+                  <span className={styles.voteWording}>Vote</span>
+                </Button>
+              )}
             </div>
           ))}
       </div>
