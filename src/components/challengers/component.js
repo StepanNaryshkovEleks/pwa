@@ -42,7 +42,9 @@ export const Challengers = ({
       });
     }
   }, [challengeId, getMediaFiles, mediaDetails, challengeOwnerId]);
-  console.log(mediaFiles);
+  // console.log(mediaFiles);
+  // console.log(mediaDetails);
+  // console.log(challenge);
   return (
     <main className={styles.main}>
       {isFetching && <Spinner />}
@@ -71,6 +73,8 @@ export const Challengers = ({
                   onClick={() =>
                     voteChallenge({
                       actorId,
+                      challengeReference: {challengeId},
+                      voteEntryId: 1,
                     })
                   }
                 >
