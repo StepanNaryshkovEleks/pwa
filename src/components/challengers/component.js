@@ -11,6 +11,7 @@ import votedIcon from "../../images/voted.svg";
 import addUser from "../../images/add-user-white.svg";
 import userImg from "../../images/user.png";
 import {EllipsisOutlined} from "@ant-design/icons";
+import getWInner from "../../helpers/getWInner";
 
 export const Challengers = ({
   fetchChallenge,
@@ -23,6 +24,7 @@ export const Challengers = ({
   voteChallenge,
   actorId,
   shouldFetchChallenge,
+  submitChallengeWinner,
 }) => {
   const [search, setSearch] = useState("");
   const [activeRow, setActiveRow] = useState("");
@@ -57,6 +59,8 @@ export const Challengers = ({
       });
     }
   }, [challengeId, getMediaFiles, mediaDetails, challengeOwnerId]);
+  const winnerName = getWInner(challenge.challengeState);
+  console.log(winnerName);
 
   return (
     <main className={styles.main}>
@@ -65,10 +69,10 @@ export const Challengers = ({
       <div className={styles.challengers}>
         {mediaFiles &&
           mediaFiles.map((file) => {
-            const voteEntryId = findEntryId(mediaDetails, file.details.mediaId.id);
+            const entryId = findEntryId(mediaDetails, file.details.mediaId.id);
             const shouldBlockVote = isVoted(
               challenge.challengeState.voteParticipantEntryArray,
-              voteEntryId,
+              entryId,
               actorId
             );
             const isActive = file.details.mediaId.id === activeRow;
@@ -120,7 +124,7 @@ export const Challengers = ({
                           ? voteChallenge({
                               actorId,
                               challengeReference: {challengeId},
-                              voteEntryId,
+                              voteEntryId: entryId,
                               shouldFetchChallenge: true,
                             })
                           : {}
@@ -136,14 +140,25 @@ export const Challengers = ({
                       </span>
                     </Button>
                   )}
-                  {isOwner && (
-                    <span onClick={() => setActiveRow(file.details.mediaId.id)}>
-                      <EllipsisOutlined />
-                    </span>
-                  )}
+                  {isOwner &&
+                    !winnerName(
+                      <span onClick={() => setActiveRow(file.details.mediaId.id)}>
+                        <EllipsisOutlined />
+                      </span>
+                    )}
                 </div>
                 {isActive && (
-                  <Button type="primary" className={styles.winnerBtn}>
+                  <Button
+                    type="primary"
+                    className={styles.winnerBtn}
+                    onClick={() =>
+                      submitChallengeWinner({
+                        selectEntryId: {
+                          id: entryId,
+                        },
+                      })
+                    }
+                  >
                     <img src={addUser} />
                     Confirm the Winner
                   </Button>

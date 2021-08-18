@@ -354,6 +354,64 @@ export const uploadMediaRequest = ({
     });
 };
 
+export const submitChallengeWinnerRequest = ({
+  securityToken,
+  challengeId,
+  participantId,
+  selectEntryId,
+}) => {
+  const reqPayload = {
+    jsonType: "vee.UpdateChallengeParticipationForm",
+    challengeReference: {
+      challengeId,
+    },
+    participantEntry: {
+      participantId,
+      selectEntryId: {
+        id: selectEntryId,
+      },
+    },
+  };
+
+  return axios
+    .put(`rs/application/form/vee`, reqPayload, {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        "realm-token": getToken(),
+        "security-token": securityToken,
+      },
+    })
+    .catch((error) => {
+      throw error.response.data;
+    });
+};
+
+export function* submitChallengeWinner(props) {
+  try {
+    console.log(props);
+    return;
+    const {user} = yield select();
+    const {shouldRefreshChallenges = false, ...payload} = props.payload;
+    const response = yield call(submitChallengeWinnerRequest, {
+      ...payload,
+      securityToken: user.securityToken,
+      actorId: user.actorHandle.actorId,
+    });
+
+    if (isResponseOk(response)) {
+    } else {
+      yield put({
+        type: CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.ERROR,
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.ERROR,
+    });
+  }
+}
+
 export function* uploadMedia(props) {
   try {
     const {user} = yield select();
