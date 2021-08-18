@@ -6,6 +6,7 @@ import {getMediaFilesAction} from "../../redux/actions/challenge/getMedia";
 export const mapStateToProps = (state) => ({
   user: state.user,
   challenge: state.challenge.data,
+  shouldFetchChallenge: state.challenge.shouldFetchChallenge,
   isFetching: state.challenge.fetching,
 });
 

@@ -3,10 +3,20 @@ import CNST from "../../constants";
 export default function reducer(state = {}, action) {
   switch (action.type) {
     case CNST.CHALLENGE.GET_CHALLENGE.FETCH:
+    case CNST.CHALLENGE.VOTE_CHALLENGE.FETCH:
     case CNST.CHALLENGE.GET_MEDIA_FILES.FETCH: {
       return {
         ...state,
         fetching: true,
+        error: false,
+        shouldFetchChallenge: false,
+      };
+    }
+    case CNST.CHALLENGE.VOTE_CHALLENGE.SUCCESS: {
+      return {
+        ...state,
+        shouldFetchChallenge: action.payload,
+        fetching: false,
         error: false,
       };
     }
@@ -42,12 +52,14 @@ export default function reducer(state = {}, action) {
         },
       };
     }
+    case CNST.CHALLENGE.VOTE_CHALLENGE.ERROR:
     case CNST.CHALLENGE.GET_CHALLENGE.ERROR:
     case CNST.CHALLENGE.GET_MEDIA_FILES.ERROR: {
       return {
         ...state,
         error: true,
         fetching: false,
+        shouldFetchChallenge: false,
       };
     }
     default:
