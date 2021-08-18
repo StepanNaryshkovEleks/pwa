@@ -6,6 +6,7 @@ import {getToken} from "../../helpers/local-storage-service";
 import getMediaId from "../../helpers/getMediaId";
 import {notification} from "antd";
 import base64ToHexString from "../../helpers/base64ToHexString";
+import FileType from "file-type/browser";
 
 export const createChallengeRequest = ({
   name,
@@ -577,22 +578,16 @@ export function* getMediaFiles(props) {
             mediaId: media.striveMediaId.id,
           });
           if (isResponseOk(details)) {
-            try {
-              return {
-                data: yield call(getMediaRequest, {
-                  ...props.payload,
-                  securityToken: user.securityToken,
-                  mediaOwnerId: media.participantId,
-                  mediaId: media.striveMediaId.id,
-                  mediaExtension: details.data.mediaHandle.mediaExtension,
-                }),
-                details,
-              };
-            } catch (e) {
-              yield put({
-                type: CNST.CHALLENGE.GET_MEDIA_FILES.ERROR,
-              });
-            }
+            return {
+              data: yield call(getMediaRequest, {
+                ...props.payload,
+                securityToken: user.securityToken,
+                mediaOwnerId: media.participantId,
+                mediaId: media.striveMediaId.id,
+                mediaExtension: details.data.mediaHandle.mediaExtension,
+              }),
+              details,
+            };
           }
         } catch (e) {
           yield put({
@@ -603,12 +598,17 @@ export function* getMediaFiles(props) {
     })
   );
 
-  mediaResponse = mediaResponse
-    .filter((data) => data?.data.status === 200)
-    .map((data) => ({
-      details: data.details.data,
-      mediaFile: data.data.data,
-    }));
+  mediaResponse = yield all(
+    mediaResponse
+      .filter((data) => data.data.status === 200)
+      .map(function* (data) {
+        return {
+          details: data.details.data,
+          mediaFile: data.data.data,
+          mediaType: yield call(FileType.fromBlob, data.data.data),
+        };
+      })
+  );
 
   if (mediaResponse.length > 0) {
     yield put({

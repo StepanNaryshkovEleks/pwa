@@ -88,12 +88,22 @@ export const Challengers = ({
                     shouldBlockVote ? styles.mediaContainerSmall : ""
                   }`}
                 >
-                  <video
-                    className={styles.media}
-                    id="videoId"
-                    src={URL.createObjectURL(file.mediaFile)}
-                    muted
-                  />
+                  {file.mediaType.mime.includes("video") ? (
+                    <video
+                      playsInline
+                      className={styles.media}
+                      id="videoId"
+                      src={URL.createObjectURL(file.mediaFile)}
+                      muted
+                      type="video/mp4"
+                    />
+                  ) : (
+                    <img
+                      className={styles.media}
+                      src={URL.createObjectURL(file.mediaFile)}
+                      alt="Content"
+                    />
+                  )}
                 </div>
                 {!isOwner && role !== "CHALLENGER" && (
                   <Button
