@@ -15,7 +15,6 @@ export const Challengers = ({
   isFetching,
 }) => {
   const [search, setSearch] = useState("");
-
   const mediaDetails = challenge?.challengeState.striveParticipantEntryArray;
   const challengeOwnerId =
     challenge?.challengeState.challengeDefinition.challengeOwnerHandle.actorId;
@@ -55,12 +54,22 @@ export const Challengers = ({
                 <span className={styles.votes}>128,671 votes</span>
               </div>
               <div className={styles.mediaContainer}>
-                <video
-                  className={styles.media}
-                  id="videoId"
-                  src={URL.createObjectURL(file.mediaFile)}
-                  muted
-                />
+                {file.mediaType.mime.includes("video") ? (
+                  <video
+                    playsInline
+                    className={styles.media}
+                    id="videoId"
+                    src={URL.createObjectURL(file.mediaFile)}
+                    muted
+                    type="video/mp4"
+                  />
+                ) : (
+                  <img
+                    className={styles.media}
+                    src={URL.createObjectURL(file.mediaFile)}
+                    alt="Content"
+                  />
+                )}
               </div>
               <Button>
                 <img src={voteIcon} alt="Vote" className={styles.voteIcon} />
