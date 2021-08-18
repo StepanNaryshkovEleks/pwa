@@ -600,7 +600,7 @@ export function* getMediaFiles(props) {
 
   mediaResponse = yield all(
     mediaResponse
-      .filter((data) => data.data.status === 200)
+      .filter((data) => data?.data?.status === 200)
       .map(function* (data) {
         return {
           details: data.details.data,

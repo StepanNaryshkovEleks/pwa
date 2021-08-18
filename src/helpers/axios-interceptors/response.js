@@ -21,7 +21,7 @@ axios.interceptors.response.use(
       // we call het profile each time after refreshing the page to check if user can log in
       // so, in this case it is not necessary to show an error
       if (error.response.config.data !== '{"jsonType":"vee.FetchIdentificationForm"}') {
-        openNotificationWithIcon(error.response.status);
+        // openNotificationWithIcon(error.response.status);
       } else {
         store.dispatch(signOutAction());
       }

@@ -8,7 +8,9 @@ import getVotes from "./../../helpers/getVotes";
 import isVoted from "./../../helpers/isVoted";
 import voteIcon from "../../images/vote.svg";
 import votedIcon from "../../images/voted.svg";
+import addUser from "../../images/add-user-white.svg";
 import userImg from "../../images/user.png";
+import {EllipsisOutlined} from "@ant-design/icons";
 
 export const Challengers = ({
   fetchChallenge,
@@ -23,6 +25,7 @@ export const Challengers = ({
   shouldFetchChallenge,
 }) => {
   const [search, setSearch] = useState("");
+  const [activeRow, setActiveRow] = useState("");
 
   const mediaDetails = challenge?.challengeState.striveParticipantEntryArray;
   const challengeOwnerId =
@@ -68,64 +71,81 @@ export const Challengers = ({
               voteEntryId,
               actorId
             );
+            const isActive = file.details.mediaId.id === activeRow;
             return (
-              <div className={styles.challenger} key={file.details.mediaId.id}>
-                <img src={userImg} alt="User" className={styles.userImg} />
-                <div className={styles.challengerInfo}>
-                  <span className={styles.userName}>
-                    {file.details.actorHandle.assetId.id}
-                  </span>
-                  <span className={styles.votes}>
-                    {getVotes(
-                      challenge.challengeState.striveParticipantEntryArray,
-                      file.details.mediaId.id
-                    )}{" "}
-                    votes
-                  </span>
-                </div>
-                <div
-                  className={`${styles.mediaContainer} ${
-                    shouldBlockVote ? styles.mediaContainerSmall : ""
-                  }`}
-                >
-                  {file.mediaType.mime.includes("video") ? (
-                    <video
-                      playsInline
-                      className={styles.media}
-                      id="videoId"
-                      src={URL.createObjectURL(file.mediaFile)}
-                      muted
-                      type="video/mp4"
-                    />
-                  ) : (
-                    <img
-                      className={styles.media}
-                      src={URL.createObjectURL(file.mediaFile)}
-                      alt="Content"
-                    />
+              <div
+                className={`${styles.wrap} ${isActive ? styles.wrapActive : ""}`}
+                key={file.details.mediaId.id}
+              >
+                <div className={styles.challenger}>
+                  <img src={userImg} alt="User" className={styles.userImg} />
+                  <div className={styles.challengerInfo}>
+                    <span className={styles.userName}>
+                      {file.details.actorHandle.assetId.id}
+                    </span>
+                    <span className={styles.votes}>
+                      {getVotes(
+                        challenge.challengeState.striveParticipantEntryArray,
+                        file.details.mediaId.id
+                      )}{" "}
+                      votes
+                    </span>
+                  </div>
+                  <div
+                    className={`${styles.mediaContainer} ${
+                      shouldBlockVote ? styles.mediaContainerSmall : ""
+                    }`}
+                  >
+                    {file.mediaType.mime.includes("video") ? (
+                      <video
+                        playsInline
+                        className={styles.media}
+                        id="videoId"
+                        src={URL.createObjectURL(file.mediaFile)}
+                        muted
+                        type="video/mp4"
+                      />
+                    ) : (
+                      <img
+                        className={styles.media}
+                        src={URL.createObjectURL(file.mediaFile)}
+                        alt="Content"
+                      />
+                    )}
+                  </div>
+                  {!isOwner && role !== "CHALLENGER" && (
+                    <Button
+                      onClick={() =>
+                        !shouldBlockVote
+                          ? voteChallenge({
+                              actorId,
+                              challengeReference: {challengeId},
+                              voteEntryId,
+                              shouldFetchChallenge: true,
+                            })
+                          : {}
+                      }
+                    >
+                      {shouldBlockVote ? (
+                        <img src={votedIcon} alt="Voted" className={styles.voteIcon} />
+                      ) : (
+                        <img src={voteIcon} alt="Vote" className={styles.voteIcon} />
+                      )}
+                      <span className={styles.voteWording}>
+                        {shouldBlockVote ? "Voted" : "Vote"}
+                      </span>
+                    </Button>
+                  )}
+                  {isOwner && (
+                    <span onClick={() => setActiveRow(file.details.mediaId.id)}>
+                      <EllipsisOutlined />
+                    </span>
                   )}
                 </div>
-                {!isOwner && role !== "CHALLENGER" && (
-                  <Button
-                    onClick={() =>
-                      !shouldBlockVote
-                        ? voteChallenge({
-                            actorId,
-                            challengeReference: {challengeId},
-                            voteEntryId,
-                            shouldFetchChallenge: true,
-                          })
-                        : {}
-                    }
-                  >
-                    {shouldBlockVote ? (
-                      <img src={votedIcon} alt="Voted" className={styles.voteIcon} />
-                    ) : (
-                      <img src={voteIcon} alt="Vote" className={styles.voteIcon} />
-                    )}
-                    <span className={styles.voteWording}>
-                      {shouldBlockVote ? "Voted" : "Vote"}
-                    </span>
+                {isActive && (
+                  <Button type="primary" className={styles.winnerBtn}>
+                    <img src={addUser} />
+                    Confirm the Winner
                   </Button>
                 )}
               </div>
