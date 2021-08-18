@@ -134,7 +134,7 @@ export const getChallengesRequest = ({securityToken, actorId}) => {
     });
 };
 
-export function* getChallenges(props) {
+export function* getChallenges() {
   try {
     const {user} = yield select();
     const response = yield call(getChallengesRequest, {
@@ -484,14 +484,19 @@ export const voteChallengeRequest = ({
 
 export function* voteChallenge(props) {
   try {
+    const {shouldFetchChallenge = false, ...payload} = props.payload;
     const {user} = yield select();
     const response = yield call(voteChallengeRequest, {
-      ...props.payload,
+      ...payload,
       securityToken: user.securityToken,
       actorId: user.actorHandle.actorId,
     });
 
     if (isResponseOk(response)) {
+      yield put({
+        type: CNST.CHALLENGE.VOTE_CHALLENGE.SUCCESS,
+        payload: shouldFetchChallenge,
+      });
     } else {
       yield put({
         type: CNST.CHALLENGE.VOTE_CHALLENGE.ERROR,

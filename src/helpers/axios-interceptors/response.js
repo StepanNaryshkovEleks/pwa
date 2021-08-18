@@ -1,5 +1,7 @@
 import axios from "axios";
 import {notification} from "antd";
+import {signOutAction} from "../../redux/actions/user/signOut";
+import {store} from "./../../index";
 
 const openNotificationWithIcon = (code) => {
   notification["error"]({
@@ -20,6 +22,8 @@ axios.interceptors.response.use(
       // so, in this case it is not necessary to show an error
       if (error.response.config.data !== '{"jsonType":"vee.FetchIdentificationForm"}') {
         openNotificationWithIcon(error.response.status);
+      } else {
+        store.dispatch(signOutAction());
       }
       throw error;
     }
