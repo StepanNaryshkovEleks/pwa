@@ -367,9 +367,7 @@ export const submitChallengeWinnerRequest = ({
     },
     participantEntry: {
       participantId,
-      selectEntryId: {
-        id: selectEntryId,
-      },
+      selectEntryId,
     },
   };
 
@@ -389,15 +387,24 @@ export const submitChallengeWinnerRequest = ({
 
 export function* submitChallengeWinner(props) {
   try {
-    console.log(props);
-    return;
     const {user} = yield select();
-    const {shouldRefreshChallenges = false, ...payload} = props.payload;
+    const {shouldFetchChallenge = false, ...payload} = props.payload;
     const response = yield call(submitChallengeWinnerRequest, {
       ...payload,
       securityToken: user.securityToken,
       actorId: user.actorHandle.actorId,
     });
+
+    if (isResponseOk(response)) {
+      yield put({
+        type: CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.SUCCESS,
+        payload: shouldFetchChallenge,
+      });
+    } else {
+      yield put({
+        type: CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.ERROR,
+      });
+    }
 
     if (isResponseOk(response)) {
     } else {

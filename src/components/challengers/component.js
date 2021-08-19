@@ -10,7 +10,7 @@ import voteIcon from "../../images/vote.svg";
 import votedIcon from "../../images/voted.svg";
 import addUser from "../../images/add-user-white.svg";
 import userImg from "../../images/user.png";
-import {EllipsisOutlined} from "@ant-design/icons";
+import {EllipsisOutlined, TrophyFilled} from "@ant-design/icons";
 import getWInner from "../../helpers/getWInner";
 
 export const Challengers = ({
@@ -59,8 +59,7 @@ export const Challengers = ({
       });
     }
   }, [challengeId, getMediaFiles, mediaDetails, challengeOwnerId]);
-  const winnerName = getWInner(challenge.challengeState);
-  console.log(winnerName);
+  const isThereWinner = !!challenge?.challengeState?.selectParticipantEntryArray.length;
 
   return (
     <main className={styles.main}>
@@ -69,16 +68,21 @@ export const Challengers = ({
       <div className={styles.challengers}>
         {mediaFiles &&
           mediaFiles.map((file) => {
+            const winnerName = getWInner(challenge.challengeState);
             const entryId = findEntryId(mediaDetails, file.details.mediaId.id);
             const shouldBlockVote = isVoted(
               challenge.challengeState.voteParticipantEntryArray,
               entryId,
               actorId
             );
+            const isWinnerRow = winnerName === file.details.actorHandle.assetId.id;
             const isActive = file.details.mediaId.id === activeRow;
+
             return (
               <div
-                className={`${styles.wrap} ${isActive ? styles.wrapActive : ""}`}
+                className={`${styles.wrap} ${
+                  isActive || isWinnerRow ? styles.wrapActive : ""
+                }`}
                 key={file.details.mediaId.id}
               >
                 <div className={styles.challenger}>
@@ -117,6 +121,7 @@ export const Challengers = ({
                       />
                     )}
                   </div>
+                  {winnerName === file.details.actorHandle.assetId.id && <TrophyFilled />}
                   {!isOwner && role !== "CHALLENGER" && (
                     <Button
                       onClick={() =>
@@ -140,12 +145,11 @@ export const Challengers = ({
                       </span>
                     </Button>
                   )}
-                  {isOwner &&
-                    !winnerName(
-                      <span onClick={() => setActiveRow(file.details.mediaId.id)}>
-                        <EllipsisOutlined />
-                      </span>
-                    )}
+                  {isOwner && !winnerName && !isThereWinner && (
+                    <span onClick={() => setActiveRow(file.details.mediaId.id)}>
+                      <EllipsisOutlined />
+                    </span>
+                  )}
                 </div>
                 {isActive && (
                   <Button
@@ -153,6 +157,9 @@ export const Challengers = ({
                     className={styles.winnerBtn}
                     onClick={() =>
                       submitChallengeWinner({
+                        shouldFetchChallenge: true,
+                        challengeId,
+                        participantId: file.details.mediaHandle.actorId,
                         selectEntryId: {
                           id: entryId,
                         },

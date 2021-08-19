@@ -15,8 +15,8 @@
 
 .winnerBtn {
   height: 30px;
-  width: 100%;
-  margin: 15px 10px;
+  width: calc(100% - 20px);
+  margin: 15px auto;
   justify-content: center;
   align-items: center;
 }

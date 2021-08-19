@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Header from "../../components/header";
 import userImg from "../../images/user.png";
 import backIcon from "../../images/chevron-left.svg";
@@ -20,12 +20,16 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
-export const ChallengeSpecifics = ({location, voteChallenge, user}) => {
+export const ChallengeSpecifics = ({location, voteChallenge, user, clearChallenge}) => {
   const history = useHistory();
   const challengeId = location.state.challengeId;
   const isOwner = location.state.isOwner;
   const role = location.state.role;
   const title = isOwner ? "Created Challenge" : "Vee Challenge";
+
+  useEffect(() => {
+    return () => clearChallenge();
+  }, [clearChallenge]);
 
   return (
     <div className={styles.challenges}>
