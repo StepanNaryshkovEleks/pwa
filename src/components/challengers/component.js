@@ -77,6 +77,9 @@ export const Challengers = ({
             );
             const isWinnerRow = winnerName === file.details.actorHandle.assetId.id;
             const isActive = file.details.mediaId.id === activeRow;
+            const indxInVoting = challenge.challengeState.voteParticipantEntryArray.findIndex(
+              (el) => el.participantId === actorId
+            );
 
             return (
               <div
@@ -121,11 +124,15 @@ export const Challengers = ({
                       />
                     )}
                   </div>
-                  {winnerName === file.details.actorHandle.assetId.id && <TrophyFilled />}
+                  {winnerName === file.details.actorHandle.assetId.id && (
+                    <span className={styles.trophy}>
+                      <TrophyFilled />
+                    </span>
+                  )}
                   {!isOwner && role !== "CHALLENGER" && (
                     <Button
                       onClick={() =>
-                        !shouldBlockVote
+                        !shouldBlockVote && indxInVoting === -1
                           ? voteChallenge({
                               actorId,
                               challengeReference: {challengeId},
@@ -151,15 +158,14 @@ export const Challengers = ({
                     </span>
                   )}
                 </div>
-                {isActive && (
+                {isActive && !isThereWinner && (
                   <Button
                     type="primary"
                     className={styles.winnerBtn}
                     onClick={() =>
                       submitChallengeWinner({
-                        shouldFetchChallenge: true,
                         challengeId,
-                        participantId: file.details.mediaHandle.actorId,
+                        participantId: challengeOwnerId,
                         selectEntryId: {
                           id: entryId,
                         },

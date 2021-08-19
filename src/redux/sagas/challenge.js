@@ -388,9 +388,8 @@ export const submitChallengeWinnerRequest = ({
 export function* submitChallengeWinner(props) {
   try {
     const {user} = yield select();
-    const {shouldFetchChallenge = false, ...payload} = props.payload;
     const response = yield call(submitChallengeWinnerRequest, {
-      ...payload,
+      ...props.payload,
       securityToken: user.securityToken,
       actorId: user.actorHandle.actorId,
     });
@@ -398,7 +397,7 @@ export function* submitChallengeWinner(props) {
     if (isResponseOk(response)) {
       yield put({
         type: CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.SUCCESS,
-        payload: shouldFetchChallenge,
+        payload: response.data.participantEntry,
       });
     } else {
       yield put({
