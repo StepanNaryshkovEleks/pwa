@@ -12,6 +12,20 @@ export default function reducer(state = {}, action) {
         shouldFetchChallenge: false,
       };
     }
+    case CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.SUCCESS: {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          challengeState: {
+            ...state.data.challengeState,
+            selectParticipantEntryArray: [action.payload],
+          },
+        },
+        fetching: false,
+        error: false,
+      };
+    }
     case CNST.CHALLENGE.VOTE_CHALLENGE.SUCCESS: {
       return {
         ...state,
@@ -61,6 +75,9 @@ export default function reducer(state = {}, action) {
         fetching: false,
         shouldFetchChallenge: false,
       };
+    }
+    case CNST.CHALLENGE.CLEAR_CHALLENGE_SUCCESS: {
+      return {};
     }
     default:
       return state;

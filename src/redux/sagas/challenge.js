@@ -354,6 +354,70 @@ export const uploadMediaRequest = ({
     });
 };
 
+export const submitChallengeWinnerRequest = ({
+  securityToken,
+  challengeId,
+  participantId,
+  selectEntryId,
+}) => {
+  const reqPayload = {
+    jsonType: "vee.UpdateChallengeParticipationForm",
+    challengeReference: {
+      challengeId,
+    },
+    participantEntry: {
+      participantId,
+      selectEntryId,
+    },
+  };
+
+  return axios
+    .put(`rs/application/form/vee`, reqPayload, {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+        "realm-token": getToken(),
+        "security-token": securityToken,
+      },
+    })
+    .catch((error) => {
+      throw error.response.data;
+    });
+};
+
+export function* submitChallengeWinner(props) {
+  try {
+    const {user} = yield select();
+    const response = yield call(submitChallengeWinnerRequest, {
+      ...props.payload,
+      securityToken: user.securityToken,
+      actorId: user.actorHandle.actorId,
+    });
+
+    if (isResponseOk(response)) {
+      yield put({
+        type: CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.SUCCESS,
+        payload: response.data.participantEntry,
+      });
+    } else {
+      yield put({
+        type: CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.ERROR,
+      });
+    }
+
+    if (isResponseOk(response)) {
+    } else {
+      yield put({
+        type: CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.ERROR,
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.ERROR,
+    });
+  }
+}
+
 export function* uploadMedia(props) {
   try {
     const {user} = yield select();
@@ -600,7 +664,7 @@ export function* getMediaFiles(props) {
 
   mediaResponse = yield all(
     mediaResponse
-      .filter((data) => data.data.status === 200)
+      .filter((data) => data?.data?.status === 200)
       .map(function* (data) {
         return {
           details: data.details.data,
