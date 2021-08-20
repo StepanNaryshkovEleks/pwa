@@ -12,7 +12,11 @@ export const ChallengeActivities = ({mediaFiles, singleView, onClose}) => {
     <Carousel>
       {mediaFiles &&
         mediaFiles.map((file, i) => (
-          <div className={styles.challenger} key={file.details.mediaId.id}>
+          <div
+            className={styles.challenger}
+            key={file.details.mediaId.id}
+            onClick={(e) => e.stopPropagation()}
+          >
             {file.mediaType.mime.includes("video") ? (
               <video
                 playsInline
@@ -51,7 +55,7 @@ export const ChallengeActivities = ({mediaFiles, singleView, onClose}) => {
                 <img src={voteIcon} alt="Vote" />
               </button>
             </div>
-            {i === 0 && !singleView && (
+            {i === 0 && mediaFiles.length > 1 && (
               <div className={styles.tip}>
                 <span className={styles.tipText}>
                   Swipe to

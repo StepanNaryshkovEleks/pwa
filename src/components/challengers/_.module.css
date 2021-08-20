@@ -92,9 +92,12 @@
   margin-left: 9px;
 }
 
-.background {
-  position: absolute;
+.singleMedia {
   width: 100vw;
   height: 100vh;
+  position: absolute;
   top: 0;
+  z-index: 101;
+  /* tabs bar and header height */
+  padding-top: 88px;
 }
