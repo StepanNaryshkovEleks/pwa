@@ -90,7 +90,7 @@ export const Profile = ({user}) => {
           />
         </div>
         <span onClick={openNotification} className="link link--primary">
-          Set Account Details
+          Save changes
         </span>
       </form>
     </>
