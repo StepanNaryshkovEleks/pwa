@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Helmet} from "react-helmet";
 import Header from "../../components/header";
 import styles from "./_.module.css";
@@ -25,6 +25,26 @@ const openNotificationWithIcon = (description) => {
     message: "Error",
     description,
   });
+};
+
+const Video = ({file}) => {
+  const videoRef = useRef();
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.pause(); // this hack needs for mobile safari which does not show first frame
+    }
+  }, [videoRef]);
+
+  return (
+    <>
+      <video className={styles.item} preload="metadata" autoPlay muted ref={videoRef}>
+        <source src={file.url} />
+      </video>
+      <span className={styles.duration}>
+        00:{file.duration < 10 ? "0" + file.duration : file.duration}
+      </span>
+    </>
+  );
 };
 
 export const UploadMedia = ({match, uploadMedia, location}) => {
@@ -92,6 +112,7 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
   if (shouldBeRedirected) {
     return <Redirect to={CNST.ROUTES.DASHBOARD} />;
   }
+
   return (
     <>
       <Helmet>
@@ -132,10 +153,7 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
               {file.type === "img" ? (
                 <img src={file.url} alt="" className={styles.item} />
               ) : (
-                <>
-                  <video src={file.url} className={styles.item} />
-                  <span className={styles.duration}>00:{file.duration}</span>
-                </>
+                <Video file={file} />
               )}
             </div>
           );
