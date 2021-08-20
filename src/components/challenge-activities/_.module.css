@@ -1,6 +1,7 @@
 .challenger {
   position: relative;
   width: 100%;
+  /* 42px - header height, 46px - tabs panel height, 86px - footer height */
   height: calc(100vh - 42px - 46px - 86px);
 }
 

@@ -40,6 +40,7 @@ export const ChallengeSpecifics = ({
   const mediaDetails = challenge?.challengeState.striveParticipantEntryArray;
   const challengeOwnerId =
     challenge?.challengeState.challengeDefinition.challengeOwnerHandle.actorId;
+  const mediaFiles = challenge?.mediaFiles ? challenge.mediaFiles : [];
 
   useEffect(() => {
     fetchChallenge({challengeId});
@@ -74,7 +75,11 @@ export const ChallengeSpecifics = ({
         defaultActiveKey={location.state.defaultTab}
       >
         <TabPane tab="Activities" key={CNST.ROUTES.CHALLENGE_ACTIVITIES_TAB}>
-          <ChallengeActivities challengeId={challengeId} />
+          {isOwner ? (
+            <div>Owner view of activities</div>
+          ) : (
+            <ChallengeActivities mediaFiles={mediaFiles} />
+          )}
         </TabPane>
         <TabPane tab="Challengers" key={CNST.ROUTES.CHALLENGE_CHALLENGERS_TAB}>
           <Challengers
