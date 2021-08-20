@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Search from "../../components/search";
 import {Button} from "antd";
-import Spinner from "../spinner";
 import styles from "./_.module.css";
 import findEntryId from "./../../helpers/findEntryId";
 import getVotes from "./../../helpers/getVotes";
@@ -13,9 +12,7 @@ import userImg from "../../images/user.png";
 export const Challengers = ({
   fetchChallenge,
   challenge,
-  getMediaFiles,
   challengeId,
-  isFetching,
   isOwner,
   role,
   voteChallenge,
@@ -25,18 +22,11 @@ export const Challengers = ({
   const [search, setSearch] = useState("");
 
   const mediaDetails = challenge?.challengeState.striveParticipantEntryArray;
-  const challengeOwnerId =
-    challenge?.challengeState.challengeDefinition.challengeOwnerHandle.actorId;
   const mediaFiles = challenge?.mediaFiles
     ? challenge.mediaFiles.filter((file) =>
         file.details.actorHandle.assetId.id.toLowerCase().includes(search.toLowerCase())
       )
     : [];
-
-  useEffect(() => {
-    // works only after render
-    fetchChallenge({challengeId});
-  }, [fetchChallenge, challengeId]);
 
   useEffect(() => {
     // works after voting
@@ -45,19 +35,8 @@ export const Challengers = ({
     }
   }, [shouldFetchChallenge, fetchChallenge, challengeId]);
 
-  useEffect(() => {
-    if (mediaDetails && challengeOwnerId && mediaDetails.length !== 0) {
-      getMediaFiles({
-        challengeId,
-        challengeOwnerId,
-        mediaDetails,
-      });
-    }
-  }, [challengeId, getMediaFiles, mediaDetails, challengeOwnerId]);
-
   return (
     <main className={styles.main}>
-      {isFetching && <Spinner />}
       <Search value={search} setValue={setSearch} />
       <div className={styles.challengers}>
         {mediaFiles &&
