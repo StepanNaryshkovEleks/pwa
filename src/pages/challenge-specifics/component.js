@@ -26,6 +26,7 @@ export const ChallengeSpecifics = ({
   location,
   voteChallenge,
   user,
+  clearChallenge,
   fetchChallenge,
   getMediaFiles,
   challenge,
@@ -53,6 +54,10 @@ export const ChallengeSpecifics = ({
       });
     }
   }, [challengeId, getMediaFiles, mediaDetails, challengeOwnerId]);
+
+  useEffect(() => {
+    return () => clearChallenge();
+  }, [clearChallenge]);
 
   return (
     <div className={styles.challenges}>
