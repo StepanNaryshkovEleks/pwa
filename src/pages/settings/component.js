@@ -15,6 +15,7 @@ import rulesIcon from "../../images/our-rules.svg";
 import privacyIcon from "../../images/privacy.svg";
 import logoutIcon from "../../images/logout.svg";
 import Setting from "../../components/settings";
+import CNST from "../../constants";
 
 const CloseIcon = ({className, onClick}) => (
   <button className={styles.backButton} onClick={onClick}>
@@ -39,7 +40,7 @@ export const Settings = ({signOut, realmToken}) => {
         RightComponent={(props) => UserImage({...props, userImg})}
       />
       <main className={styles.main}>
-        <Link to="/">
+        <Link to={CNST.ROUTES.PROFILE}>
           <Setting icon={userImg} iconStyles={styles.profileImg} title="Edit Profile" />
         </Link>
         <Link to="/">

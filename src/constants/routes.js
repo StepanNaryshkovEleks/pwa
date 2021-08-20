@@ -5,6 +5,7 @@ const ROUTES = {
   INTERESTS: "/interests",
   FORGOT_PASSWORD: "/forgot-password",
   CREATING_PASSWORD: "/create-password",
+  PROFILE: "/profile",
   SETTINGS: "/settings",
   DASHBOARD: "/dashboard",
   CREATE_CHALLENGE: "/create-challenge",

@@ -7,6 +7,7 @@ import IsAuthUser from "./IsAuthUser";
 import Interests from "../pages/interests";
 import SignIn from "../pages/sign-in";
 import SignUp from "../pages/sign-up";
+import Profile from "../pages/profile";
 import Home from "../pages/home";
 import ChallengeSpecifics from "../pages/challenge-specifics";
 import CreatingPassword from "../pages/creating-password";
@@ -42,6 +43,7 @@ export const AppRouter = () => (
       component={ChallengeSpecifics}
     />
     <IsAuthUser exact path={CNST.ROUTES.SETTINGS} component={Settings} />
+    <IsAuthUser exact path={CNST.ROUTES.PROFILE} component={Profile} />
     <IsAuthUser exact path={CNST.ROUTES.DASHBOARD} component={Dashboard} />
     <IsAuthUser exact path={CNST.ROUTES.CREATE_CHALLENGE} component={CreateChallenge} />
     <IsAuthUser exact path={CNST.ROUTES.INVITATION} component={Invitation} />
