@@ -45,14 +45,6 @@ export const Challengers = ({
     });
   }, [refs]);
 
-  useEffect(() => {
-    refs.forEach((ref) => {
-      if (ref.current) {
-        ref.current.pause(); // this hack needs for mobile safari which does not show first frame
-      }
-    });
-  }, [refs]);
-
   return (
     <main className={styles.main}>
       {showMedia && (
