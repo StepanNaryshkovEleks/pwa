@@ -1,10 +1,6 @@
 import CNST from "../../constants";
 
 export default function reducer(state = {}, action) {
-  if (action.type === CNST.CHALLENGE.VOTE_CHALLENGE.SUCCESS) {
-    console.log(action);
-    console.log(state.data.challengeState);
-  }
   switch (action.type) {
     case CNST.CHALLENGE.GET_CHALLENGE.FETCH:
     case CNST.CHALLENGE.VOTE_CHALLENGE.FETCH:
