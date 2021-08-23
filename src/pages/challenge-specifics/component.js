@@ -1,5 +1,7 @@
 import React, {useEffect} from "react";
 import Header from "../../components/header";
+import Footer from "../../components/footer";
+import Spinner from "../../components/spinner";
 import userImg from "../../images/user.png";
 import backIcon from "../../images/chevron-left.svg";
 import {useHistory} from "react-router-dom";
@@ -20,12 +22,39 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
-export const ChallengeSpecifics = ({location, voteChallenge, user, clearChallenge}) => {
+export const ChallengeSpecifics = ({
+  location,
+  voteChallenge,
+  user,
+  clearChallenge,
+  fetchChallenge,
+  getMediaFiles,
+  challenge,
+  isFetching,
+}) => {
   const history = useHistory();
   const challengeId = location.state.challengeId;
   const isOwner = location.state.isOwner;
   const role = location.state.role;
   const title = isOwner ? "Created Challenge" : "Vee Challenge";
+  const mediaDetails = challenge?.challengeState.striveParticipantEntryArray;
+  const challengeOwnerId =
+    challenge?.challengeState.challengeDefinition.challengeOwnerHandle.actorId;
+  const mediaFiles = challenge?.mediaFiles ? challenge.mediaFiles : [];
+
+  useEffect(() => {
+    fetchChallenge({challengeId});
+  }, [fetchChallenge, challengeId]);
+
+  useEffect(() => {
+    if (mediaDetails && challengeOwnerId && mediaDetails.length !== 0) {
+      getMediaFiles({
+        challengeId,
+        challengeOwnerId,
+        mediaDetails,
+      });
+    }
+  }, [challengeId, getMediaFiles, mediaDetails, challengeOwnerId]);
 
   useEffect(() => {
     return () => clearChallenge();
@@ -33,6 +62,7 @@ export const ChallengeSpecifics = ({location, voteChallenge, user, clearChalleng
 
   return (
     <div className={styles.challenges}>
+      {isFetching && <Spinner />}
       <Header
         title={`${title} ${challengeId}`}
         LeftComponent={(props) => BackIcon({...props, onClick: () => history.goBack()})}
@@ -45,7 +75,11 @@ export const ChallengeSpecifics = ({location, voteChallenge, user, clearChalleng
         defaultActiveKey={location.state.defaultTab}
       >
         <TabPane tab="Activities" key={CNST.ROUTES.CHALLENGE_ACTIVITIES_TAB}>
-          <ChallengeActivities />
+          {isOwner ? (
+            <div>Owner view of activities</div>
+          ) : (
+            <ChallengeActivities mediaFiles={mediaFiles} />
+          )}
         </TabPane>
         <TabPane tab="Challengers" key={CNST.ROUTES.CHALLENGE_CHALLENGERS_TAB}>
           <Challengers
@@ -60,6 +94,7 @@ export const ChallengeSpecifics = ({location, voteChallenge, user, clearChalleng
           Information
         </TabPane>
       </Tabs>
+      <Footer />
     </div>
   );
 };
