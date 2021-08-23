@@ -14,14 +14,12 @@ import getWInner from "../../helpers/getWInner";
 import ChallengeActivities from "../challenge-activities";
 
 export const Challengers = ({
-  fetchChallenge,
   challenge,
   challengeId,
   isOwner,
   role,
   voteChallenge,
   actorId,
-  shouldFetchChallenge,
   submitChallengeWinner,
 }) => {
   const [search, setSearch] = useState("");
@@ -38,13 +36,6 @@ export const Challengers = ({
       )
     : [];
   const refs = mediaFiles.map(() => createRef());
-
-  useEffect(() => {
-    // works after voting
-    if (shouldFetchChallenge) {
-      fetchChallenge({challengeId});
-    }
-  }, [shouldFetchChallenge, fetchChallenge, challengeId]);
 
   useEffect(() => {
     refs.forEach((ref) => {
@@ -139,9 +130,10 @@ export const Challengers = ({
                         !shouldBlockVote && indxInVoting === -1
                           ? voteChallenge({
                               actorId,
+                              mediaOwnerId: file.details.actorHandle.actorId,
+                              striveMediaId: file.details.mediaId.id,
                               challengeReference: {challengeId},
                               voteEntryId: entryId,
-                              shouldFetchChallenge: true,
                             })
                           : {}
                       }

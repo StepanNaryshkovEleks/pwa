@@ -548,10 +548,9 @@ export const voteChallengeRequest = ({
 
 export function* voteChallenge(props) {
   try {
-    const {shouldFetchChallenge = false, ...payload} = props.payload;
     const {user} = yield select();
     const response = yield call(voteChallengeRequest, {
-      ...payload,
+      ...props.payload,
       securityToken: user.securityToken,
       actorId: user.actorHandle.actorId,
     });
@@ -559,7 +558,11 @@ export function* voteChallenge(props) {
     if (isResponseOk(response)) {
       yield put({
         type: CNST.CHALLENGE.VOTE_CHALLENGE.SUCCESS,
-        payload: shouldFetchChallenge,
+        payload: {
+          participantEntry: response.data.participantEntry,
+          striveMediaId: props.payload.striveMediaId,
+          mediaOwnerId: props.payload.mediaOwnerId,
+        },
       });
     } else {
       yield put({
