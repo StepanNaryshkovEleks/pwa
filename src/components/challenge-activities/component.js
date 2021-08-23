@@ -31,6 +31,7 @@ export const ChallengeActivities = ({
             challenge.challengeState.striveParticipantEntryArray,
             file.details.mediaId.id
           );
+          const isMyFile = actorId === file.details.actorHandle.actorId;
           const shouldBlockVote = isVoted(
             challenge.challengeState.voteParticipantEntryArray,
             entryId,
@@ -85,7 +86,7 @@ export const ChallengeActivities = ({
                 </span>
                 <button
                   onClick={() =>
-                    !shouldBlockVote && indxInVoting === -1
+                    !shouldBlockVote && indxInVoting === -1 && !isMyFile
                       ? voteChallenge({
                           actorId,
                           mediaOwnerId: file.details.actorHandle.actorId,
