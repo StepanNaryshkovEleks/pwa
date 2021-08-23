@@ -1,6 +1,10 @@
 import CNST from "../../constants";
 
 export default function reducer(state = {}, action) {
+  if (action.type === CNST.CHALLENGE.VOTE_CHALLENGE.SUCCESS) {
+    console.log(action);
+    console.log(state.data.challengeState);
+  }
   switch (action.type) {
     case CNST.CHALLENGE.GET_CHALLENGE.FETCH:
     case CNST.CHALLENGE.VOTE_CHALLENGE.FETCH:
@@ -29,7 +33,38 @@ export default function reducer(state = {}, action) {
     case CNST.CHALLENGE.VOTE_CHALLENGE.SUCCESS: {
       return {
         ...state,
-        shouldFetchChallenge: action.payload,
+        data: {
+          ...state.data,
+          challengeState: {
+            ...state.data.challengeState,
+            striveParticipantEntryArray:
+              state.data.challengeState.striveParticipantEntryArray.length > 0
+                ? state.data.challengeState.striveParticipantEntryArray.map(
+                    (striveParticipantEntry) =>
+                      striveParticipantEntry.striveMediaId.id ===
+                      action.payload.striveMediaId
+                        ? {
+                            ...striveParticipantEntry,
+                            voteCount: (striveParticipantEntry.voteCount || 0) + 1,
+                          }
+                        : striveParticipantEntry
+                  )
+                : [
+                    {
+                      striveMediaId: action.payload.striveMediaId,
+                      participantId: action.payload.mediaOwnerId,
+                      voteCount: 1,
+                      entryId: {
+                        id: action.payload.participantEntry.voteEntryId.id,
+                      },
+                    },
+                  ],
+            voteParticipantEntryArray: [
+              ...state.data.challengeState.voteParticipantEntryArray,
+              action.payload.participantEntry,
+            ],
+          },
+        },
         fetching: false,
         error: false,
       };

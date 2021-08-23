@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Spinner from "../../components/spinner";
@@ -33,11 +33,12 @@ export const ChallengeSpecifics = ({
   isFetching,
 }) => {
   const history = useHistory();
+  const [isMediaFetched, setMediaFetched] = useState(false);
   const challengeId = location.state.challengeId;
   const isOwner = location.state.isOwner;
   const role = location.state.role;
   const title = isOwner ? "Created Challenge" : "Vee Challenge";
-  const mediaDetails = challenge?.challengeState.striveParticipantEntryArray;
+  const mediaDetails = challenge?.challengeState?.striveParticipantEntryArray;
   const challengeOwnerId =
     challenge?.challengeState.challengeDefinition.challengeOwnerHandle.actorId;
   const mediaFiles = challenge?.mediaFiles ? challenge.mediaFiles : [];
@@ -47,14 +48,20 @@ export const ChallengeSpecifics = ({
   }, [fetchChallenge, challengeId]);
 
   useEffect(() => {
-    if (mediaDetails && challengeOwnerId && mediaDetails.length !== 0) {
+    if (
+      mediaDetails &&
+      challengeOwnerId &&
+      mediaDetails.length !== 0 &&
+      !isMediaFetched
+    ) {
+      setMediaFetched(true);
       getMediaFiles({
         challengeId,
         challengeOwnerId,
         mediaDetails,
       });
     }
-  }, [challengeId, getMediaFiles, mediaDetails, challengeOwnerId]);
+  }, [challengeId, getMediaFiles, mediaDetails, challengeOwnerId, isMediaFetched]);
 
   useEffect(() => {
     return () => clearChallenge();
@@ -78,7 +85,14 @@ export const ChallengeSpecifics = ({
           {isOwner ? (
             <div>Owner view of activities</div>
           ) : (
-            <ChallengeActivities mediaFiles={mediaFiles} />
+            <ChallengeActivities
+              voteChallenge={voteChallenge}
+              isOwner={false}
+              role={role}
+              actorId={user.actorHandle.actorId}
+              challengeId={challengeId}
+              mediaFiles={mediaFiles}
+            />
           )}
         </TabPane>
         <TabPane tab="Challengers" key={CNST.ROUTES.CHALLENGE_CHALLENGERS_TAB}>

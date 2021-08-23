@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Search from "../../components/search";
 import {Button} from "antd";
 import styles from "./_.module.css";
@@ -14,14 +14,12 @@ import getWInner from "../../helpers/getWInner";
 import ChallengeActivities from "../challenge-activities";
 
 export const Challengers = ({
-  fetchChallenge,
   challenge,
   challengeId,
   isOwner,
   role,
   voteChallenge,
   actorId,
-  shouldFetchChallenge,
   submitChallengeWinner,
 }) => {
   const [search, setSearch] = useState("");
@@ -37,13 +35,6 @@ export const Challengers = ({
         file.details.actorHandle.assetId.id.toLowerCase().includes(search.toLowerCase())
       )
     : [];
-
-  useEffect(() => {
-    // works after voting
-    if (shouldFetchChallenge) {
-      fetchChallenge({challengeId});
-    }
-  }, [shouldFetchChallenge, fetchChallenge, challengeId]);
 
   return (
     <main className={styles.main}>
@@ -127,9 +118,10 @@ export const Challengers = ({
                         !shouldBlockVote && indxInVoting === -1
                           ? voteChallenge({
                               actorId,
+                              mediaOwnerId: file.details.actorHandle.actorId,
+                              striveMediaId: file.details.mediaId.id,
                               challengeReference: {challengeId},
                               voteEntryId: entryId,
-                              shouldFetchChallenge: true,
                             })
                           : {}
                       }

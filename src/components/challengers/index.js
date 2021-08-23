@@ -6,7 +6,6 @@ import {submitChallengeWinnerAction} from "../../redux/actions/challenge/submitC
 export const mapStateToProps = (state) => ({
   user: state.user,
   challenge: state.challenge.data,
-  shouldFetchChallenge: state.challenge.shouldFetchChallenge,
 });
 
 export const mapDispatchToProps = (dispatch) => ({
