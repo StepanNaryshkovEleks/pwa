@@ -36,7 +36,7 @@ export const ChallengeActivities = ({
             entryId,
             actorId
           );
-          console.log("shouldBlockVote", shouldBlockVote);
+
           return (
             <div
               className={styles.challenger}
