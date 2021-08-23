@@ -81,7 +81,7 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
             duration,
             type,
             fileSize: file.size,
-            mediaExtension: "." + file.type.slice("video/".length),
+            mediaExtension: file.name.slice(file.name.lastIndexOf(".")),
           },
         ]);
       });
