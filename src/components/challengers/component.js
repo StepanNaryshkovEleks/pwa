@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState, createRef} from "react";
 import Search from "../../components/search";
 import {Button} from "antd";
 import styles from "./_.module.css";
@@ -35,6 +35,15 @@ export const Challengers = ({
         file.details.actorHandle.assetId.id.toLowerCase().includes(search.toLowerCase())
       )
     : [];
+  const refs = mediaFiles.map(() => createRef());
+
+  useEffect(() => {
+    refs.forEach((ref) => {
+      if (ref.current) {
+        ref.current.pause(); // this hack needs for mobile safari which does not show first frame
+      }
+    });
+  }, [refs]);
 
   return (
     <main className={styles.main}>
@@ -50,7 +59,7 @@ export const Challengers = ({
       <Search value={search} setValue={setSearch} />
       <div>
         {mediaFiles &&
-          mediaFiles.map((file) => {
+          mediaFiles.map((file, i) => {
             const winnerName = getWInner(challenge.challengeState);
             const entryId = findEntryId(mediaDetails, file.details.mediaId.id);
             const shouldBlockVote = isVoted(
@@ -95,10 +104,13 @@ export const Challengers = ({
                       <video
                         playsInline
                         className={styles.media}
-                        id="videoId"
-                        src={`${URL.createObjectURL(file.mediaFile)}#t=0.001`}
                         muted
-                      />
+                        preload="metadata"
+                        autoPlay
+                        ref={refs[i]}
+                      >
+                        <source src={URL.createObjectURL(file.mediaFile)} />
+                      </video>
                     ) : (
                       <img
                         className={styles.media}
