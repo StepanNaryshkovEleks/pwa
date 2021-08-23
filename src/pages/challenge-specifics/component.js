@@ -86,7 +86,6 @@ export const ChallengeSpecifics = ({
             <div>Owner view of activities</div>
           ) : (
             <ChallengeActivities
-              voteChallenge={voteChallenge}
               isOwner={false}
               role={role}
               actorId={user.actorHandle.actorId}
@@ -99,7 +98,7 @@ export const ChallengeSpecifics = ({
           <Challengers
             challengeId={challengeId}
             actorId={user.actorHandle.actorId}
-            isOwner={isOwner}
+            isChallengeOwner={isOwner}
             role={role}
             voteChallenge={voteChallenge}
           />

@@ -16,7 +16,7 @@ import ChallengeActivities from "../challenge-activities";
 export const Challengers = ({
   challenge,
   challengeId,
-  isOwner,
+  isChallengeOwner,
   role,
   voteChallenge,
   actorId,
@@ -52,6 +52,10 @@ export const Challengers = ({
           <ChallengeActivities
             mediaFiles={showMedia}
             singleView
+            actorId={actorId}
+            role={role}
+            isOwner={isChallengeOwner}
+            challengeId={challengeId}
             onClose={() => setShowMedia(false)}
           />
         </div>
@@ -124,7 +128,7 @@ export const Challengers = ({
                       <TrophyFilled />
                     </span>
                   )}
-                  {!isOwner && role !== "CHALLENGER" && (
+                  {!isChallengeOwner && role !== "CHALLENGER" && (
                     <Button
                       onClick={() =>
                         !shouldBlockVote && indxInVoting === -1
@@ -148,7 +152,7 @@ export const Challengers = ({
                       </span>
                     </Button>
                   )}
-                  {isOwner && !winnerName && !isThereWinner && (
+                  {isChallengeOwner && !winnerName && !isThereWinner && (
                     <span onClick={() => setActiveRow(file.details.mediaId.id)}>
                       <EllipsisOutlined />
                     </span>

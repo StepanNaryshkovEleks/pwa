@@ -46,6 +46,7 @@ export const Dashboard = ({fetchChallenges, challenges, user}) => {
               const participant = challenge.challengePotential.challengeState.participantArray.find(
                 (el) => el.participantId === user.actorHandle.actorId
               );
+
               return (
                 <Link
                   key={
@@ -58,7 +59,9 @@ export const Dashboard = ({fetchChallenges, challenges, user}) => {
                     state: {
                       defaultTab: CNST.ROUTES.CHALLENGE_ACTIVITIES_TAB,
                       role: participant.participantRole,
-                      isOwner: false,
+                      isOwner:
+                        challenge.challengePotential.challengeState.challengeDefinition
+                          .challengeOwnerHandle.actorId === user.actorHandle.actorId,
                       challengeId:
                         challenge.challengePotential.challengeState.challengeDefinition
                           .challengeReference.challengeId,
