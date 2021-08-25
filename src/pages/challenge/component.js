@@ -15,6 +15,7 @@ import backIcon from "../../images/chevron-left.svg";
 import userImg from "../../images/user.png";
 import CNST from "../../constants";
 import base64ToHexString from "../../helpers/base64ToHexString";
+import Spinner from "../../components/spinner";
 
 const BackIcon = ({className, onClick}) => (
   <button className={styles.goBack} onClick={onClick}>
@@ -41,13 +42,17 @@ export const ChallengePage = ({
       )
     : {};
 
-  const isInvited = participant.participantStatus === "INVITED";
-  const isEngaged = participant.participantStatus === "ENGAGED";
-  const isDisengaged = participant.participantStatus === "DISENGAGED";
-
   useEffect(() => {
     fetchChallenge({challengeId});
   }, [fetchChallenge, challengeId]);
+
+  if (!participant.participantStatus) {
+    return <Spinner />;
+  }
+
+  const isInvited = participant.participantStatus === "INVITED";
+  const isEngaged = participant.participantStatus === "ENGAGED";
+  const isDisengaged = participant.participantStatus === "DISENGAGED";
 
   const onEngage = (participantStatus) => {
     engageChallenge({
