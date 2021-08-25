@@ -10,6 +10,7 @@ import styles from "./_.module.css";
 import CNST from "../../constants";
 import ChallengeActivities from "../../components/challenge-activities";
 import Challengers from "../../components/challengers";
+import ChallengeOwnerActivities from "../../components/challenge-owner-activities";
 
 const {TabPane} = Tabs;
 
@@ -83,7 +84,11 @@ export const ChallengeSpecifics = ({
       >
         <TabPane tab="Activities" key={CNST.ROUTES.CHALLENGE_ACTIVITIES_TAB}>
           {isOwner ? (
-            <div>Owner view of activities</div>
+            <ChallengeOwnerActivities
+              challengeId={challengeId}
+              role={role}
+              actorId={user.actorHandle.actorId}
+            />
           ) : (
             <ChallengeActivities
               isOwner={false}
