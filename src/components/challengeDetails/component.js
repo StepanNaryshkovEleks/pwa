@@ -68,10 +68,9 @@ export const ChallengeDetails = ({data, type, actorId, engageChallenge}) => {
           }}
         >
           <header className={styles.header}>
-            <span className={styles.id}>{challengeReference.challengeId}</span>
+            <span className={styles.id}>{challengeName}</span>
           </header>
-          <span className={styles.name}>{challengeName}</span>
-          <span className={styles.description}>{challengeDescription}</span>
+          <span className={styles.name}>{challengeDescription}</span>
         </Link>
         <button
           onClick={() => onEngage("DISENGAGED")}
@@ -89,18 +88,17 @@ export const ChallengeDetails = ({data, type, actorId, engageChallenge}) => {
   const REJECTED_CONTENT = () => (
     <span className={styles.challenge}>
       <header className={styles.header}>
-        <span className={styles.id}>{challengeReference.challengeId}</span>
+        <span className={styles.id}>{challengeName}</span>
         <span className={styles.rejected}>Rejected</span>
       </header>
-      <span className={styles.name}>{challengeName}</span>
-      <span className={styles.description}>{challengeDescription}</span>
+      <span className={styles.name}>{challengeDescription}</span>
     </span>
   );
 
   const ACTIVE_CONTENT = () => (
     <span className={styles.challenge}>
       <header className={styles.header}>
-        <span className={styles.id}>{challengeReference.challengeId}</span>
+        <span className={styles.id}>{challengeName}</span>
         {indx >= 0 &&
           indxInMedia === -1 &&
           data.challengePotential.challengeState.participantArray[indx]
@@ -154,8 +152,7 @@ export const ChallengeDetails = ({data, type, actorId, engageChallenge}) => {
             </span>
           )}
       </header>
-      <span className={styles.name}>{challengeName}</span>
-      <span className={styles.description}>{challengeDescription}</span>
+      <span className={styles.name}>{challengeDescription}</span>
     </span>
   );
 
@@ -177,11 +174,10 @@ export const ChallengeDetails = ({data, type, actorId, engageChallenge}) => {
         }}
       >
         <header className={styles.header}>
-          <span className={styles.id}>{challengeReference.challengeId} (Created)</span>
+          <span className={styles.id}>{challengeName} (Created)</span>
           {winnerName && <span className={styles.endeded}>Ended</span>}
         </header>
-        <span className={styles.name}>{challengeName}</span>
-        <span className={styles.description}>{challengeDescription}</span>
+        <span className={styles.name}>{challengeDescription}</span>
         {winnerName && (
           <div className={styles.winner}>
             <img src={userImg} alt="Winner" className={styles.winnerImg} />

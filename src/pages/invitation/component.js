@@ -29,7 +29,7 @@ export const Invitation = ({inviteUsers, challenge, observers, challengers}) => 
       </Helmet>
       <Header
         classes={styles.wrap}
-        title={`Vee Challenge ${id}`}
+        title="Vee Challenge"
         RightComponent={(props) => UserImage({...props, userImg})}
       />
       <h1 className={styles.title}>Challenge Invitees</h1>

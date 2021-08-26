@@ -120,7 +120,7 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
       </Helmet>
       <Header
         classes={styles.wrap}
-        title={`Vee Challenge #${match.params.challengeId}`}
+        title="Vee Challenge"
         LeftComponent={(props) =>
           SettingsIcon({...props, onClick: () => setModalState(true)})
         }

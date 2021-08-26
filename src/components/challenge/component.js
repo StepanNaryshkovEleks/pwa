@@ -1,7 +1,5 @@
 import React from "react";
 import styles from "./_.module.css";
-import {Link} from "react-router-dom";
-import CNST from "../../constants";
 import {getRandomImage} from "../../helpers/getRandomImage.js";
 import getWInner from "../../helpers/getWInner";
 
@@ -14,7 +12,6 @@ export const Challenge = ({data, challengeIndex, userId}) => {
     challengeName,
     challengeDescription,
     challengeOwnerHandle,
-    challengeReference,
   } = data.challengeDefinition;
 
   const challengeImg = getRandomImage(challengeIndex);
@@ -35,25 +32,42 @@ export const Challenge = ({data, challengeIndex, userId}) => {
       </header>
       <img src={challengeImg} alt="Challenge" className={styles.challengeImg} />
       <div className={styles.footer}>
-        <div className={styles.votesContainer}>
-          <span className={styles.id}>{challengeReference.challengeId}</span>
-          {winnerName && (
-            <>
-              <img src={userImg} alt="Winner" className={styles.winnerImg} />
-              <span className={styles.winnerName}>{winnerName} won the challenge</span>
-            </>
-          )}
-          <span className={styles.votes}>
-            {data.voteParticipantEntryArray.length} votes
-          </span>
-          {!winnerName && isObserver && (
-            <button className={styles.button}>
-              <img src={voteIcon} alt="Vote" />
-            </button>
-          )}
+        <div
+          className={`${styles.votesContainer} ${
+            winnerName ? styles.votesContainerClosed : ""
+          }`}
+        >
+          <div
+            className={`${styles.headerDesc} ${
+              !winnerName ? styles.headerDescWithoutWinner : ""
+            }`}
+          >
+            {winnerName && (
+              <div className={styles.winWrap}>
+                <img src={userImg} alt="Winner" className={styles.winnerImg} />
+                <span className={styles.winnerName}>{winnerName} won the challenge</span>
+              </div>
+            )}
+            <div className={styles.voteWrap}>
+              <span className={styles.votes}>
+                {data.voteParticipantEntryArray.length} votes
+              </span>
+              {!winnerName && isObserver && (
+                <button className={styles.button}>
+                  <img src={voteIcon} alt="Vote" />
+                </button>
+              )}
+            </div>
+          </div>
+          <div
+            className={`${
+              winnerName ? styles.challengeDesc : styles.challengeDescWithoutWinner
+            }`}
+          >
+            <span className={styles.name}>{challengeName}</span>
+            <span className={styles.description}>{challengeDescription}</span>
+          </div>
         </div>
-        <span className={styles.name}>{challengeName}</span>
-        <span className={styles.description}>{challengeDescription}</span>
       </div>
     </section>
   );
