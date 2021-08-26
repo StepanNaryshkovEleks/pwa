@@ -1,0 +1,63 @@
+.main.noScroll {
+  /* 42px - header height, 46px - tabs panel height, 86px - footer height */
+  height: calc(100vh - 42px - 46px - 86px);
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 15px;
+  position: relative;
+}
+
+.userImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  margin-right: auto;
+  margin-left: 12px;
+}
+
+.userName {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+.userStatus {
+  font-size: 12px;
+  font-weight: lighter;
+  line-height: 14px;
+  color: #333333;
+}
+
+.mediaContainer {
+  padding: 1px;
+  background: linear-gradient(#006dff, #00efff);
+  border-radius: 3px;
+  display: inline-flex;
+  margin-right: 20px;
+}
+
+.media {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.singleMedia {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  z-index: 101;
+  /* tabs bar and header height */
+  padding-top: 88px;
+}

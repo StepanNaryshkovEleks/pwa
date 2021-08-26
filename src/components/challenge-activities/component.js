@@ -19,6 +19,7 @@ export const ChallengeActivities = ({
   onClose,
   challenge,
   actorId,
+  isOwner,
 }) => {
   return (
     <Carousel>
@@ -86,7 +87,7 @@ export const ChallengeActivities = ({
                 </span>
                 <button
                   onClick={() =>
-                    !shouldBlockVote && indxInVoting === -1 && !isMyFile
+                    !shouldBlockVote && indxInVoting === -1 && !isMyFile && !isOwner
                       ? voteChallenge({
                           actorId,
                           mediaOwnerId: file.details.actorHandle.actorId,
