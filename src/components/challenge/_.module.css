@@ -41,10 +41,28 @@
   line-height: 14px;
 }
 
+.headerDesc {
+  width: 100%;
+  display: flex;
+}
+
 .votesContainer {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding: 9px 0;
+}
+
+.votesContainerClosed {
+  flex-wrap: wrap;
+}
+
+.headerDescWithoutWinner {
+  width: auto;
+  order: 1;
+}
+
+.challengeDescWithoutWinner {
+  width: 100%;
 }
 
 .id {
@@ -70,7 +88,6 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  margin-left: 9px;
 }
 
 .winnerName {
@@ -83,10 +100,31 @@
 }
 
 .name {
+  font-size: 14px;
   font-weight: bold;
   margin-top: 8px;
 }
 
+.challengeDesc {
+  width: 100%;
+  order: 3;
+  display: block;
+  margin-top: 10px;
+}
+
 .description {
   display: block;
+  margin-top: 2px;
+}
+
+.voteWrap {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+}
+
+.winWrap {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 50px);
 }

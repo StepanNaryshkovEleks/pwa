@@ -49,10 +49,13 @@
   flex-wrap: wrap-reverse;
   min-height: 30px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  margin-top: 4px;
-  margin-bottom: 7px;
+}
+
+.header :global(.link) {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .challenge :global(.ant-btn) {
@@ -66,7 +69,7 @@
   margin-right: 9px;
 }
 
-.id {
+.name {
   font-size: 18px;
   color: black;
   font-weight: bold;
@@ -80,6 +83,7 @@
 }
 
 .winner {
+  display: flex;
   margin-top: 5px;
 }
 
@@ -96,6 +100,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: block;
 }
 
 .rejected {
@@ -107,13 +112,6 @@
   padding: 0 5px;
 }
 
-.name {
+.desc {
   font-weight: bold;
-}
-
-.description {
-  font-size: 12px;
-  display: block;
-  line-height: 14px;
-  margin-top: -3px;
 }

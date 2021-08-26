@@ -72,7 +72,7 @@ export const ChallengeSpecifics = ({
     <div className={styles.challenges}>
       {isFetching && <Spinner />}
       <Header
-        title={`${title} ${challengeId}`}
+        title={`${title}`}
         LeftComponent={(props) => BackIcon({...props, onClick: () => history.goBack()})}
         RightComponent={(props) => UserImage({...props, userImg})}
       />

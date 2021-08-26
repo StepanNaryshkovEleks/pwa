@@ -65,7 +65,7 @@ export const ChallengePage = ({
   return (
     <>
       <Header
-        title={`Vee Challenge ${challengeId}`}
+        title="Vee Challenge"
         LeftComponent={(props) => BackIcon({...props, onClick: () => history.goBack()})}
         RightComponent={(props) => UserImage({...props, userImg})}
       />
