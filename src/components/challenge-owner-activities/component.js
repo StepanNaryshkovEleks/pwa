@@ -3,6 +3,13 @@ import styles from "./_.module.css";
 import userImg from "../../images/user.png";
 import ChallengeActivities from "../challenge-activities";
 
+const statusMap = {
+  INVITED: "Invited to this Challenge",
+  DISENGAGED: "Rejected Challenge",
+  ENGAGED: "Accepted Challenge",
+  UPLOADED: "Uploaded Video",
+};
+
 export const ChallengeOwnerActivities = ({challenge, challengeId, role, actorId}) => {
   const [showMedia, setShowMedia] = useState(false);
   const participants = challenge?.challengeState.participantArray || [];
@@ -31,15 +38,8 @@ export const ChallengeOwnerActivities = ({challenge, challengeId, role, actorId}
     });
   }, [refs]);
 
-  const statusMap = {
-    INVITED: "Invited to this Challenge",
-    DISENGAGED: "Rejected Challenge",
-    ENGAGED: "Accepted Challenge",
-    UPLOADED: "Uploaded Video",
-  };
-
   return (
-    <main className={`${styles.main} ${showMedia && styles.noScroll}`}>
+    <main className={`${styles.main} ${showMedia ? styles.noScroll : ""}`}>
       {showMedia && (
         <div className={styles.singleMedia} onClick={() => setShowMedia(false)}>
           <ChallengeActivities
