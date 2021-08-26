@@ -69,7 +69,7 @@
   margin-right: 9px;
 }
 
-.id {
+.name {
   font-size: 18px;
   color: black;
   font-weight: bold;
@@ -112,13 +112,6 @@
   padding: 0 5px;
 }
 
-.name {
+.desc {
   font-weight: bold;
-}
-
-.description {
-  font-size: 12px;
-  display: block;
-  line-height: 14px;
-  margin-top: -3px;
 }
