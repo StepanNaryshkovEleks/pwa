@@ -11,6 +11,7 @@ import CNST from "../../constants";
 import ChallengeActivities from "../../components/challenge-activities";
 import Challengers from "../../components/challengers";
 import ChallengeOwnerActivities from "../../components/challenge-owner-activities";
+import ChallengeInformation from "../../components/challenge-information";
 
 const {TabPane} = Tabs;
 
@@ -109,7 +110,7 @@ export const ChallengeSpecifics = ({
           />
         </TabPane>
         <TabPane tab="Information" key={CNST.ROUTES.CHALLENGE_INFORMATION_TAB}>
-          Information
+          <ChallengeInformation challenge={challenge} />
         </TabPane>
       </Tabs>
       <Footer />
