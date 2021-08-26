@@ -60,9 +60,14 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
       openNotificationWithIcon("The size should be less than 500mb");
       return;
     }
-
+    const mediaExtension = file.name.slice(file.name.lastIndexOf("."));
     const type = file.type.indexOf("image") >= 0 ? "img" : "video";
     const url = URL.createObjectURL(file);
+
+    if (!CNST.ALLOWED_FILES.includes(mediaExtension.toLowerCase())) {
+      openNotificationWithIcon("Sorry, we do not support this format of the file");
+      return;
+    }
 
     if (type === "video") {
       var video = document.createElement("video");
@@ -81,7 +86,7 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
             duration,
             type,
             fileSize: file.size,
-            mediaExtension: file.name.slice(file.name.lastIndexOf(".")),
+            mediaExtension,
           },
         ]);
       });
@@ -94,7 +99,7 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
           duration: 0,
           type,
           fileSize: file.size,
-          mediaExtension: "." + file.type.slice("image/".length),
+          mediaExtension,
         },
       ]);
     }
