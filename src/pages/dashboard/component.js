@@ -48,12 +48,14 @@ export const Dashboard = ({fetchChallenges, challenges, user}) => {
               );
 
               return (
-                <Link
+                <Challenge
                   key={
                     challenge.challengePotential.challengeState.challengeDefinition
                       .challengeReference.challengeId
                   }
-                  className={styles.link}
+                  data={challenge.challengePotential.challengeState}
+                  challengeIndex={i}
+                  userId={user.actorHandle.actorId}
                   to={{
                     pathname: CNST.ROUTES.CHALLENGE_SPECIFICS,
                     state: {
@@ -67,13 +69,7 @@ export const Dashboard = ({fetchChallenges, challenges, user}) => {
                           .challengeReference.challengeId,
                     },
                   }}
-                >
-                  <Challenge
-                    data={challenge.challengePotential.challengeState}
-                    challengeIndex={i}
-                    userId={user.actorHandle.actorId}
-                  />
-                </Link>
+                />
               );
             })}
           </section>
