@@ -2,6 +2,17 @@
   width: 50%;
 }
 
+.dashboard :global(.ant-skeleton-element) {
+  display: block;
+  width: 100%;
+  height: 375px;
+}
+
+.dashboard :global(.ant-skeleton-element .ant-skeleton-image) {
+  width: 100%;
+  height: 100%;
+}
+
 main.dashboard :global(.ant-tabs-nav) {
   margin-bottom: 0;
 }

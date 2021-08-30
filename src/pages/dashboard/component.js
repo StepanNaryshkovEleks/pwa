@@ -21,7 +21,13 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
-export const Dashboard = ({fetchChallenges, challenges, user}) => {
+export const Dashboard = ({
+  fetchChallenges,
+  challenges,
+  user,
+  mediaForClosedChallenges,
+  getWinnerFile,
+}) => {
   const [tab, setTab] = useState();
   const [isChallengeFetched, setChallengeFetch] = useState(false);
 
@@ -78,6 +84,10 @@ export const Dashboard = ({fetchChallenges, challenges, user}) => {
           <section className={styles.challenges}>
             {challenges.closed.map((challenge, i) => (
               <Challenge
+                isClosed={true}
+                getWinnerFile={getWinnerFile}
+                mediaForClosedChallenges={mediaForClosedChallenges}
+                user={user}
                 key={
                   challenge.challengePotential.challengeState.challengeDefinition
                     .challengeReference.challengeId

@@ -89,6 +89,44 @@ export const getChallengeRequest = ({securityToken, actorId, challengeId}) => {
     });
 };
 
+export function* getWinnerMedia(props) {
+  try {
+    const responseWithoutExt = yield call(getMediaDetailsRequest, props.payload);
+    const response = yield call(getMediaRequest, {
+      ...props.payload,
+      mediaExtension: responseWithoutExt.data.mediaHandle.mediaExtension,
+    });
+
+    if (isResponseOk(response) && isResponseOk(responseWithoutExt)) {
+      const mediaType = yield call(FileType.fromBlob, response.data);
+      yield put({
+        type: CNST.CHALLENGE.GET_WINNER_FILE.SUCCESS,
+        payload: {
+          data: {
+            metadata: response.data,
+            mediaType,
+          },
+          challengeId: props.payload.challengeId,
+        },
+      });
+    } else {
+      yield put({
+        type: CNST.CHALLENGE.GET_WINNER_FILE.ERROR,
+        payload: {
+          challengeId: props.payload.challengeId,
+        },
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: CNST.CHALLENGE.GET_WINNER_FILE.ERROR,
+      payload: {
+        challengeId: props.payload.challengeId,
+      },
+    });
+  }
+}
+
 export function* getChallenge(props) {
   try {
     const {user} = yield select();
@@ -164,6 +202,7 @@ export function* getChallenges() {
         invites: [],
         rejected: [],
         closed: [],
+        closedChallengesMapForMediaFiles: {},
       };
 
       detailedChallengesResponse = detailedChallengesResponse
@@ -200,6 +239,12 @@ export function* getChallenges() {
           detailedChallengesResponse[i].challengePotential.challengeState
             .selectParticipantEntryArray.length !== 0
         ) {
+          newData.closedChallengesMapForMediaFiles[
+            detailedChallengesResponse[i].challengeReference.challengeId
+          ] = {
+            isFetching: false,
+            file: {},
+          };
           newData.closed.push(detailedChallengesResponse[i]);
         } else if (
           indx >= 0 &&
