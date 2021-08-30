@@ -43,6 +43,7 @@ export default function reducer(state = challenges, action) {
                 action.payload.challengeId
               ],
               isFetching: true,
+              isFailed: true,
             },
           },
         },
@@ -61,6 +62,7 @@ export default function reducer(state = challenges, action) {
               ],
               file: {...action.payload.data},
               isFetching: false,
+              isFailed: false,
             },
           },
         },
@@ -78,6 +80,7 @@ export default function reducer(state = challenges, action) {
                 action.payload.challengeId
               ],
               isFetching: false,
+              isFailed: true,
             },
           },
         },

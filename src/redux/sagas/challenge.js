@@ -243,6 +243,7 @@ export function* getChallenges() {
             detailedChallengesResponse[i].challengeReference.challengeId
           ] = {
             isFetching: false,
+            isFailed: false,
             file: {},
           };
           newData.closed.push(detailedChallengesResponse[i]);

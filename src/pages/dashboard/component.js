@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Challenge from "../../components/challenge";
@@ -10,6 +10,8 @@ import userImg from "../../images/user.png";
 import styles from "./_.module.css";
 
 const {TabPane} = Tabs;
+
+const CHALLENGE_LIMIT = 3;
 
 const SettingsIcon = ({className}) => (
   <Link to={CNST.ROUTES.SETTINGS}>

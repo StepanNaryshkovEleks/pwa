@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styles from "./_.module.css";
-import {Skeleton, Spin} from "antd";
+import {Result, Skeleton, Spin} from "antd";
 import {getRandomImage} from "../../helpers/getRandomImage.js";
 import getWInner from "../../helpers/getWInner";
 import getWinnerMedia from "../../helpers/getWinnerMedia";
@@ -34,8 +34,12 @@ export const Challenge = ({
     : false;
 
   useEffect(() => {
-    if (currentMedia && !currentMedia.isFetching && !currentMedia.file.mediaType) {
-      console.log("call");
+    if (
+      currentMedia &&
+      !currentMedia.isFetching &&
+      !currentMedia.isFailed &&
+      !currentMedia.file.mediaType
+    ) {
       const winnerData = getWinnerMedia(data);
       getWinnerFile({
         securityToken: user.securityToken,
@@ -69,13 +73,16 @@ export const Challenge = ({
       {!isClosed && (
         <img src={challengeImg} alt="Challenge" className={styles.challengeImg} />
       )}
+      {isClosed && !currentMedia.isFetching && currentMedia.isFailed && (
+        <div className={styles.placeholder}>
+          <Result status="warning" title="There are some problems with your operation." />
+        </div>
+      )}
       {isClosed && currentMedia.isFetching && (
-        <>
-          <div className={styles.placeholder}>
-            <Spin tip="Loading..." />
-            <Skeleton.Image active />
-          </div>
-        </>
+        <div className={styles.placeholder}>
+          <Spin tip="Loading..." />
+          <Skeleton.Image active />
+        </div>
       )}
 
       {isClosed &&
