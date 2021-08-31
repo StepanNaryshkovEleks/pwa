@@ -19,7 +19,7 @@ export const ChallengeActivities = ({
   onClose,
   challenge,
   actorId,
-  isOwner,
+  role,
 }) => {
   return (
     <Carousel>
@@ -32,7 +32,6 @@ export const ChallengeActivities = ({
             challenge.challengeState.striveParticipantEntryArray,
             file.details.mediaId.id
           );
-          const isMyFile = actorId === file.details.actorHandle.actorId;
           const shouldBlockVote = isVoted(
             challenge.challengeState.voteParticipantEntryArray,
             entryId,
@@ -78,33 +77,35 @@ export const ChallengeActivities = ({
                 <EllipsisOutlined className={styles.more} style={{color: "white"}} />
               )}
               <div className={styles.votes}>
-                <span>
+                <span className={styles.votesCount}>
                   {getVotes(
                     challenge.challengeState.striveParticipantEntryArray,
                     file.details.mediaId.id
                   )}{" "}
                   votes
                 </span>
-                <button
-                  onClick={() =>
-                    !shouldBlockVote && indxInVoting === -1 && !isMyFile && !isOwner
-                      ? voteChallenge({
-                          actorId,
-                          mediaOwnerId: file.details.actorHandle.actorId,
-                          striveMediaId: file.details.mediaId.id,
-                          challengeReference: {challengeId},
-                          voteEntryId: entryId,
-                        })
-                      : {}
-                  }
-                  className={styles.voteBtn}
-                >
-                  {shouldBlockVote ? (
-                    <img src={votedIcon} alt="Voted" height={24} />
-                  ) : (
-                    <img src={voteIcon} alt="Vote" />
-                  )}
-                </button>
+                {role === "OBSERVER" && (shouldBlockVote || indxInVoting === -1) && (
+                  <button
+                    onClick={() =>
+                      !shouldBlockVote && indxInVoting === -1
+                        ? voteChallenge({
+                            actorId,
+                            mediaOwnerId: file.details.actorHandle.actorId,
+                            striveMediaId: file.details.mediaId.id,
+                            challengeReference: {challengeId},
+                            voteEntryId: entryId,
+                          })
+                        : {}
+                    }
+                    className={styles.voteBtn}
+                  >
+                    {shouldBlockVote ? (
+                      <img src={votedIcon} alt="Voted" height={24} />
+                    ) : (
+                      <img src={voteIcon} alt="Vote" />
+                    )}
+                  </button>
+                )}
               </div>
               {i === 0 && mediaFiles.length > 1 && (
                 <div className={styles.tip}>
