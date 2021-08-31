@@ -113,7 +113,7 @@ export const ChallengeDetails = ({data, type, actorId, engageChallenge}) => {
               className="link link--primary link--small"
             >
               <img className={styles.btnImg} src={videoCamera} />
-              Add content
+              Submit entry
             </Link>
           )}
         {indx >= 0 &&
@@ -137,7 +137,7 @@ export const ChallengeDetails = ({data, type, actorId, engageChallenge}) => {
               className="link link--primary link--small"
             >
               <img className={styles.btnImg} src={voteIcon} />
-              Vote
+              Go to vote
             </Link>
           )}
         {indx >= 0 &&
