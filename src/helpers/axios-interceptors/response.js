@@ -21,7 +21,7 @@ axios.interceptors.response.use(
       if (error.response.status === 403) {
         store.dispatch(signOutAction());
       } else {
-        // openNotificationWithIcon(error.response.status);
+        openNotificationWithIcon(error.response.status);
       }
       throw error;
     }

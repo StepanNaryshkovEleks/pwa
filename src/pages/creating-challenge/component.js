@@ -104,7 +104,7 @@ export const CreateChallenge = ({createChallenge, fetching}) => {
         )}
         <Button onClick={openNotification} className={styles.btn}>
           <img src={VideoCamera} className={styles.camera} alt="Content" />
-          Add Content
+          Add how-to
         </Button>
         <Button
           type="primary"

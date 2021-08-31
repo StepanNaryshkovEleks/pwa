@@ -18,6 +18,16 @@
   border-radius: 50%;
 }
 
+.btnImg {
+  margin-right: 9px;
+}
+
+.link {
+  display: flex;
+  margin: 0;
+  line-height: 1;
+}
+
 .username {
   font-size: 16px;
   margin-right: auto;
@@ -25,6 +35,18 @@
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 15px;
+  white-space: nowrap;
+}
+
+.placeholder {
+  position: relative;
+}
+
+.placeholder :global(.ant-spin) {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, 0);
 }
 
 .challengeImg {

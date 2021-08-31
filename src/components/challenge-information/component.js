@@ -3,9 +3,13 @@ import {getRandomImage} from "../../helpers/getRandomImage.js";
 import styles from "./_.module.css";
 
 export const ChallengeInformation = ({challenge}) => {
-  const challengeName = challenge?.challengeState.challengeDefinition.challengeName;
-  const challengeDescription =
-    challenge?.challengeState.challengeDefinition.challengeDescription;
+  if (!challenge?.challengeState) {
+    return <></>;
+  }
+  const {
+    challengeName,
+    challengeDescription,
+  } = challenge.challengeState.challengeDefinition;
   const challengeImg = getRandomImage(1);
 
   return (
