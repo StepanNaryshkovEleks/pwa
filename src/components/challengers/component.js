@@ -31,9 +31,19 @@ export const Challengers = ({
   const challengeOwnerId =
     challenge?.challengeState.challengeDefinition.challengeOwnerHandle.actorId;
   const mediaFiles = challenge?.mediaFiles
-    ? challenge.mediaFiles.filter((file) =>
-        file.details.actorHandle.assetId.id.toLowerCase().includes(search.toLowerCase())
-      )
+    ? challenge.mediaFiles
+        .filter((file) =>
+          file.details.actorHandle.assetId.id.toLowerCase().includes(search.toLowerCase())
+        )
+        .sort((a, b) => {
+          const entryId = findEntryId(mediaDetails, a.details.mediaId.id);
+          const isFileVoted = isVoted(
+            challenge.challengeState.voteParticipantEntryArray,
+            entryId,
+            actorId
+          );
+          return isFileVoted ? -1 : 0;
+        })
     : [];
   const refs = mediaFiles.map(() => createRef());
 
@@ -130,6 +140,7 @@ export const Challengers = ({
                   )}
                   {!isChallengeOwner && role !== "CHALLENGER" && (
                     <Button
+                      disabled={!shouldBlockVote && indxInVoting !== -1}
                       onClick={() =>
                         !shouldBlockVote && indxInVoting === -1
                           ? voteChallenge({
