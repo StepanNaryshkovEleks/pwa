@@ -113,9 +113,9 @@ export const ChallengePage = ({
                     <img
                       className={styles.buttonImg}
                       src={cameraIcon}
-                      alt="Add content"
+                      alt="Submit Entry"
                     />
-                    Add Content
+                    Submit Entry
                   </Button>
                 </Link>
               )}

@@ -186,7 +186,7 @@ export const Challenge = ({
               className="link link--primary link--small"
             >
               <img className={styles.btnImg} src={videoCamera} />
-              Add content
+              Submit entry
             </Link>
           )}
       </header>
