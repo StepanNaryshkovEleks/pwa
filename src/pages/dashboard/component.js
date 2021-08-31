@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Challenge from "../../components/challenge";
@@ -11,6 +11,8 @@ import styles from "./_.module.css";
 
 const {TabPane} = Tabs;
 
+const CHALLENGE_LIMIT = 3;
+
 const SettingsIcon = ({className}) => (
   <Link to={CNST.ROUTES.SETTINGS}>
     <img src={settingsIcon} alt="Settings" className={className} />
@@ -21,7 +23,13 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
-export const Dashboard = ({fetchChallenges, challenges, user}) => {
+export const Dashboard = ({
+  fetchChallenges,
+  challenges,
+  user,
+  mediaForClosedChallenges,
+  getWinnerFile,
+}) => {
   const [tab, setTab] = useState();
   const [isChallengeFetched, setChallengeFetch] = useState(false);
 
@@ -78,6 +86,10 @@ export const Dashboard = ({fetchChallenges, challenges, user}) => {
           <section className={styles.challenges}>
             {challenges.closed.map((challenge, i) => (
               <Challenge
+                isClosed={true}
+                getWinnerFile={getWinnerFile}
+                mediaForClosedChallenges={mediaForClosedChallenges}
+                user={user}
                 key={
                   challenge.challengePotential.challengeState.challengeDefinition
                     .challengeReference.challengeId

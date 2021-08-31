@@ -7,6 +7,9 @@ const challenges = {
     invites: [],
     rejected: [],
     closed: [],
+    challengesWithDetails: {
+      closedChallengesMapForMediaFiles: {},
+    },
   },
 };
 

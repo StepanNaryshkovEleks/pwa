@@ -38,6 +38,17 @@
   white-space: nowrap;
 }
 
+.placeholder {
+  position: relative;
+}
+
+.placeholder :global(.ant-spin) {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, 0);
+}
+
 .challengeImg {
   height: 375px;
   width: 100%;

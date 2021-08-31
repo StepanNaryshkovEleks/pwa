@@ -1,6 +1,11 @@
 import CNST from "../../constants";
 
-export default function reducer(state = {}, action) {
+const defaultState = {
+  fetching: false,
+  error: false,
+};
+
+export default function reducer(state = defaultState, action) {
   switch (action.type) {
     case CNST.CHALLENGE.GET_CHALLENGE.FETCH:
     case CNST.CHALLENGE.VOTE_CHALLENGE.FETCH:
@@ -108,7 +113,7 @@ export default function reducer(state = {}, action) {
       };
     }
     case CNST.CHALLENGE.CLEAR_CHALLENGE_SUCCESS: {
-      return {};
+      return defaultState;
     }
     default:
       return state;
