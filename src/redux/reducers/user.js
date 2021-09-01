@@ -42,6 +42,11 @@ export default function reducer(state = user, action) {
         fetching: false,
         shouldShowAdv: true,
       };
+    case CNST.USER.CLEAR_ADV.SUCCESS:
+      return {
+        ...state,
+        shouldShowAdv: false,
+      };
     case CNST.USER.SIGN_IN.ERROR:
     case CNST.USER.SIGN_UP.ERROR:
     case CNST.USER.SHARING_PROFILE.ERROR:

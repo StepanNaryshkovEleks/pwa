@@ -1,12 +1,13 @@
 import styles from "./_.module.css";
 import {CloseOutlined} from "@ant-design/icons";
 
-export const FullPageAdv = ({url, handleClosed}) => {
+export const FullPageAdv = ({url, handleClosed, color}) => {
   return (
     <div
       className={styles.wrap}
       style={{
         backgroundImage: `url(${url})`,
+        backgroundColor: color,
       }}
     >
       <div className={styles.header}>

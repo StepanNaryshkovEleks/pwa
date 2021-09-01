@@ -19,6 +19,7 @@
   font-size: 12px;
   line-height: 14px;
   color: white;
+  font-family: "Roboto", sans-serif;
 }
 
 .header {
@@ -38,6 +39,7 @@
   width: 100%;
   margin-bottom: 70px;
   height: 47px;
+  font-family: "Roboto", sans-serif;
 }
 .closed {
   font-size: 20px;

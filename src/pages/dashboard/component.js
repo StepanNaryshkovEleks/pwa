@@ -11,8 +11,11 @@ import styles from "./_.module.css";
 import getAdvertisement from "../../helpers/getAdvertisement";
 import usePrevious from "../../hooks/usePrev";
 import FullPageAdv from "../../components/advertisement/full-page";
+import {SmallAdv} from "../../components/advertisement/small-adv/component";
 
 const {TabPane} = Tabs;
+
+const randomImage = getAdvertisement();
 
 const SettingsIcon = ({className}) => (
   <Link to={CNST.ROUTES.SETTINGS}>
@@ -31,11 +34,12 @@ export const Dashboard = ({
   mediaForClosedChallenges,
   getWinnerFile,
   shouldShowAdv,
+  clearAdv,
 }) => {
   const [advImages, setAdvImages] = useState({
     big: null,
     color: null,
-    small: null,
+    small: randomImage.small,
   });
   const prevShouldShowAdvStatus = usePrevious(shouldShowAdv);
   const [tab, setTab] = useState();
@@ -43,9 +47,16 @@ export const Dashboard = ({
 
   useEffect(() => {
     if (shouldShowAdv && !prevShouldShowAdvStatus) {
-      setAdvImages(getAdvertisement());
+      clearAdv();
+      setAdvImages((prev) => {
+        return {
+          ...prev,
+          big: randomImage.big,
+          color: randomImage.color,
+        };
+      });
     }
-  }, [prevShouldShowAdvStatus, shouldShowAdv]);
+  }, [prevShouldShowAdvStatus, shouldShowAdv, clearAdv]);
 
   useEffect(() => {
     if (user?.actorHandle?.actorId && !isChallengeFetched) {
@@ -68,7 +79,13 @@ export const Dashboard = ({
 
   return (
     <main className={styles.dashboard}>
-      {advImages.big && <FullPageAdv url={advImages.big} handleClosed={handleClosed} />}
+      {advImages.big && (
+        <FullPageAdv
+          url={advImages.big}
+          handleClosed={handleClosed}
+          color={randomImage.color}
+        />
+      )}
       <Header
         title="Welcome to Vee"
         LeftComponent={SettingsIcon}
@@ -83,28 +100,33 @@ export const Dashboard = ({
               );
 
               return (
-                <Challenge
-                  key={
-                    challenge.challengePotential.challengeState.challengeDefinition
-                      .challengeReference.challengeId
-                  }
-                  data={challenge.challengePotential.challengeState}
-                  challengeIndex={i}
-                  userId={user.actorHandle.actorId}
-                  to={{
-                    pathname: CNST.ROUTES.CHALLENGE_SPECIFICS,
-                    state: {
-                      defaultTab: CNST.ROUTES.CHALLENGE_ACTIVITIES_TAB,
-                      role: participant.participantRole,
-                      isOwner:
-                        challenge.challengePotential.challengeState.challengeDefinition
-                          .challengeOwnerHandle.actorId === user.actorHandle.actorId,
-                      challengeId:
-                        challenge.challengePotential.challengeState.challengeDefinition
-                          .challengeReference.challengeId,
-                    },
-                  }}
-                />
+                <>
+                  <Challenge
+                    key={
+                      challenge.challengePotential.challengeState.challengeDefinition
+                        .challengeReference.challengeId
+                    }
+                    data={challenge.challengePotential.challengeState}
+                    challengeIndex={i}
+                    userId={user.actorHandle.actorId}
+                    to={{
+                      pathname: CNST.ROUTES.CHALLENGE_SPECIFICS,
+                      state: {
+                        defaultTab: CNST.ROUTES.CHALLENGE_ACTIVITIES_TAB,
+                        role: participant.participantRole,
+                        isOwner:
+                          challenge.challengePotential.challengeState.challengeDefinition
+                            .challengeOwnerHandle.actorId === user.actorHandle.actorId,
+                        challengeId:
+                          challenge.challengePotential.challengeState.challengeDefinition
+                            .challengeReference.challengeId,
+                      },
+                    }}
+                  />
+                  {i === 0 && (
+                    <SmallAdv url={randomImage.small} color={randomImage.color} />
+                  )}
+                </>
               );
             })}
           </section>
