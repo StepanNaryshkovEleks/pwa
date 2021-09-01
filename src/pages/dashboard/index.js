@@ -5,6 +5,7 @@ import {getWinnerFileAction} from "../../redux/actions/challenge/getWinnerFile";
 
 export const mapStateToProps = (state) => ({
   user: state.user,
+  shouldShowAdv: state.user.shouldShowAdv,
   challenges: state.challenges.challengesWithDetails,
   mediaForClosedChallenges:
     state.challenges?.challengesWithDetails?.closedChallengesMapForMediaFiles,

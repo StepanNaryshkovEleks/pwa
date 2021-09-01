@@ -34,9 +34,15 @@ export default function reducer(state = user, action) {
         ...state,
         realmToken: action.payload,
         isLoggedIn: true,
+        shouldShowAdv: true,
+      };
+    case CNST.USER.SIGN_UP.SUCCESS:
+      return {
+        ...state,
+        fetching: false,
+        shouldShowAdv: true,
       };
     case CNST.USER.SIGN_IN.ERROR:
-    case CNST.USER.SIGN_UP.SUCCESS:
     case CNST.USER.SIGN_UP.ERROR:
     case CNST.USER.SHARING_PROFILE.ERROR:
     case CNST.USER.SHARING_PROFILE.SUCCESS:

@@ -1,0 +1,46 @@
+.wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  color: white;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.shop {
+  border: none;
+  padding: 0;
+  background-color: #00eeff;
+  border-radius: 5px;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+  width: 100%;
+  margin-bottom: 70px;
+  height: 47px;
+}
+.closed {
+  font-size: 20px;
+  border: none;
+  background-color: transparent;
+}

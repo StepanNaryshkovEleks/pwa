@@ -44,7 +44,7 @@ export const InvitationOptions = ({challenge}) => {
       </Helmet>
       <Header
         classes={styles.wrap}
-        title={`Vee Challenge ${id}`}
+        title="Vee Challenge"
         LeftComponent={(props) =>
           SettingsIcon({...props, onClick: () => history.goBack()})
         }

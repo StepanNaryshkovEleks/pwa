@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Challenge from "../../components/challenge";
@@ -8,10 +8,11 @@ import CNST from "../../constants";
 import settingsIcon from "../../images/settings.svg";
 import userImg from "../../images/user.png";
 import styles from "./_.module.css";
+import getAdvertisement from "../../helpers/getAdvertisement";
+import usePrevious from "../../hooks/usePrev";
+import FullPageAdv from "../../components/advertisement/full-page";
 
 const {TabPane} = Tabs;
-
-const CHALLENGE_LIMIT = 3;
 
 const SettingsIcon = ({className}) => (
   <Link to={CNST.ROUTES.SETTINGS}>
@@ -29,9 +30,22 @@ export const Dashboard = ({
   user,
   mediaForClosedChallenges,
   getWinnerFile,
+  shouldShowAdv,
 }) => {
+  const [advImages, setAdvImages] = useState({
+    big: null,
+    color: null,
+    small: null,
+  });
+  const prevShouldShowAdvStatus = usePrevious(shouldShowAdv);
   const [tab, setTab] = useState();
   const [isChallengeFetched, setChallengeFetch] = useState(false);
+
+  useEffect(() => {
+    if (shouldShowAdv && !prevShouldShowAdvStatus) {
+      setAdvImages(getAdvertisement());
+    }
+  }, [prevShouldShowAdvStatus, shouldShowAdv]);
 
   useEffect(() => {
     if (user?.actorHandle?.actorId && !isChallengeFetched) {
@@ -40,8 +54,21 @@ export const Dashboard = ({
     }
   }, [fetchChallenges, user, isChallengeFetched]);
 
+  const handleClosed = useCallback(
+    () =>
+      setAdvImages((prev) => {
+        return {
+          ...prev,
+          big: null,
+          color: null,
+        };
+      }),
+    []
+  );
+
   return (
     <main className={styles.dashboard}>
+      {advImages.big && <FullPageAdv url={advImages.big} handleClosed={handleClosed} />}
       <Header
         title="Welcome to Vee"
         LeftComponent={SettingsIcon}
