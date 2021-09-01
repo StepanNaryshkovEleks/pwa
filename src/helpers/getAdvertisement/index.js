@@ -17,7 +17,7 @@ export default function () {
 
   return {
     big: bigPictures[randomNumber],
-    color: colors[randomNumber],
+    color: colors[randomNumber + 1] || colors[0],
     small: smallPictures[randomNumber + 1] || smallPictures[0],
   };
 }

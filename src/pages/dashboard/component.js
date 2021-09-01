@@ -38,7 +38,7 @@ export const Dashboard = ({
 }) => {
   const [advImages, setAdvImages] = useState({
     big: null,
-    color: null,
+    color: randomImage.color,
     small: randomImage.small,
   });
   const prevShouldShowAdvStatus = usePrevious(shouldShowAdv);
@@ -52,7 +52,6 @@ export const Dashboard = ({
         return {
           ...prev,
           big: randomImage.big,
-          color: randomImage.color,
         };
       });
     }
@@ -71,7 +70,6 @@ export const Dashboard = ({
         return {
           ...prev,
           big: null,
-          color: null,
         };
       }),
     []
