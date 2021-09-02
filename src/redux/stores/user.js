@@ -6,6 +6,7 @@ const user = {
   lastName: "",
   isLoggedIn: false,
   isGetUserFetched: false,
+  shouldShowAdv: false,
 };
 
 export default user;

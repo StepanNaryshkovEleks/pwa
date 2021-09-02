@@ -1,7 +1,5 @@
 .wrap {
   min-height: 100vh;
-  background-image: url("../../images/home-bg.png");
-  background-size: cover;
   display: flex;
   flex-direction: column;
   padding: 120px 15px 0;

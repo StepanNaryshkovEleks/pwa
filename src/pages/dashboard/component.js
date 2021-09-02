@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Challenge from "../../components/challenge";
@@ -8,10 +8,14 @@ import CNST from "../../constants";
 import settingsIcon from "../../images/settings.svg";
 import userImg from "../../images/user.png";
 import styles from "./_.module.css";
+import getAdvertisement from "../../helpers/getAdvertisement";
+import usePrevious from "../../hooks/usePrev";
+import FullPageAdv from "../../components/advertisement/full-page";
+import {SmallAdv} from "../../components/advertisement/small-adv/component";
 
 const {TabPane} = Tabs;
 
-const CHALLENGE_LIMIT = 3;
+const randomImage = getAdvertisement();
 
 const SettingsIcon = ({className}) => (
   <Link to={CNST.ROUTES.SETTINGS}>
@@ -29,9 +33,29 @@ export const Dashboard = ({
   user,
   mediaForClosedChallenges,
   getWinnerFile,
+  shouldShowAdv,
+  clearAdv,
 }) => {
+  const [advImages, setAdvImages] = useState({
+    big: null,
+    color: randomImage.color,
+    small: randomImage.small,
+  });
+  const prevShouldShowAdvStatus = usePrevious(shouldShowAdv);
   const [tab, setTab] = useState();
   const [isChallengeFetched, setChallengeFetch] = useState(false);
+
+  useEffect(() => {
+    if (shouldShowAdv && !prevShouldShowAdvStatus) {
+      clearAdv();
+      setAdvImages((prev) => {
+        return {
+          ...prev,
+          big: randomImage.big,
+        };
+      });
+    }
+  }, [prevShouldShowAdvStatus, shouldShowAdv, clearAdv]);
 
   useEffect(() => {
     if (user?.actorHandle?.actorId && !isChallengeFetched) {
@@ -40,8 +64,26 @@ export const Dashboard = ({
     }
   }, [fetchChallenges, user, isChallengeFetched]);
 
+  const handleClosed = useCallback(
+    () =>
+      setAdvImages((prev) => {
+        return {
+          ...prev,
+          big: null,
+        };
+      }),
+    []
+  );
+
   return (
     <main className={styles.dashboard}>
+      {advImages.big && (
+        <FullPageAdv
+          url={advImages.big}
+          handleClosed={handleClosed}
+          color={randomImage.color}
+        />
+      )}
       <Header
         title="Welcome to Vee"
         LeftComponent={SettingsIcon}
@@ -56,28 +98,33 @@ export const Dashboard = ({
               );
 
               return (
-                <Challenge
-                  key={
-                    challenge.challengePotential.challengeState.challengeDefinition
-                      .challengeReference.challengeId
-                  }
-                  data={challenge.challengePotential.challengeState}
-                  challengeIndex={i}
-                  userId={user.actorHandle.actorId}
-                  to={{
-                    pathname: CNST.ROUTES.CHALLENGE_SPECIFICS,
-                    state: {
-                      defaultTab: CNST.ROUTES.CHALLENGE_ACTIVITIES_TAB,
-                      role: participant.participantRole,
-                      isOwner:
-                        challenge.challengePotential.challengeState.challengeDefinition
-                          .challengeOwnerHandle.actorId === user.actorHandle.actorId,
-                      challengeId:
-                        challenge.challengePotential.challengeState.challengeDefinition
-                          .challengeReference.challengeId,
-                    },
-                  }}
-                />
+                <>
+                  <Challenge
+                    key={
+                      challenge.challengePotential.challengeState.challengeDefinition
+                        .challengeReference.challengeId
+                    }
+                    data={challenge.challengePotential.challengeState}
+                    challengeIndex={i}
+                    userId={user.actorHandle.actorId}
+                    to={{
+                      pathname: CNST.ROUTES.CHALLENGE_SPECIFICS,
+                      state: {
+                        defaultTab: CNST.ROUTES.CHALLENGE_ACTIVITIES_TAB,
+                        role: participant.participantRole,
+                        isOwner:
+                          challenge.challengePotential.challengeState.challengeDefinition
+                            .challengeOwnerHandle.actorId === user.actorHandle.actorId,
+                        challengeId:
+                          challenge.challengePotential.challengeState.challengeDefinition
+                            .challengeReference.challengeId,
+                      },
+                    }}
+                  />
+                  {i === 0 && (
+                    <SmallAdv url={randomImage.small} color={randomImage.color} />
+                  )}
+                </>
               );
             })}
           </section>

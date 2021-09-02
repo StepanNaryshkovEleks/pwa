@@ -14,9 +14,8 @@ const UserImage = ({userImg, className}) => (
   <img src={userImg} alt="User" className={className} />
 );
 
-export const Invitation = ({inviteUsers, challenge, observers, challengers}) => {
+export const Invitation = ({inviteUsers, observers, challengers}) => {
   const history = useHistory();
-  const id = challenge.challengeReference ? challenge.challengeReference.challengeId : "";
 
   const handleSubmit = () => {
     inviteUsers({history});
