@@ -46,10 +46,10 @@
 }
 
 .header {
-  flex-wrap: wrap-reverse;
+  flex-wrap: revert;
   min-height: 30px;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
