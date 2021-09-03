@@ -104,3 +104,9 @@
   /* tabs bar and header height */
   padding-top: 88px;
 }
+
+.challenger :global(.anticon-warning) {
+  font-size: 30px;
+  color: orange;
+  margin-right: 10px;
+}

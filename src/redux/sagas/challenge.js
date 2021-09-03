@@ -752,11 +752,13 @@ export function* getMediaFile(props) {
     } else {
       yield put({
         type: CNST.CHALLENGE.GET_MEDIA_FILE.ERROR,
+        payload: props.payload,
       });
     }
   } catch (error) {
     yield put({
       type: CNST.CHALLENGE.GET_MEDIA_FILE.ERROR,
+      payload: props.payload,
     });
   }
 }

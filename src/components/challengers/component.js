@@ -9,7 +9,7 @@ import voteIcon from "../../images/vote.svg";
 import votedIcon from "../../images/voted.svg";
 import addUser from "../../images/add-user-white.svg";
 import userImg from "../../images/user.png";
-import {EllipsisOutlined, TrophyFilled} from "@ant-design/icons";
+import {EllipsisOutlined, TrophyFilled, WarningFilled} from "@ant-design/icons";
 import getWInner from "../../helpers/getWInner";
 import ChallengeActivities from "../challenge-activities";
 
@@ -111,32 +111,36 @@ export const Challengers = ({
                       {getVotes(striveEntry, file.striveMediaId.id)} votes
                     </span>
                   </div>
-                  <div
-                    className={`${styles.mediaContainer} ${
-                      shouldBlockVote ? styles.mediaContainerSmall : ""
-                    }`}
-                    onClick={() => setShowMedia([file])}
-                  >
-                    {media.mediaFile &&
-                      (media.mediaType.mime.includes("video") ? (
-                        <video
-                          playsInline
-                          className={styles.media}
-                          muted
-                          preload="metadata"
-                          autoPlay
-                          ref={refs[i]}
-                        >
-                          <source src={URL.createObjectURL(media.mediaFile)} />
-                        </video>
-                      ) : (
-                        <img
-                          className={styles.media}
-                          src={URL.createObjectURL(media.mediaFile)}
-                          alt="Content"
-                        />
-                      ))}
-                  </div>
+
+                  {!media.fetching && media.error && <WarningFilled />}
+                  {!media.error && (
+                    <div
+                      className={`${styles.mediaContainer} ${
+                        shouldBlockVote ? styles.mediaContainerSmall : ""
+                      }`}
+                      onClick={() => setShowMedia([file])}
+                    >
+                      {media.mediaFile &&
+                        (media.mediaType.mime.includes("video") ? (
+                          <video
+                            playsInline
+                            className={styles.media}
+                            muted
+                            preload="metadata"
+                            autoPlay
+                            ref={refs[i]}
+                          >
+                            <source src={URL.createObjectURL(media.mediaFile)} />
+                          </video>
+                        ) : (
+                          <img
+                            className={styles.media}
+                            src={URL.createObjectURL(media.mediaFile)}
+                            alt="Content"
+                          />
+                        ))}
+                    </div>
+                  )}
                   {media.details && winnerName === media.details.actorHandle.assetId.id && (
                     <span className={styles.trophy}>
                       <TrophyFilled />

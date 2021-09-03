@@ -38,6 +38,8 @@
 }
 
 .mediaContainer {
+  min-width: 40px;
+  min-height: 40px;
   padding: 1px;
   background: linear-gradient(#006dff, #00efff);
   border-radius: 3px;
@@ -60,4 +62,9 @@
   z-index: 101;
   /* tabs bar and header height */
   padding-top: 88px;
+}
+
+.main :global(.anticon-warning) {
+  font-size: 30px;
+  color: orange;
 }

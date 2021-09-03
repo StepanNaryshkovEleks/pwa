@@ -2,6 +2,7 @@ import React, {useEffect, useState, createRef} from "react";
 import styles from "./_.module.css";
 import userImg from "../../images/user.png";
 import ChallengeActivities from "../challenge-activities";
+import {WarningFilled} from "@ant-design/icons";
 
 const statusMap = {
   INVITED: "Invited to this Challenge",
@@ -74,7 +75,8 @@ export const ChallengeOwnerActivities = ({
                 {statusMap[user.participantStatus]}
               </span>
             </div>
-            {user.participantStatus === "UPLOADED" && (
+            {!user.fetching && user.error && <WarningFilled />}
+            {!user.error && user.participantStatus === "UPLOADED" && (
               <div className={styles.mediaContainer} onClick={() => setShowMedia([user])}>
                 {user.mediaFile &&
                   (user.mediaType.mime.includes("video") ? (

@@ -141,7 +141,7 @@ export default function reducer(state = defaultState, action) {
         ...state,
         mediaFilesForDetails: {
           ...state.mediaFilesForDetails,
-          [action.payload.details.mediaId.id]: {
+          [action.payload.mediaId]: {
             error: true,
             fetching: false,
           },
