@@ -8,6 +8,7 @@ import {clearChallengeAction} from "../../redux/actions/challenge/clearChallenge
 export const mapStateToProps = (state) => ({
   user: state.user,
   challenge: state.challenge.data,
+  mediaFiles: state.challenge.mediaFilesForDetails,
 });
 
 export const mapDispatchToProps = (dispatch) => ({

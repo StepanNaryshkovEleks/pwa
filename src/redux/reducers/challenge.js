@@ -3,19 +3,30 @@ import CNST from "../../constants";
 const defaultState = {
   fetching: false,
   error: false,
+  mediaFilesForDetails: {},
 };
 
 export default function reducer(state = defaultState, action) {
   switch (action.type) {
     case CNST.CHALLENGE.GET_CHALLENGE.FETCH:
     case CNST.CHALLENGE.VOTE_CHALLENGE.FETCH:
-    case CNST.CHALLENGE.GET_MEDIA_FILES.FETCH:
-    case CNST.CHALLENGE.GET_MEDIA_FILE.FETCH: {
+    case CNST.CHALLENGE.GET_MEDIA_FILES.FETCH: {
       return {
         ...state,
         fetching: true,
         error: false,
         shouldFetchChallenge: false,
+      };
+    }
+    case CNST.CHALLENGE.GET_MEDIA_FILE.FETCH: {
+      return {
+        ...state,
+        mediaFilesForDetails: {
+          ...state.mediaFilesForDetails,
+          [action.payload.mediaId]: {
+            fetching: true,
+          },
+        },
       };
     }
     case CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.SUCCESS: {
@@ -106,36 +117,35 @@ export default function reducer(state = defaultState, action) {
     case CNST.CHALLENGE.GET_MEDIA_FILE.SUCCESS: {
       return {
         ...state,
-        fetching: false,
-        data: {
-          ...state.data,
-          challengeState: {
-            ...state.data.challengeState,
-            striveParticipantEntryArray: state.data.challengeState.striveParticipantEntryArray.map(
-              (el) => {
-                if (el.striveMediaId.id === action.payload.details.mediaId.id) {
-                  return {
-                    ...el,
-                    ...action.payload,
-                  };
-                } else {
-                  return el;
-                }
-              }
-            ),
+        mediaFilesForDetails: {
+          ...state.mediaFilesForDetails,
+          [action.payload.details.mediaId.id]: {
+            ...action.payload,
+            fetching: false,
           },
         },
       };
     }
     case CNST.CHALLENGE.VOTE_CHALLENGE.ERROR:
     case CNST.CHALLENGE.GET_CHALLENGE.ERROR:
-    case CNST.CHALLENGE.GET_MEDIA_FILES.ERROR:
-    case CNST.CHALLENGE.GET_MEDIA_FILE.ERROR: {
+    case CNST.CHALLENGE.GET_MEDIA_FILES.ERROR: {
       return {
         ...state,
         error: true,
         fetching: false,
         shouldFetchChallenge: false,
+      };
+    }
+    case CNST.CHALLENGE.GET_MEDIA_FILE.ERROR: {
+      return {
+        ...state,
+        mediaFilesForDetails: {
+          ...state.mediaFilesForDetails,
+          [action.payload.details.mediaId.id]: {
+            error: true,
+            fetching: false,
+          },
+        },
       };
     }
     case CNST.CHALLENGE.CLEAR_CHALLENGE_SUCCESS: {

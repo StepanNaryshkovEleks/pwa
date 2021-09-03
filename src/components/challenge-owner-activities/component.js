@@ -10,10 +10,16 @@ const statusMap = {
   UPLOADED: "Uploaded Video",
 };
 
-export const ChallengeOwnerActivities = ({challenge, challengeId, role, actorId}) => {
+export const ChallengeOwnerActivities = ({
+  challenge,
+  challengeId,
+  role,
+  actorId,
+  mediaFiles,
+}) => {
   const [showMedia, setShowMedia] = useState(false);
   const participants = challenge?.challengeState.participantArray || [];
-  const mediaFiles = challenge?.mediaFiles || [];
+  const striveEntry = challenge?.challengeState.striveParticipantEntryArray || [];
 
   const invited = participants.map((user) => ({
     ...user,
@@ -21,14 +27,18 @@ export const ChallengeOwnerActivities = ({challenge, challengeId, role, actorId}
   }));
   const rejected = participants.filter((user) => user.participantStatus === "DISENGAGED");
   const accepted = participants.filter((user) => user.participantStatus === "ENGAGED");
-  const uploaded = mediaFiles.map((file) => ({
-    ...file,
-    participantStatus: "UPLOADED",
-    participantName: file.details.actorHandle.assetId.id,
-  }));
+  const uploaded = striveEntry.map((file) => {
+    const media = mediaFiles[file.striveMediaId.id];
+    return {
+      ...file,
+      ...media,
+      participantStatus: "UPLOADED",
+      participantName: media.details ? media.details.actorHandle.assetId.id : "",
+    };
+  });
 
   const data = [...uploaded, ...accepted, ...rejected, ...invited];
-  const refs = mediaFiles.map(() => createRef());
+  const refs = striveEntry.map(() => createRef());
 
   useEffect(() => {
     refs.forEach((ref) => {
@@ -43,7 +53,8 @@ export const ChallengeOwnerActivities = ({challenge, challengeId, role, actorId}
       {showMedia && (
         <div className={styles.singleMedia} onClick={() => setShowMedia(false)}>
           <ChallengeActivities
-            mediaFiles={showMedia}
+            mediaDetails={showMedia}
+            mediaFiles={mediaFiles}
             singleView
             actorId={actorId}
             role={role}
@@ -65,24 +76,25 @@ export const ChallengeOwnerActivities = ({challenge, challengeId, role, actorId}
             </div>
             {user.participantStatus === "UPLOADED" && (
               <div className={styles.mediaContainer} onClick={() => setShowMedia([user])}>
-                {user.mediaType.mime.includes("video") ? (
-                  <video
-                    playsInline
-                    className={styles.media}
-                    muted
-                    preload="metadata"
-                    autoPlay
-                    ref={refs[i]}
-                  >
-                    <source src={URL.createObjectURL(user.mediaFile)} />
-                  </video>
-                ) : (
-                  <img
-                    className={styles.media}
-                    src={URL.createObjectURL(user.mediaFile)}
-                    alt="Content"
-                  />
-                )}
+                {user.mediaFile &&
+                  (user.mediaType.mime.includes("video") ? (
+                    <video
+                      playsInline
+                      className={styles.media}
+                      muted
+                      preload="metadata"
+                      autoPlay
+                      ref={refs[i]}
+                    >
+                      <source src={URL.createObjectURL(user.mediaFile)} />
+                    </video>
+                  ) : (
+                    <img
+                      className={styles.media}
+                      src={URL.createObjectURL(user.mediaFile)}
+                      alt="Content"
+                    />
+                  ))}
               </div>
             )}
           </div>

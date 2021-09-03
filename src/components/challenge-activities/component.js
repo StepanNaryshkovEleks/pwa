@@ -16,6 +16,7 @@ export const ChallengeActivities = ({
   challengeId,
   voteChallenge,
   mediaDetails,
+  mediaFiles,
   singleView,
   onClose,
   challenge,
@@ -26,6 +27,7 @@ export const ChallengeActivities = ({
     <Carousel>
       {mediaDetails &&
         mediaDetails.map((file, i) => {
+          const media = mediaFiles[file.striveMediaId.id] || {};
           const indxInVoting = challenge.challengeState.voteParticipantEntryArray.findIndex(
             (el) => el.participantId === actorId
           );
@@ -45,11 +47,11 @@ export const ChallengeActivities = ({
               key={file.striveMediaId.id}
               onClick={(e) => e.stopPropagation()}
             >
-              <Media file={file} />
+              <Media file={media} />
               <div className={styles.user}>
                 <img src={userImg} alt="User" className={styles.userImg} />
                 <span className={styles.userName}>
-                  {file.details ? file.details.actorHandle.assetId.id : ""}
+                  {media.details ? media.details.actorHandle.assetId.id : ""}
                 </span>
               </div>
               {singleView ? (

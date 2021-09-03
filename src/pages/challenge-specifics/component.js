@@ -31,6 +31,7 @@ export const ChallengeSpecifics = ({
   fetchChallenge,
   getMediaFile,
   challenge,
+  mediaFiles,
 }) => {
   const history = useHistory();
   const [isMediaFetched, setMediaFetched] = useState(false);
@@ -41,9 +42,7 @@ export const ChallengeSpecifics = ({
   const mediaDetails = challenge?.challengeState?.striveParticipantEntryArray;
   const challengeOwnerId =
     challenge?.challengeState.challengeDefinition.challengeOwnerHandle.actorId;
-  const loadedFiles = challenge
-    ? challenge.challengeState.striveParticipantEntryArray.filter((el) => el.mediaFile)
-    : [];
+  const loadedFiles = Object.values(mediaFiles).filter((el) => !el.fetching);
   const percent = mediaDetails ? (loadedFiles.length * 100) / mediaDetails.length : 0;
 
   useEffect(() => {
@@ -81,7 +80,6 @@ export const ChallengeSpecifics = ({
         LeftComponent={(props) => BackIcon({...props, onClick: () => history.goBack()})}
         RightComponent={(props) => UserImage({...props, userImg})}
       />
-      {percent < 100 && <Progress percent={percent} showInfo={false} />}
       <Tabs
         className={`${styles.tabs} ${isOwner ? styles.tabsOwner : ""}`}
         tabPosition={"top"}
@@ -102,6 +100,7 @@ export const ChallengeSpecifics = ({
               actorId={user.actorHandle.actorId}
               challengeId={challengeId}
               mediaDetails={mediaDetails}
+              mediaFiles={mediaFiles}
             />
           )}
         </TabPane>
@@ -119,6 +118,7 @@ export const ChallengeSpecifics = ({
         </TabPane>
       </Tabs>
       <Footer />
+      {percent < 100 && <Progress percent={percent} showInfo={false} />}
     </div>
   );
 };
