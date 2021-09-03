@@ -6,3 +6,10 @@ export function getMediaFilesAction(data) {
     payload: data,
   };
 }
+
+export function getMediaFileAction(data) {
+  return {
+    type: CNST.CHALLENGE.GET_MEDIA_FILE.FETCH,
+    payload: data,
+  };
+}

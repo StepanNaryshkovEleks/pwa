@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import Spinner from "../../components/spinner";
 import userImg from "../../images/user.png";
 import backIcon from "../../images/chevron-left.svg";
 import {useHistory} from "react-router-dom";
-import {Tabs} from "antd";
+import {Tabs, Progress} from "antd";
 import styles from "./_.module.css";
 import CNST from "../../constants";
 import ChallengeActivities from "../../components/challenge-activities";
@@ -30,9 +29,8 @@ export const ChallengeSpecifics = ({
   user,
   clearChallenge,
   fetchChallenge,
-  getMediaFiles,
+  getMediaFile,
   challenge,
-  isFetching,
 }) => {
   const history = useHistory();
   const [isMediaFetched, setMediaFetched] = useState(false);
@@ -43,7 +41,10 @@ export const ChallengeSpecifics = ({
   const mediaDetails = challenge?.challengeState?.striveParticipantEntryArray;
   const challengeOwnerId =
     challenge?.challengeState.challengeDefinition.challengeOwnerHandle.actorId;
-  const mediaFiles = challenge?.mediaFiles ? challenge.mediaFiles : [];
+  const loadedFiles = challenge
+    ? challenge.challengeState.striveParticipantEntryArray.filter((el) => el.mediaFile)
+    : [];
+  const percent = mediaDetails ? (loadedFiles.length * 100) / mediaDetails.length : 0;
 
   useEffect(() => {
     fetchChallenge({challengeId});
@@ -57,13 +58,17 @@ export const ChallengeSpecifics = ({
       !isMediaFetched
     ) {
       setMediaFetched(true);
-      getMediaFiles({
-        challengeId,
-        challengeOwnerId,
-        mediaDetails,
+      mediaDetails.map((media) => {
+        getMediaFile({
+          securityToken: user.securityToken,
+          challengeId,
+          challengeOwnerId,
+          mediaOwnerId: media.participantId,
+          mediaId: media.striveMediaId.id,
+        });
       });
     }
-  }, [challengeId, getMediaFiles, mediaDetails, challengeOwnerId, isMediaFetched]);
+  }, [challengeId, getMediaFile, mediaDetails, challengeOwnerId, isMediaFetched, user]);
 
   useEffect(() => {
     return () => clearChallenge();
@@ -71,12 +76,12 @@ export const ChallengeSpecifics = ({
 
   return (
     <div className={styles.challenges}>
-      {isFetching && <Spinner />}
       <Header
         title={`${title}`}
         LeftComponent={(props) => BackIcon({...props, onClick: () => history.goBack()})}
         RightComponent={(props) => UserImage({...props, userImg})}
       />
+      {percent < 100 && <Progress percent={percent} showInfo={false} />}
       <Tabs
         className={`${styles.tabs} ${isOwner ? styles.tabsOwner : ""}`}
         tabPosition={"top"}
@@ -96,7 +101,7 @@ export const ChallengeSpecifics = ({
               role={role}
               actorId={user.actorHandle.actorId}
               challengeId={challengeId}
-              mediaFiles={mediaFiles}
+              mediaDetails={mediaDetails}
             />
           )}
         </TabPane>

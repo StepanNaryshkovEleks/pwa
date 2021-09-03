@@ -9,7 +9,8 @@ export default function reducer(state = defaultState, action) {
   switch (action.type) {
     case CNST.CHALLENGE.GET_CHALLENGE.FETCH:
     case CNST.CHALLENGE.VOTE_CHALLENGE.FETCH:
-    case CNST.CHALLENGE.GET_MEDIA_FILES.FETCH: {
+    case CNST.CHALLENGE.GET_MEDIA_FILES.FETCH:
+    case CNST.CHALLENGE.GET_MEDIA_FILE.FETCH: {
       return {
         ...state,
         fetching: true,
@@ -102,9 +103,34 @@ export default function reducer(state = defaultState, action) {
         },
       };
     }
+    case CNST.CHALLENGE.GET_MEDIA_FILE.SUCCESS: {
+      return {
+        ...state,
+        fetching: false,
+        data: {
+          ...state.data,
+          challengeState: {
+            ...state.data.challengeState,
+            striveParticipantEntryArray: state.data.challengeState.striveParticipantEntryArray.map(
+              (el) => {
+                if (el.striveMediaId.id === action.payload.details.mediaId.id) {
+                  return {
+                    ...el,
+                    ...action.payload,
+                  };
+                } else {
+                  return el;
+                }
+              }
+            ),
+          },
+        },
+      };
+    }
     case CNST.CHALLENGE.VOTE_CHALLENGE.ERROR:
     case CNST.CHALLENGE.GET_CHALLENGE.ERROR:
-    case CNST.CHALLENGE.GET_MEDIA_FILES.ERROR: {
+    case CNST.CHALLENGE.GET_MEDIA_FILES.ERROR:
+    case CNST.CHALLENGE.GET_MEDIA_FILE.ERROR: {
       return {
         ...state,
         error: true,

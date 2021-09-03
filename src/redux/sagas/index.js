@@ -12,6 +12,7 @@ import {
   getMediaFiles,
   submitChallengeWinner,
   getWinnerMedia,
+  getMediaFile,
 } from "./challenge";
 
 export default function* rootSaga() {
@@ -30,4 +31,5 @@ export default function* rootSaga() {
   yield takeLatest(CNST.CHALLENGE.GET_MEDIA_FILES.FETCH, getMediaFiles);
   yield takeLatest(CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.FETCH, submitChallengeWinner);
   yield takeEvery(CNST.CHALLENGE.GET_WINNER_FILE.FETCH, getWinnerMedia);
+  yield takeEvery(CNST.CHALLENGE.GET_MEDIA_FILE.FETCH, getMediaFile);
 }
