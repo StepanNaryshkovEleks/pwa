@@ -122,7 +122,11 @@ export const Dashboard = ({
                     }}
                   />
                   {i === 0 && (
-                    <SmallAdv url={randomImage.small} color={randomImage.color} />
+                    <SmallAdv
+                      key="advertisement"
+                      url={randomImage.small}
+                      color={randomImage.color}
+                    />
                   )}
                 </>
               );
