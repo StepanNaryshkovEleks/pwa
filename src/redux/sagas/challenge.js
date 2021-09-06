@@ -730,3 +730,35 @@ export function* getMediaFiles(props) {
     });
   }
 }
+
+export function* getMediaFile(props) {
+  try {
+    const details = yield call(getMediaDetailsRequest, props.payload);
+    const response = yield call(getMediaRequest, {
+      ...props.payload,
+      mediaExtension: details.data.mediaHandle.mediaExtension,
+    });
+
+    if (isResponseOk(response) && isResponseOk(details)) {
+      const mediaType = yield call(FileType.fromBlob, response.data);
+      yield put({
+        type: CNST.CHALLENGE.GET_MEDIA_FILE.SUCCESS,
+        payload: {
+          details: details.data,
+          mediaFile: response.data,
+          mediaType,
+        },
+      });
+    } else {
+      yield put({
+        type: CNST.CHALLENGE.GET_MEDIA_FILE.ERROR,
+        payload: props.payload,
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: CNST.CHALLENGE.GET_MEDIA_FILE.ERROR,
+      payload: props.payload,
+    });
+  }
+}

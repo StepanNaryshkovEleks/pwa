@@ -36,3 +36,8 @@
 .tabsOwner :global(.ant-tabs-tab:nth-of-type(2)) {
   order: 3;
 }
+
+.challenges :global(.ant-progress) {
+  position: fixed;
+  bottom: 15px;
+}

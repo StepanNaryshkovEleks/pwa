@@ -3,6 +3,7 @@ import CNST from "../../constants";
 const defaultState = {
   fetching: false,
   error: false,
+  mediaFilesForDetails: {},
 };
 
 export default function reducer(state = defaultState, action) {
@@ -15,6 +16,17 @@ export default function reducer(state = defaultState, action) {
         fetching: true,
         error: false,
         shouldFetchChallenge: false,
+      };
+    }
+    case CNST.CHALLENGE.GET_MEDIA_FILE.FETCH: {
+      return {
+        ...state,
+        mediaFilesForDetails: {
+          ...state.mediaFilesForDetails,
+          [action.payload.mediaId]: {
+            fetching: true,
+          },
+        },
       };
     }
     case CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.SUCCESS: {
@@ -102,6 +114,18 @@ export default function reducer(state = defaultState, action) {
         },
       };
     }
+    case CNST.CHALLENGE.GET_MEDIA_FILE.SUCCESS: {
+      return {
+        ...state,
+        mediaFilesForDetails: {
+          ...state.mediaFilesForDetails,
+          [action.payload.details.mediaId.id]: {
+            ...action.payload,
+            fetching: false,
+          },
+        },
+      };
+    }
     case CNST.CHALLENGE.VOTE_CHALLENGE.ERROR:
     case CNST.CHALLENGE.GET_CHALLENGE.ERROR:
     case CNST.CHALLENGE.GET_MEDIA_FILES.ERROR: {
@@ -110,6 +134,18 @@ export default function reducer(state = defaultState, action) {
         error: true,
         fetching: false,
         shouldFetchChallenge: false,
+      };
+    }
+    case CNST.CHALLENGE.GET_MEDIA_FILE.ERROR: {
+      return {
+        ...state,
+        mediaFilesForDetails: {
+          ...state.mediaFilesForDetails,
+          [action.payload.mediaId]: {
+            error: true,
+            fetching: false,
+          },
+        },
       };
     }
     case CNST.CHALLENGE.CLEAR_CHALLENGE_SUCCESS: {

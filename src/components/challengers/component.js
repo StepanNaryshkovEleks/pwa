@@ -9,12 +9,13 @@ import voteIcon from "../../images/vote.svg";
 import votedIcon from "../../images/voted.svg";
 import addUser from "../../images/add-user-white.svg";
 import userImg from "../../images/user.png";
-import {EllipsisOutlined, TrophyFilled} from "@ant-design/icons";
+import {EllipsisOutlined, TrophyFilled, WarningFilled} from "@ant-design/icons";
 import getWInner from "../../helpers/getWInner";
 import ChallengeActivities from "../challenge-activities";
 
 export const Challengers = ({
   challenge,
+  mediaFiles,
   challengeId,
   isChallengeOwner,
   role,
@@ -25,27 +26,30 @@ export const Challengers = ({
   const [search, setSearch] = useState("");
   const [activeRow, setActiveRow] = useState("");
   const [showMedia, setShowMedia] = useState(false);
-
+  const striveEntry = challenge?.challengeState?.striveParticipantEntryArray || [];
   const isThereWinner = !!challenge?.challengeState?.selectParticipantEntryArray.length;
-  const mediaDetails = challenge?.challengeState.striveParticipantEntryArray;
+  const mediaDetails = striveEntry
+    .filter((file) => {
+      const media = mediaFiles[file.striveMediaId.id];
+      return media.details
+        ? media.details.actorHandle.assetId.id
+            .toLowerCase()
+            .includes(search.toLowerCase())
+        : true;
+    })
+    .sort((a, b) => {
+      const entryId = findEntryId(striveEntry, a.striveMediaId.id);
+      const isFileVoted = isVoted(
+        challenge.challengeState.voteParticipantEntryArray,
+        entryId,
+        actorId
+      );
+      return isFileVoted ? -1 : 0;
+    });
+
   const challengeOwnerId =
     challenge?.challengeState.challengeDefinition.challengeOwnerHandle.actorId;
-  const mediaFiles = challenge?.mediaFiles
-    ? challenge.mediaFiles
-        .filter((file) =>
-          file.details.actorHandle.assetId.id.toLowerCase().includes(search.toLowerCase())
-        )
-        .sort((a, b) => {
-          const entryId = findEntryId(mediaDetails, a.details.mediaId.id);
-          const isFileVoted = isVoted(
-            challenge.challengeState.voteParticipantEntryArray,
-            entryId,
-            actorId
-          );
-          return isFileVoted ? -1 : 0;
-        })
-    : [];
-  const refs = mediaFiles.map(() => createRef());
+  const refs = mediaDetails.map(() => createRef());
 
   useEffect(() => {
     refs.forEach((ref) => {
@@ -60,7 +64,8 @@ export const Challengers = ({
       {showMedia && (
         <div className={styles.singleMedia} onClick={() => setShowMedia(false)}>
           <ChallengeActivities
-            mediaFiles={showMedia}
+            mediaDetails={showMedia}
+            mediaFiles={mediaFiles}
             singleView
             actorId={actorId}
             role={role}
@@ -72,17 +77,19 @@ export const Challengers = ({
       )}
       <Search value={search} setValue={setSearch} />
       <div>
-        {mediaFiles &&
-          mediaFiles.map((file, i) => {
+        {mediaDetails &&
+          mediaDetails.map((file, i) => {
+            const media = mediaFiles[file.striveMediaId.id];
             const winnerName = getWInner(challenge.challengeState);
-            const entryId = findEntryId(mediaDetails, file.details.mediaId.id);
+            const entryId = findEntryId(mediaDetails, file.striveMediaId.id);
             const shouldBlockVote = isVoted(
               challenge.challengeState.voteParticipantEntryArray,
               entryId,
               actorId
             );
-            const isWinnerRow = winnerName === file.details.actorHandle.assetId.id;
-            const isActive = file.details.mediaId.id === activeRow;
+            const isWinnerRow =
+              media.details && winnerName === media.details.actorHandle.assetId.id;
+            const isActive = file.striveMediaId.id === activeRow;
             const indxInVoting = challenge.challengeState.voteParticipantEntryArray.findIndex(
               (el) => el.participantId === actorId
             );
@@ -92,48 +99,49 @@ export const Challengers = ({
                 className={`${styles.wrap} ${
                   isActive || isWinnerRow ? styles.wrapActive : ""
                 }`}
-                key={file.details.mediaId.id}
+                key={file.striveMediaId.id}
               >
                 <div className={styles.challenger}>
                   <img src={userImg} alt="User" className={styles.userImg} />
                   <div className={styles.challengerInfo}>
                     <span className={styles.userName}>
-                      {file.details.actorHandle.assetId.id}
+                      {media.details ? media.details.actorHandle.assetId.id : ""}
                     </span>
                     <span className={styles.votes}>
-                      {getVotes(
-                        challenge.challengeState.striveParticipantEntryArray,
-                        file.details.mediaId.id
-                      )}{" "}
-                      votes
+                      {getVotes(striveEntry, file.striveMediaId.id)} votes
                     </span>
                   </div>
-                  <div
-                    className={`${styles.mediaContainer} ${
-                      shouldBlockVote ? styles.mediaContainerSmall : ""
-                    }`}
-                    onClick={() => setShowMedia([file])}
-                  >
-                    {file.mediaType.mime.includes("video") ? (
-                      <video
-                        playsInline
-                        className={styles.media}
-                        muted
-                        preload="metadata"
-                        autoPlay
-                        ref={refs[i]}
-                      >
-                        <source src={URL.createObjectURL(file.mediaFile)} />
-                      </video>
-                    ) : (
-                      <img
-                        className={styles.media}
-                        src={URL.createObjectURL(file.mediaFile)}
-                        alt="Content"
-                      />
-                    )}
-                  </div>
-                  {winnerName === file.details.actorHandle.assetId.id && (
+
+                  {!media.fetching && media.error && <WarningFilled />}
+                  {!media.error && (
+                    <div
+                      className={`${styles.mediaContainer} ${
+                        shouldBlockVote ? styles.mediaContainerSmall : ""
+                      }`}
+                      onClick={() => setShowMedia([file])}
+                    >
+                      {media.mediaFile &&
+                        (media.mediaType.mime.includes("video") ? (
+                          <video
+                            playsInline
+                            className={styles.media}
+                            muted
+                            preload="metadata"
+                            autoPlay
+                            ref={refs[i]}
+                          >
+                            <source src={URL.createObjectURL(media.mediaFile)} />
+                          </video>
+                        ) : (
+                          <img
+                            className={styles.media}
+                            src={URL.createObjectURL(media.mediaFile)}
+                            alt="Content"
+                          />
+                        ))}
+                    </div>
+                  )}
+                  {media.details && winnerName === media.details.actorHandle.assetId.id && (
                     <span className={styles.trophy}>
                       <TrophyFilled />
                     </span>
@@ -145,8 +153,8 @@ export const Challengers = ({
                         !shouldBlockVote && indxInVoting === -1
                           ? voteChallenge({
                               actorId,
-                              mediaOwnerId: file.details.actorHandle.actorId,
-                              striveMediaId: file.details.mediaId.id,
+                              mediaOwnerId: file.participantId,
+                              striveMediaId: file.striveMediaId.id,
                               challengeReference: {challengeId},
                               voteEntryId: entryId,
                             })
@@ -164,7 +172,7 @@ export const Challengers = ({
                     </Button>
                   )}
                   {isChallengeOwner && !winnerName && !isThereWinner && (
-                    <span onClick={() => setActiveRow(file.details.mediaId.id)}>
+                    <span onClick={() => setActiveRow(file.striveMediaId.id)}>
                       <EllipsisOutlined />
                     </span>
                   )}

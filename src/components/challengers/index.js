@@ -6,6 +6,7 @@ import {submitChallengeWinnerAction} from "../../redux/actions/challenge/submitC
 export const mapStateToProps = (state) => ({
   user: state.user,
   challenge: state.challenge.data,
+  mediaFiles: state.challenge.mediaFilesForDetails,
 });
 
 export const mapDispatchToProps = (dispatch) => ({

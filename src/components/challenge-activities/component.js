@@ -1,4 +1,5 @@
 import React from "react";
+import Media from "../media";
 import {Carousel} from "antd";
 import {EllipsisOutlined, CloseOutlined} from "@ant-design/icons";
 import styles from "./_.module.css";
@@ -14,6 +15,7 @@ import findEntryId from "../../helpers/findEntryId";
 export const ChallengeActivities = ({
   challengeId,
   voteChallenge,
+  mediaDetails,
   mediaFiles,
   singleView,
   onClose,
@@ -23,14 +25,15 @@ export const ChallengeActivities = ({
 }) => {
   return (
     <Carousel>
-      {mediaFiles &&
-        mediaFiles.map((file, i) => {
+      {mediaDetails &&
+        mediaDetails.map((file, i) => {
+          const media = mediaFiles[file.striveMediaId.id] || {};
           const indxInVoting = challenge.challengeState.voteParticipantEntryArray.findIndex(
             (el) => el.participantId === actorId
           );
           const entryId = findEntryId(
             challenge.challengeState.striveParticipantEntryArray,
-            file.details.mediaId.id
+            file.striveMediaId.id
           );
           const shouldBlockVote = isVoted(
             challenge.challengeState.voteParticipantEntryArray,
@@ -41,30 +44,14 @@ export const ChallengeActivities = ({
           return (
             <div
               className={styles.challenger}
-              key={file.details.mediaId.id}
+              key={file.striveMediaId.id}
               onClick={(e) => e.stopPropagation()}
             >
-              {file.mediaType.mime.includes("video") ? (
-                <video
-                  playsInline
-                  className={styles.media}
-                  id="videoId"
-                  src={URL.createObjectURL(file.mediaFile)}
-                  muted
-                  autoPlay
-                  loop
-                />
-              ) : (
-                <img
-                  className={styles.media}
-                  src={URL.createObjectURL(file.mediaFile)}
-                  alt="Content"
-                />
-              )}
+              <Media file={media} />
               <div className={styles.user}>
                 <img src={userImg} alt="User" className={styles.userImg} />
                 <span className={styles.userName}>
-                  {file.details.actorHandle.assetId.id}
+                  {media.details ? media.details.actorHandle.assetId.id : ""}
                 </span>
               </div>
               {singleView ? (
@@ -80,7 +67,7 @@ export const ChallengeActivities = ({
                 <span className={styles.votesCount}>
                   {getVotes(
                     challenge.challengeState.striveParticipantEntryArray,
-                    file.details.mediaId.id
+                    file.striveMediaId.id
                   )}{" "}
                   votes
                 </span>
@@ -90,8 +77,8 @@ export const ChallengeActivities = ({
                       !shouldBlockVote && indxInVoting === -1
                         ? voteChallenge({
                             actorId,
-                            mediaOwnerId: file.details.actorHandle.actorId,
-                            striveMediaId: file.details.mediaId.id,
+                            mediaOwnerId: file.participantId,
+                            striveMediaId: file.striveMediaId.id,
                             challengeReference: {challengeId},
                             voteEntryId: entryId,
                           })
@@ -107,7 +94,7 @@ export const ChallengeActivities = ({
                   </button>
                 )}
               </div>
-              {i === 0 && mediaFiles.length > 1 && (
+              {i === 0 && mediaDetails.length > 1 && (
                 <div className={styles.tip}>
                   <span className={styles.tipText}>
                     Swipe to
