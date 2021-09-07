@@ -6,7 +6,7 @@ import userImg from "../../images/user.png";
 import {Link} from "react-router-dom";
 import CNST from "../../constants";
 import closeIcon from "../../images/close-white.svg";
-import {Button, notification, Modal} from "antd";
+import {Button, notification, Modal, Spin} from "antd";
 import VideoCamera from "../../images/video-camera.svg";
 import {Redirect} from "react-router";
 
@@ -50,6 +50,8 @@ const Video = ({file}) => {
 export const UploadMedia = ({match, uploadMedia, location}) => {
   const [files, setFiles] = useState([]);
   const [shouldBeRedirected, setRedirect] = useState(false);
+  const [isLoadingFile, setLoadingFile] = useState(false);
+  let loadingFile = useRef(null);
   const [isVisibleModal, setModalState] = useState(false);
   const [activeFile, setActiveFile] = useState(0);
   const handleFileInput = (e) => {
@@ -68,10 +70,11 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
       openNotificationWithIcon("Sorry, we do not support this format of the file");
       return;
     }
-
+    setLoadingFile(true);
     if (type === "video") {
-      var video = document.createElement("video");
+      let video = document.createElement("video");
       video.src = url;
+      loadingFile.current = video;
       video.addEventListener("durationchange", () => {
         const duration = video.duration.toFixed(0);
         if (duration > 30) {
@@ -103,6 +106,7 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
         },
       ]);
     }
+    setLoadingFile(false);
   };
 
   const handleSubmit = () => {
@@ -118,6 +122,12 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
     return <Redirect to={CNST.ROUTES.DASHBOARD} />;
   }
 
+  const handleCancelUploading = () => {
+    setLoadingFile(false);
+    loadingFile.current?.remove();
+    loadingFile.current = null;
+  };
+
   return (
     <>
       <Helmet>
@@ -131,6 +141,18 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
         }
         RightComponent={(props) => UserImage({...props, userImg})}
       />
+      {isLoadingFile && (
+        <div className={styles.loadingWrap}>
+          <Spin tip="Loading..." />
+          <button
+            className={styles.cancelBtn}
+            type="button"
+            onClick={handleCancelUploading}
+          >
+            Cancel
+          </button>
+        </div>
+      )}
       <Modal
         wrapClassName={styles.modalWrap}
         title="Do you want to exit?"

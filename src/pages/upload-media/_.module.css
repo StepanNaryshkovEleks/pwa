@@ -89,6 +89,30 @@
   color: white;
 }
 
+.loadingWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.cancelBtn {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  color: #ff4d4f;
+  font-size: 16px;
+  margin-top: 20px;
+  text-indent: -7px;
+}
+
 .input {
   cursor: pointer;
   position: absolute;
