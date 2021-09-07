@@ -51,7 +51,7 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
   const [files, setFiles] = useState([]);
   const [shouldBeRedirected, setRedirect] = useState(false);
   const [isLoadingFile, setLoadingFile] = useState(false);
-  let loadingFn = useRef(true);
+  let loadingFile = useRef(null);
   const [isVisibleModal, setModalState] = useState(false);
   const [activeFile, setActiveFile] = useState(0);
   const handleFileInput = (e) => {
@@ -74,30 +74,25 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
     if (type === "video") {
       let video = document.createElement("video");
       video.src = url;
-      setTimeout(() => {
-        video.remove();
-        console.log("removed");
-      }, 1999);
-      setTimeout(() => {
-        video.addEventListener("durationchange", () => {
-          const duration = video.duration.toFixed(0);
-          // if (duration > 30) {
-          //   openNotificationWithIcon("The duration should be less than 30sec");
-          //   return;
-          // }
-          setFiles([
-            ...files,
-            {
-              file,
-              url,
-              duration,
-              type,
-              fileSize: file.size,
-              mediaExtension,
-            },
-          ]);
-        });
-      }, 2000);
+      loadingFile.current = video;
+      video.addEventListener("durationchange", () => {
+        const duration = video.duration.toFixed(0);
+        if (duration > 30) {
+          openNotificationWithIcon("The duration should be less than 30sec");
+          return;
+        }
+        setFiles([
+          ...files,
+          {
+            file,
+            url,
+            duration,
+            type,
+            fileSize: file.size,
+            mediaExtension,
+          },
+        ]);
+      });
     } else {
       setFiles([
         ...files,
@@ -129,6 +124,8 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
 
   const handleCancelUploading = () => {
     setLoadingFile(false);
+    loadingFile.current?.remove();
+    loadingFile.current = null;
   };
 
   return (
