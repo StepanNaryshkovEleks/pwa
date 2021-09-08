@@ -30,9 +30,6 @@ function searchHelper(data, search) {
       .includes(search.toLowerCase()) ||
     data.challengePotential.challengeState.challengeDefinition.challengeDescription
       .toLowerCase()
-      .includes(search.toLowerCase()) ||
-    data.challengePotential.challengeState.challengeDefinition.challengeReference.challengeId
-      .toLowerCase()
       .includes(search.toLowerCase())
   );
 }
