@@ -19,16 +19,8 @@ axios.interceptors.response.use(
     }
 
     if (error.response.status >= 400) {
-      if (
-        error.response.status === 403 &&
-        error.response.config.url !== "application/vee/signup"
-      ) {
+      if (error.response.status === 403) {
         store.dispatch(signOutAction());
-      } else if (
-        error.response.status === 403 &&
-        error.response.config.url === "application/vee/signup"
-      ) {
-        openNotificationWithIcon(403, "This name already exists");
       } else {
         openNotificationWithIcon(error.response.status);
       }
