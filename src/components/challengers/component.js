@@ -12,6 +12,7 @@ import userImg from "../../images/user.png";
 import {EllipsisOutlined, TrophyFilled, WarningFilled} from "@ant-design/icons";
 import getWInner from "../../helpers/getWInner";
 import ChallengeActivities from "../challenge-activities";
+import {Spin} from "antd";
 
 export const Challengers = ({
   challenge,
@@ -111,15 +112,15 @@ export const Challengers = ({
                       {getVotes(striveEntry, file.striveMediaId.id)} votes
                     </span>
                   </div>
-
                   {!media.fetching && media.error && <WarningFilled />}
                   {!media.error && (
                     <div
                       className={`${styles.mediaContainer} ${
                         shouldBlockVote ? styles.mediaContainerSmall : ""
                       }`}
-                      onClick={() => setShowMedia([file])}
+                      onClick={() => !media.fetching && setShowMedia([file])}
                     >
+                      {media.fetching && <Spin />}
                       {media.mediaFile &&
                         (media.mediaType.mime.includes("video") ? (
                           <video
