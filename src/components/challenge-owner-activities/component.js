@@ -82,7 +82,11 @@ export const ChallengeOwnerActivities = ({
                 className={styles.mediaContainer}
                 onClick={() => !user.fetching && setShowMedia([user])}
               >
-                {user.fetching && <Spin />}
+                {user.fetching && (
+                  <div className={styles.spinnerBackground}>
+                    <Spin />
+                  </div>
+                )}
                 {user.mediaFile &&
                   (user.mediaType.mime.includes("video") ? (
                     <video

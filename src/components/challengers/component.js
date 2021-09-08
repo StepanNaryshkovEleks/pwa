@@ -120,7 +120,11 @@ export const Challengers = ({
                       }`}
                       onClick={() => !media.fetching && setShowMedia([file])}
                     >
-                      {media.fetching && <Spin />}
+                      {media.fetching && (
+                        <div className={styles.spinnerBackground}>
+                          <Spin />
+                        </div>
+                      )}
                       {media.mediaFile &&
                         (media.mediaType.mime.includes("video") ? (
                           <video
