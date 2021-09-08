@@ -3,6 +3,7 @@ import styles from "./_.module.css";
 import userImg from "../../images/user.png";
 import ChallengeActivities from "../challenge-activities";
 import {WarningFilled} from "@ant-design/icons";
+import {Spin} from "antd";
 
 const statusMap = {
   INVITED: "Invited to this Challenge",
@@ -77,7 +78,15 @@ export const ChallengeOwnerActivities = ({
             </div>
             {!user.fetching && user.error && <WarningFilled />}
             {!user.error && user.participantStatus === "UPLOADED" && (
-              <div className={styles.mediaContainer} onClick={() => setShowMedia([user])}>
+              <div
+                className={styles.mediaContainer}
+                onClick={() => !user.fetching && setShowMedia([user])}
+              >
+                {user.fetching && (
+                  <div className={styles.spinnerBackground}>
+                    <Spin />
+                  </div>
+                )}
                 {user.mediaFile &&
                   (user.mediaType.mime.includes("video") ? (
                     <video

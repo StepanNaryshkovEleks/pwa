@@ -54,6 +54,7 @@
 }
 
 .mediaContainer {
+  position: relative;
   min-width: 42px;
   min-height: 42px;
   padding: 1px;
@@ -109,4 +110,18 @@
   font-size: 30px;
   color: orange;
   margin-right: 10px;
+}
+
+.spinnerBackground {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 3px;
+}
+
+.challenger :global(.ant-spin) {
+  position: absolute;
+  left: 50%;
+  top: 57%;
+  transform: translate(-50%, -50%);
 }

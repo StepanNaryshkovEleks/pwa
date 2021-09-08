@@ -38,6 +38,7 @@
 }
 
 .mediaContainer {
+  position: relative;
   min-width: 40px;
   min-height: 40px;
   padding: 1px;
@@ -67,4 +68,18 @@
 .main :global(.anticon-warning) {
   font-size: 30px;
   color: orange;
+}
+
+.spinnerBackground {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 3px;
+}
+
+.main :global(.ant-spin) {
+  position: absolute;
+  left: 50%;
+  top: 57%;
+  transform: translate(-50%, -50%);
 }
