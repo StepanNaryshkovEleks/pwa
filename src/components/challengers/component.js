@@ -9,7 +9,7 @@ import voteIcon from "../../images/vote.svg";
 import votedIcon from "../../images/voted.svg";
 import addUser from "../../images/add-user-white.svg";
 import userImg from "../../images/user.png";
-import {EllipsisOutlined, TrophyFilled, WarningFilled} from "@ant-design/icons";
+import {EllipsisOutlined, StarTwoTone, WarningFilled} from "@ant-design/icons";
 import getWInner from "../../helpers/getWInner";
 import ChallengeActivities from "../challenge-activities";
 import {Spin} from "antd";
@@ -148,7 +148,7 @@ export const Challengers = ({
                   )}
                   {media.details && winnerName === media.details.actorHandle.assetId.id && (
                     <span className={styles.trophy}>
-                      <TrophyFilled />
+                      <StarTwoTone />
                     </span>
                   )}
                   {!isChallengeOwner && role !== "CHALLENGER" && (
