@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../../components/header";
 import styles from "./_.module.css";
+import dayjs from "dayjs";
 import {Tabs, Avatar, Input} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import {DatePicker, Select} from "antd";
@@ -144,9 +145,11 @@ export const SignUp = ({
                 Date of Birth
               </label>
               <DatePicker
+                disabledDate={(current) => current > dayjs().startOf("day")}
                 suffixIcon={React.Fragment}
                 bordered={false}
                 allowClear={true}
+                inputReadOnly={true}
                 placeholder="please input"
                 id="date"
                 className={styles.date}
@@ -167,7 +170,7 @@ export const SignUp = ({
               />
             </div>
             <div className={styles.row}>
-              <label htmlFor="date" className="label">
+              <label htmlFor="gender" className="label">
                 Gender
               </label>
               <Select
