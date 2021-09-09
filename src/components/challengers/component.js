@@ -94,7 +94,7 @@ export const Challengers = ({
             const indxInVoting = challenge.challengeState.voteParticipantEntryArray.findIndex(
               (el) => el.participantId === actorId
             );
-
+            const isVoteBtnShowed = !isChallengeOwner && role !== "CHALLENGER";
             return (
               <div
                 className={`${styles.wrap} ${
@@ -104,10 +104,17 @@ export const Challengers = ({
               >
                 <div className={styles.challenger}>
                   <img src={userImg} alt="User" className={styles.userImg} />
-                  <div className={styles.challengerInfo}>
-                    <span className={styles.userName}>
-                      {media.details ? media.details.actorHandle.assetId.id : ""}
-                    </span>
+                  <div
+                    className={`${styles.challengerInfo} ${
+                      isVoteBtnShowed ? styles.challengerInfoBig : ""
+                    }`}
+                  >
+                    <div className={styles.userNameWrap}>
+                      <span className={styles.userName}>
+                        {media.details ? media.details.actorHandle.assetId.id : ""}
+                      </span>
+                    </div>
+
                     <span className={styles.votes}>
                       {getVotes(striveEntry, file.striveMediaId.id)} votes
                     </span>
@@ -151,7 +158,7 @@ export const Challengers = ({
                       <StarTwoTone />
                     </span>
                   )}
-                  {!isChallengeOwner && role !== "CHALLENGER" && (
+                  {isVoteBtnShowed && (
                     <Button
                       disabled={!shouldBlockVote && indxInVoting !== -1}
                       onClick={() =>
