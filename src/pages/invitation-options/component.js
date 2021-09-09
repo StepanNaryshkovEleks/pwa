@@ -67,7 +67,6 @@ export const InvitationOptions = ({challenge}) => {
         <Setting icon={discoverIcon} title="Invite By Name" />
       </Link>
       <Setting
-        lassName={styles.link}
         icon={contactsIcon}
         title="Invite From Contacts"
         onClick={openNotification}
