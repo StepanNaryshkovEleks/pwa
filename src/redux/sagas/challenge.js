@@ -4,6 +4,7 @@ import CNST from "../../constants";
 import {isResponseOk} from "../../helpers/api/isResponseOk";
 import {getToken} from "../../helpers/local-storage-service";
 import getMediaId from "../../helpers/getMediaId";
+import sortByDate from "../../helpers/sortByDate";
 import {notification} from "antd";
 import base64ToHexString from "../../helpers/base64ToHexString";
 import FileType from "file-type/browser";
@@ -261,9 +262,19 @@ export function* getChallenges() {
           newData.rejected.push(detailedChallengesResponse[i]);
         }
       }
+
+      const resultSorted = {
+        ...newData,
+        created: sortByDate(newData.created),
+        active: sortByDate(newData.active),
+        invites: sortByDate(newData.invites),
+        rejected: sortByDate(newData.rejected),
+        closed: sortByDate(newData.closed),
+      };
+
       yield put({
         type: CNST.CHALLENGE.GET_CHALLENGES.SUCCESS_WITH_DETAILS,
-        payload: newData,
+        payload: resultSorted,
       });
     } else {
       yield put({
