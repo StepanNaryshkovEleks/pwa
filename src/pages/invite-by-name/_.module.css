@@ -29,6 +29,8 @@
   font-weight: bold;
   margin-right: auto;
   margin-left: 12px;
+  overflow: auto;
+  text-overflow: ellipsis;
 }
 
 .main :global(.ant-btn) {
@@ -38,6 +40,7 @@
   align-items: center;
   font-size: 14px;
   padding: 0 15px;
+  margin-left: 10px;
 }
 
 .main :global(.ant-btn).invited {
