@@ -9,7 +9,7 @@ const statusMap = {
   INVITED: "Invited to this Challenge",
   DISENGAGED: "Rejected Challenge",
   ENGAGED: "Accepted Challenge",
-  UPLOADED: "Uploaded Video",
+  UPLOADED: "Uploaded Media",
 };
 
 export const ChallengeOwnerActivities = ({
