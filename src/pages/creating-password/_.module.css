@@ -35,7 +35,7 @@
 }
 
 .form :global(.link--primary) {
-  margin-top: 35px;
+  margin-top: 20px;
   text-align: center;
 }
 
@@ -59,4 +59,14 @@
 
 .footerText {
   color: #888;
+}
+
+.error {
+  visibility: hidden;
+  color: red;
+  font-size: 12px;
+}
+
+.error.visible {
+  visibility: visible;
 }

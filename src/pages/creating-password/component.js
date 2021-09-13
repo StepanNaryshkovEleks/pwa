@@ -5,6 +5,7 @@ import {Input} from "antd";
 import styles from "./_.module.css";
 import Header from "../../components/header";
 import chevronLeft from "../../images/chevron-left.svg";
+import validate from "../../helpers/validate";
 
 const Icon = ({className}) => (
   <Link to={CNST.ROUTES.SIGN_UP}>
@@ -14,6 +15,12 @@ const Icon = ({className}) => (
 
 export const CreatingPassword = ({createPassword, password}) => {
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [validationError, setValidationError] = useState(false);
+
+  const handleBlur = (ev) => {
+    const isValidated = validate(ev.target.value, ev.target.name);
+    setValidationError(!isValidated);
+  };
 
   return (
     <>
@@ -28,11 +35,13 @@ export const CreatingPassword = ({createPassword, password}) => {
           </label>
           <Input.Password
             allowClear={true}
+            name="password"
             type="password"
             id="password"
             visibilityToggle={false}
             value={password}
             onChange={(event) => createPassword(event.target.value)}
+            onBlur={handleBlur}
           />
         </div>
         <div className={styles.row}>
@@ -47,11 +56,17 @@ export const CreatingPassword = ({createPassword, password}) => {
             onChange={(event) => setConfirmPassword(event.target.value)}
           />
         </div>
+        <div className={`${styles.error} ${validationError ? styles.visible : ""}`}>
+          Password should be 3-16 symbols and can contain only letters, digits and some
+          special symbols (# _ @ &#38; $ ! -)
+        </div>
         <Link
           to={CNST.ROUTES.INTERESTS}
           className="link link--primary"
           disabled={
-            password.length === 0 || (password.length > 0 && password !== confirmPassword)
+            password.length === 0 ||
+            (password.length > 0 && password !== confirmPassword) ||
+            validationError
           }
         >
           Set Password
