@@ -9,9 +9,12 @@ import {Button} from "antd";
 
 import challengesIcon from "../../images/challenges.svg";
 import friendsIcon from "../../images/my-friends.svg";
+import CNST from "../../constants";
 
 const UserImage = ({userImg, className}) => (
-  <img src={userImg} alt="User" className={className} />
+  <Link to={CNST.ROUTES.PROFILE}>
+    <img src={userImg} alt="User" className={className} />
+  </Link>
 );
 
 export const Invitation = ({inviteUsers, observers, challengers}) => {

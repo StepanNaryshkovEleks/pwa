@@ -12,6 +12,7 @@ import friendsIcon from "../../images/my-friends.svg";
 import globalIcon from "../../images/global.svg";
 import discoverIcon from "../../images/discover.svg";
 import contactsIcon from "../../images/contacts.svg";
+import CNST from "../../constants";
 
 const openNotification = () => {
   notification.info({
@@ -27,7 +28,9 @@ const SettingsIcon = ({className, onClick}) => (
 );
 
 const UserImage = ({userImg, className}) => (
-  <img src={userImg} alt="User" className={className} />
+  <Link to={CNST.ROUTES.PROFILE}>
+    <img src={userImg} alt="User" className={className} />
+  </Link>
 );
 
 const SwitchComponent = () => <Switch />;

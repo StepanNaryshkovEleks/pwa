@@ -3,7 +3,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import userImg from "../../images/user.png";
 import backIcon from "../../images/chevron-left.svg";
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {Tabs, Progress} from "antd";
 import styles from "./_.module.css";
 import CNST from "../../constants";
@@ -20,7 +20,9 @@ const BackIcon = ({className, onClick}) => (
   </button>
 );
 const UserImage = ({userImg, className}) => (
-  <img src={userImg} alt="User" className={className} />
+  <Link to={CNST.ROUTES.PROFILE}>
+    <img src={userImg} alt="User" className={className} />
+  </Link>
 );
 
 export const ChallengeSpecifics = ({

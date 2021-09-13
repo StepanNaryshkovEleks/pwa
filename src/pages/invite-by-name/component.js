@@ -4,12 +4,13 @@ import {Helmet} from "react-helmet";
 import Header from "../../components/header";
 import Search from "../../components/search";
 import {Button} from "antd";
-import {useHistory, useParams} from "react-router-dom";
+import {Link, useHistory, useParams} from "react-router-dom";
 
 import userImg from "../../images/user.png";
 import backIcon from "../../images/chevron-left-white.svg";
 import inviteUserIcon from "../../images/add-user-white.svg";
 import uninviteUserIcon from "../../images/add-user-black.svg";
+import CNST from "../../constants";
 
 const SettingsIcon = ({className, onClick}) => (
   <button className={styles.backButton} onClick={onClick}>
@@ -18,13 +19,14 @@ const SettingsIcon = ({className, onClick}) => (
 );
 
 const UserImage = ({userImg, className}) => (
-  <img src={userImg} alt="User" className={className} />
+  <Link to={CNST.ROUTES.PROFILE}>
+    <img src={userImg} alt="User" className={className} />
+  </Link>
 );
 
 export const InviteByName = ({
   fetchChallenge,
   challenge = {},
-  fetching,
   observers,
   challengers,
   inviteUser,

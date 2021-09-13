@@ -24,7 +24,9 @@ const BackIcon = ({className, onClick}) => (
 );
 
 const UserImage = ({userImg, className}) => (
-  <img src={userImg} alt="User" className={className} />
+  <Link to={CNST.ROUTES.PROFILE}>
+    <img src={userImg} alt="User" className={className} />
+  </Link>
 );
 
 export const ChallengePage = ({
