@@ -29,7 +29,7 @@
   font-weight: bold;
   margin-right: auto;
   margin-left: 12px;
-  overflow: auto;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
