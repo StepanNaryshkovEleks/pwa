@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Header from "../../components/header";
 import styles from "./_.module.css";
 import dayjs from "dayjs";
@@ -8,11 +8,12 @@ import {DatePicker, Select} from "antd";
 import {Link} from "react-router-dom";
 import CNST from "../../constants";
 import {Helmet} from "react-helmet";
+import validate from "../../helpers/validate";
 
 const {Option} = Select;
 const {TabPane} = Tabs;
 
-const GeneralInputs = ({isUserTab, signUpDetails, handleChange}) => {
+const GeneralInputs = ({isUserTab, signUpDetails, handleChange, handleBlur}) => {
   return (
     <>
       <div className={styles.img}>
@@ -32,6 +33,7 @@ const GeneralInputs = ({isUserTab, signUpDetails, handleChange}) => {
           id="name"
           placeholder="please input"
           onChange={handleChange}
+          onBlur={handleBlur}
         />
       </div>
       <div className={`${styles.row} ${styles.rowDisabled}`}>
@@ -101,6 +103,7 @@ export const SignUp = ({
   setCompanyDetails,
   setAccountDetailsTab,
 }) => {
+  const [validationError, setValidationError] = useState(false);
   const isUserTab = signUpDetails.activeAccountDetailsTab === "user";
 
   const handleChange = (ev) => {
@@ -115,11 +118,19 @@ export const SignUp = ({
     }
   };
 
+  const handleBlur = (ev) => {
+    const isValidated = validate(ev.target.value, ev.target.name);
+    setValidationError(!isValidated);
+  };
+
   let disabledNextStep = false;
   if (isUserTab) {
-    disabledNextStep = signUpDetails.userDetails.name && signUpDetails.userDetails.date;
+    disabledNextStep =
+      signUpDetails.userDetails.name &&
+      signUpDetails.userDetails.date &&
+      !validationError;
   } else {
-    disabledNextStep = signUpDetails.companyDetails.name;
+    disabledNextStep = signUpDetails.companyDetails.name && !validationError;
   }
 
   return (
@@ -139,6 +150,7 @@ export const SignUp = ({
               signUpDetails={signUpDetails}
               isUserTab={isUserTab}
               handleChange={handleChange}
+              handleBlur={handleBlur}
             />
             <div className={styles.row}>
               <label htmlFor="date" className="label">
@@ -198,6 +210,7 @@ export const SignUp = ({
               signUpDetails={signUpDetails}
               isUserTab={isUserTab}
               handleChange={handleChange}
+              handleBlur={handleBlur}
             />
             <div className={`${styles.row} ${styles.rowDisabled}`}>
               <label htmlFor="website" className="label">
@@ -220,6 +233,10 @@ export const SignUp = ({
             </div>
           </TabPane>
         </Tabs>
+        <div className={`${styles.error} ${validationError ? styles.visible : ""}`}>
+          Name should be 3-16 symbols and can contain only letters, digits and some
+          special symbols (# _ -)
+        </div>
         <Link
           disabled={!disabledNextStep}
           to={CNST.ROUTES.CREATING_PASSWORD}
