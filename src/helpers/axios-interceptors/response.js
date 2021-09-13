@@ -20,7 +20,11 @@ axios.interceptors.response.use(
 
     if (error.response.status >= 400) {
       if (error.response.status === 403) {
-        store.dispatch(signOutAction());
+        if (error.response.config.url === "application/vee/signin") {
+          openNotificationWithIcon("", "Incorrect username or password");
+        } else {
+          store.dispatch(signOutAction());
+        }
       } else {
         openNotificationWithIcon(error.response.status);
       }
