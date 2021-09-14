@@ -97,9 +97,9 @@ export const ChallengeActivities = ({
               {i === 0 && mediaDetails.length > 1 && (
                 <div className={styles.tip}>
                   <span className={styles.tipText}>
-                    Swipe to
+                    Swipe
                     <br />
-                    next video
+                    to next
                   </span>
                   <img src={arrowIcon} alt="Swipe" />
                 </div>
