@@ -70,7 +70,11 @@ export const ChallengeOwnerActivities = ({
         data.map((user, i) => (
           <div className={styles.user} key={i}>
             <img src={userImg} alt="User" className={styles.userImg} />
-            <div className={styles.userInfo}>
+            <div
+              className={`${styles.userInfo} ${
+                user.participantStatus === "UPLOADED" ? styles.small : ""
+              }`}
+            >
               <span className={styles.userName}>{user.participantName}</span>
               <span className={styles.userStatus}>
                 {statusMap[user.participantStatus]}
