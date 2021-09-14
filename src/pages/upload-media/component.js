@@ -10,11 +10,20 @@ import {Button, notification, Modal, Spin} from "antd";
 import VideoCamera from "../../images/video-camera.svg";
 import {Redirect} from "react-router";
 
-const SettingsIcon = ({className, onClick}) => (
-  <span onClick={onClick}>
-    <img src={closeIcon} alt="Go back" className={className} />
-  </span>
-);
+const SettingsIcon = ({className, onClick, shouldBeRedirected = false}) => {
+  if (shouldBeRedirected) {
+    return (
+      <Link to={CNST.ROUTES.DASHBOARD}>
+        <img src={closeIcon} alt="Go back" className={className} />
+      </Link>
+    );
+  }
+  return (
+    <span onClick={onClick}>
+      <img src={closeIcon} alt="Go back" className={className} />
+    </span>
+  );
+};
 
 const UserImage = ({userImg, className}) => (
   <Link to={CNST.ROUTES.PROFILE}>
@@ -139,7 +148,11 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
         classes={styles.wrap}
         title="Vee Challenge"
         LeftComponent={(props) =>
-          SettingsIcon({...props, onClick: () => setModalState(true)})
+          SettingsIcon({
+            ...props,
+            onClick: () => setModalState(true),
+            shouldBeRedirected: files.length === 0,
+          })
         }
         RightComponent={(props) => UserImage({...props, userImg})}
       />
@@ -166,7 +179,7 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
         closable={false}
         width={270}
       >
-        It will interrupt video uploading and will delete all videos
+        It will interrupt file uploading and will delete all media files
       </Modal>
       <h1 className={styles.title}>Select Video</h1>
       <div className={styles.files}>
