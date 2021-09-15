@@ -181,7 +181,7 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
       >
         It will interrupt file uploading and will delete all media files
       </Modal>
-      <h1 className={styles.title}>Select Video</h1>
+      <h1 className={styles.title}>Select Media</h1>
       <div className={styles.files}>
         {files.map((file, index) => {
           return (
