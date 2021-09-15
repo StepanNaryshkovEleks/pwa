@@ -157,7 +157,9 @@ export const SignUp = ({
                 Date of Birth
               </label>
               <DatePicker
-                disabledDate={(current) => current > dayjs().startOf("day")}
+                disabledDate={(current) =>
+                  current > dayjs().startOf("day") || current.format("YYYY") < 1900
+                }
                 suffixIcon={React.Fragment}
                 bordered={false}
                 allowClear={true}
