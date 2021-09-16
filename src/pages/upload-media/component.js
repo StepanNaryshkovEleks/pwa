@@ -58,7 +58,7 @@ const Video = ({file}) => {
   );
 };
 
-export const UploadMedia = ({match, uploadMedia, location}) => {
+export const UploadMedia = ({match, uploadMedia, location, isFileLoading}) => {
   const [files, setFiles] = useState([]);
   const [shouldBeRedirected, setRedirect] = useState(false);
   const [isLoadingFile, setLoadingFile] = useState(false);
@@ -215,7 +215,7 @@ export const UploadMedia = ({match, uploadMedia, location}) => {
         className={styles.btn}
         onClick={handleSubmit}
         type="primary"
-        disabled={files.length === 0}
+        disabled={files.length === 0 || isFileLoading}
       >
         Upload
       </Button>

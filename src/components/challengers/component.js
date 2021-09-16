@@ -23,6 +23,7 @@ export const Challengers = ({
   voteChallenge,
   actorId,
   submitChallengeWinner,
+  isWinnerLoading,
 }) => {
   const [search, setSearch] = useState("");
   const [activeRow, setActiveRow] = useState("");
@@ -193,6 +194,7 @@ export const Challengers = ({
                   <Button
                     type="primary"
                     className={styles.winnerBtn}
+                    disabled={isWinnerLoading}
                     onClick={() =>
                       submitChallengeWinner({
                         challengeId,

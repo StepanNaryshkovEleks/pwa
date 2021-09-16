@@ -501,10 +501,19 @@ export function* uploadMedia(props) {
         message: "You successfully submitted your file",
         placement: "topLeft",
       });
+      yield put({
+        type: CNST.CHALLENGE.UPLOAD_MEDIA.SUCCESS,
+      });
       props.payload.callback();
+    } else {
+      yield put({
+        type: CNST.CHALLENGE.UPLOAD_MEDIA.ERROR,
+      });
     }
   } catch (error) {
-    console.log(error);
+    yield put({
+      type: CNST.CHALLENGE.UPLOAD_MEDIA.ERROR,
+    });
   }
 }
 

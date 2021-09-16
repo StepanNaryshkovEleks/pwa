@@ -2,6 +2,8 @@ import CNST from "../../constants";
 
 const defaultState = {
   fetching: false,
+  isFileLoading: false,
+  isWinnerLoading: false,
   error: false,
   mediaFilesForDetails: {},
 };
@@ -18,6 +20,25 @@ export default function reducer(state = defaultState, action) {
         shouldFetchChallenge: false,
       };
     }
+    case CNST.CHALLENGE.UPLOAD_MEDIA.FETCH: {
+      return {
+        ...state,
+        isFileLoading: true,
+      };
+    }
+    case CNST.CHALLENGE.UPLOAD_MEDIA.ERROR:
+    case CNST.CHALLENGE.UPLOAD_MEDIA.SUCCESS: {
+      return {
+        ...state,
+        isFileLoading: false,
+      };
+    }
+    case CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.FETCH: {
+      return {
+        ...state,
+        isWinnerLoading: true,
+      };
+    }
     case CNST.CHALLENGE.GET_MEDIA_FILE.FETCH: {
       return {
         ...state,
@@ -29,9 +50,11 @@ export default function reducer(state = defaultState, action) {
         },
       };
     }
+    case CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.ERROR:
     case CNST.CHALLENGE.SUBMIT_CHALLENGE_WINNER.SUCCESS: {
       return {
         ...state,
+        isWinnerLoading: false,
         data: {
           ...state.data,
           challengeState: {
