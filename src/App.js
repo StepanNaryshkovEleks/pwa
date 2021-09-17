@@ -8,6 +8,9 @@ import {Button, Result} from "antd";
 function App({initUser, fetching}) {
   const [isOffline, setOffline] = useState(false);
   useEffect(() => {
+    if (!window.navigator.onLine) {
+      setOffline(true);
+    }
     window.addEventListener("offline", () => setOffline((isOffline) => !isOffline));
     window.addEventListener("online", () => setOffline((isOffline) => !isOffline));
   }, []);

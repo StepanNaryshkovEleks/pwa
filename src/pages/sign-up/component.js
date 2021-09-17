@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Header from "../../components/header";
 import styles from "./_.module.css";
 import dayjs from "dayjs";
-import {Tabs, Avatar, Input} from "antd";
+import {Tabs, Avatar, Input, notification} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import {DatePicker, Select} from "antd";
 import {Link} from "react-router-dom";
@@ -13,10 +13,17 @@ import validate from "../../helpers/validate";
 const {Option} = Select;
 const {TabPane} = Tabs;
 
+const openNotification = () => {
+  notification.info({
+    message: "It is not a part of the prototype",
+    placement: "topLeft",
+  });
+};
+
 const GeneralInputs = ({isUserTab, signUpDetails, handleChange, handleBlur}) => {
   return (
     <>
-      <div className={styles.img}>
+      <div className={styles.img} onClick={openNotification}>
         <Avatar size={64} icon={<UserOutlined />} />
       </div>
       <div className={styles.row}>
