@@ -110,7 +110,10 @@ export const SignUp = ({
   setCompanyDetails,
   setAccountDetailsTab,
 }) => {
-  const [validationError, setValidationError] = useState(false);
+  const [validationError, setValidationError] = useState({
+    user: false,
+    company: false,
+  });
   const isUserTab = signUpDetails.activeAccountDetailsTab === "user";
 
   const handleChange = (ev) => {
@@ -127,7 +130,21 @@ export const SignUp = ({
 
   const handleBlur = (ev) => {
     const isValidated = validate(ev.target.value, ev.target.name);
-    setValidationError(!isValidated);
+    if (isUserTab) {
+      setValidationError((prev) => {
+        return {
+          ...prev,
+          user: !isValidated,
+        };
+      });
+    } else {
+      setValidationError((prev) => {
+        return {
+          ...prev,
+          company: !isValidated,
+        };
+      });
+    }
   };
 
   let disabledNextStep = false;
@@ -135,9 +152,9 @@ export const SignUp = ({
     disabledNextStep =
       signUpDetails.userDetails.name &&
       signUpDetails.userDetails.date &&
-      !validationError;
+      !validationError.user;
   } else {
-    disabledNextStep = signUpDetails.companyDetails.name && !validationError;
+    disabledNextStep = signUpDetails.companyDetails.name && !validationError.company;
   }
 
   return (
@@ -242,10 +259,21 @@ export const SignUp = ({
             </div>
           </TabPane>
         </Tabs>
-        <div className={`${styles.error} ${validationError ? styles.visible : ""}`}>
-          Name should be 3-16 symbols and can contain only letters, digits and some
-          special symbols (# _ -)
-        </div>
+        {isUserTab ? (
+          <div
+            className={`${styles.error} ${validationError.user ? styles.visible : ""}`}
+          >
+            Name should be 3-16 symbols and can contain only letters, digits and some
+            special symbols (# _ -)
+          </div>
+        ) : (
+          <div
+            className={`${styles.error} ${validationError.company ? styles.visible : ""}`}
+          >
+            Name should be 3-16 symbols and can contain only letters, digits and some
+            special symbols (# _ -)
+          </div>
+        )}
         <Link
           disabled={!disabledNextStep}
           to={CNST.ROUTES.CREATING_PASSWORD}
