@@ -21,7 +21,7 @@ export const Home = () => {
         />
         <div className={styles.nav}>
           <Link to={CNST.ROUTES.SIGN_UP} className="link link--primary">
-            Sign-up
+            Sign Up
           </Link>
           <Link to={CNST.ROUTES.SIGN_IN} className="link link--secondary">
             Log in
