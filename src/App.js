@@ -1,26 +1,15 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import AppRouter from "./routes";
 import {initUserAction} from "./redux/actions/user/initUser";
 import {connect} from "react-redux";
 import Spinner from "./components/spinner";
-import {Button, notification} from "antd";
-
-const openNotification = () => {
-  notification.warning({
-    className: "no-internet-popup",
-    message: `No internet connection. Please try again later`,
-    description: (
-      <Button type="link" onClick={() => document.location.reload()}>
-        Refresh page
-      </Button>
-    ),
-    placement: "topRight",
-  });
-};
+import {Button, Result} from "antd";
 
 function App({initUser, fetching}) {
+  const [isOffline, setOffline] = useState(false);
   useEffect(() => {
-    window.addEventListener("offline", () => openNotification());
+    window.addEventListener("offline", () => setOffline((isOffline) => !isOffline));
+    window.addEventListener("online", () => setOffline((isOffline) => !isOffline));
   }, []);
 
   useEffect(() => {
@@ -29,6 +18,19 @@ function App({initUser, fetching}) {
   return (
     <>
       {fetching && <Spinner />}
+      {isOffline && (
+        <div className="no-internet">
+          <Result
+            status="warning"
+            title="No internet connection. Please try again later"
+            extra={
+              <Button type="primary" onClick={() => document.location.reload()}>
+                Refresh page
+              </Button>
+            }
+          />
+        </div>
+      )}
       <AppRouter />
     </>
   );
