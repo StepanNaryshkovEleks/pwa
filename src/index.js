@@ -11,7 +11,6 @@ import "./axios.config";
 import "./helpers/axios-interceptors/response";
 
 export const store = initStore();
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

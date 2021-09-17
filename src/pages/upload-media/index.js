@@ -5,6 +5,7 @@ import {uploadMediaAction} from "../../redux/actions/challenge/uploadMedia";
 
 export const mapStateToProps = (state) => ({
   realmToken: state.user.realmToken,
+  isFileLoading: state.challenge.isFileLoading,
 });
 
 export const mapDispatchToProps = (dispatch) => ({

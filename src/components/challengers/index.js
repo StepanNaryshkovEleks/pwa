@@ -7,6 +7,7 @@ export const mapStateToProps = (state) => ({
   user: state.user,
   challenge: state.challenge.data,
   mediaFiles: state.challenge.mediaFilesForDetails,
+  isWinnerLoading: state.challenge.isWinnerLoading,
 });
 
 export const mapDispatchToProps = (dispatch) => ({
