@@ -24,7 +24,7 @@ export const Home = () => {
             Sign Up
           </Link>
           <Link to={CNST.ROUTES.SIGN_IN} className="link link--secondary">
-            Log in
+            Log In
           </Link>
         </div>
       </div>
