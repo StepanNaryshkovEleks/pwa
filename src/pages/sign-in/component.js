@@ -1,11 +1,18 @@
 import React, {useState} from "react";
 import CNST from "../../constants";
 import {Link} from "react-router-dom";
-import {Button, Input} from "antd";
+import {Button, Input, notification} from "antd";
 import styles from "./_.module.css";
 import Header from "../../components/header";
 import {Helmet} from "react-helmet";
 import validate from "../../helpers/validate";
+
+const openNotification = () => {
+  notification.info({
+    message: "It is not a part of the prototype",
+    placement: "topLeft",
+  });
+};
 
 export const SignIn = ({signIn}) => {
   const [password, setPassword] = useState("");
@@ -58,7 +65,7 @@ export const SignIn = ({signIn}) => {
             onBlur={handleBlur}
           />
         </div>
-        <Link to={CNST.ROUTES.FORGOT_PASSWORD} className={styles.link}>
+        <Link onClick={openNotification} className={styles.link} to={() => false}>
           Forgot your password?
         </Link>
         <div
