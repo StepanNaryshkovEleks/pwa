@@ -46,6 +46,10 @@ export const Challenges = ({
   const [search, setSearch] = useState("");
 
   useEffect(() => {
+    window.scrollTo(0, 1);
+  }, [tab]);
+
+  useEffect(() => {
     fetchChallenges();
   }, [fetchChallenges]);
 
