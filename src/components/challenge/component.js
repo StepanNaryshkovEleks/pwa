@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import styles from "./_.module.css";
 import {Result, Skeleton, Spin} from "antd";
 import {getRandomImage} from "../../helpers/getRandomImage.js";
@@ -11,6 +11,31 @@ import voteWhiteIcon from "../../images/vote-white.svg";
 import CNST from "../../constants";
 import base64ToHexString from "../../helpers/base64ToHexString";
 import videoCamera from "../../images/video-camera-white.svg";
+import useIntersect from "../../hooks/useIntersect";
+
+const MediaFile = ({isClosed, mediaType, metadata}) => {
+  if (!isClosed) return null;
+  if (!metadata) return null;
+
+  return mediaType && mediaType.mime.includes("video") ? (
+    <video
+      playsInline
+      className={styles.challengeImg}
+      muted
+      loop
+      preload="metadata"
+      autoPlay
+    >
+      <source src={URL.createObjectURL(metadata)} />
+    </video>
+  ) : (
+    <img
+      src={URL.createObjectURL(metadata)}
+      alt="Challenge"
+      className={styles.challengeImg}
+    />
+  );
+};
 
 export const Challenge = ({
   getWinnerFile = () => {},
@@ -28,14 +53,16 @@ export const Challenge = ({
     challengeOwnerHandle,
     challengeReference,
   } = data.challengeDefinition;
-
+  const [ref, entry] = useIntersect({});
   const currentMedia = isClosed
     ? mediaForClosedChallenges[challengeReference.challengeId]
     : false;
+  const isVisible = useMemo(() => entry?.isIntersecting, [entry?.isIntersecting]);
 
   useEffect(() => {
     if (
       currentMedia &&
+      isVisible &&
       !currentMedia.isFetching &&
       !currentMedia.isFailed &&
       !currentMedia.file.mediaType
@@ -49,7 +76,15 @@ export const Challenge = ({
         mediaId: winnerData.striveMediaId.id,
       });
     }
-  }, [currentMedia, data, challengeReference, challengeOwnerHandle, user, getWinnerFile]);
+  }, [
+    currentMedia,
+    data,
+    challengeReference,
+    challengeOwnerHandle,
+    user,
+    getWinnerFile,
+    isVisible,
+  ]);
 
   const indx = data.participantArray.findIndex((el) => el.participantId === userId);
   const indxInMedia = data.striveParticipantEntryArray.findIndex(
@@ -68,86 +103,8 @@ export const Challenge = ({
       challenger.participantStatus === "ENGAGED"
   );
 
-  const Content = () => (
-    <>
-      {!isClosed && (
-        <img src={challengeImg} alt="Challenge" className={styles.challengeImg} />
-      )}
-      {isClosed && !currentMedia.isFetching && currentMedia.isFailed && (
-        <div className={styles.placeholder}>
-          <Result status="warning" title="There are some problems with your operation." />
-        </div>
-      )}
-      {isClosed && currentMedia.isFetching && (
-        <div className={styles.placeholder}>
-          <Spin tip="Loading..." />
-          <Skeleton.Image active />
-        </div>
-      )}
-
-      {isClosed &&
-        currentMedia.file.mediaType &&
-        (currentMedia.file.mediaType.mime.includes("video") ? (
-          <video
-            playsInline
-            className={styles.challengeImg}
-            muted
-            loop
-            preload="metadata"
-            autoPlay
-          >
-            <source src={URL.createObjectURL(currentMedia.file.metadata)} />
-          </video>
-        ) : (
-          <img
-            src={URL.createObjectURL(currentMedia.file.metadata)}
-            alt="Challenge"
-            className={styles.challengeImg}
-          />
-        ))}
-      <div className={styles.footer}>
-        <div
-          className={`${styles.votesContainer} ${
-            winnerName ? styles.votesContainerClosed : ""
-          }`}
-        >
-          <div
-            className={`${styles.headerDesc} ${
-              !winnerName ? styles.headerDescWithoutWinner : ""
-            }`}
-          >
-            {winnerName && (
-              <div className={styles.winWrap}>
-                <img src={userImg} alt="Winner" className={styles.winnerImg} />
-                <span className={styles.winnerName}>{winnerName} won the challenge</span>
-              </div>
-            )}
-            <div className={styles.voteWrap}>
-              <span className={styles.votes}>
-                {data.voteParticipantEntryArray.length} votes
-              </span>
-              {!winnerName && isObserver && (
-                <button className={styles.button}>
-                  <img src={voteIcon} alt="Vote" />
-                </button>
-              )}
-            </div>
-          </div>
-          <div
-            className={`${
-              winnerName ? styles.challengeDesc : styles.challengeDescWithoutWinner
-            }`}
-          >
-            <span className={styles.name}>{challengeName}</span>
-            <span className={styles.description}>{challengeDescription}</span>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-
   return (
-    <section className={styles.challenge}>
+    <section className={styles.challenge} ref={ref}>
       <header className={styles.header}>
         <img src={userImg} alt="User" className={styles.userImg} />
         <span className={styles.username}>{challengeOwnerHandle.assetId.id}</span>
@@ -192,10 +149,136 @@ export const Challenge = ({
       </header>
       {to ? (
         <Link to={to}>
-          <Content />
+          <>
+            {!isClosed && (
+              <img src={challengeImg} alt="Challenge" className={styles.challengeImg} />
+            )}
+            {isClosed && !currentMedia.isFetching && currentMedia.isFailed && (
+              <div className={styles.placeholder}>
+                <Result
+                  status="warning"
+                  title="There are some problems with your operation."
+                />
+              </div>
+            )}
+            {((isClosed && !currentMedia.file.mediaType) || currentMedia.isFetching) && (
+              <div className={styles.placeholder}>
+                <Spin tip="Loading..." />
+                <Skeleton.Image active />
+              </div>
+            )}
+            <MediaFile
+              isClosed={isClosed}
+              mediaType={currentMedia.file?.mediaType}
+              metadata={currentMedia.file?.metadata}
+            />
+            <div className={styles.footer}>
+              <div
+                className={`${styles.votesContainer} ${
+                  winnerName ? styles.votesContainerClosed : ""
+                }`}
+              >
+                <div
+                  className={`${styles.headerDesc} ${
+                    !winnerName ? styles.headerDescWithoutWinner : ""
+                  }`}
+                >
+                  {winnerName && (
+                    <div className={styles.winWrap}>
+                      <img src={userImg} alt="Winner" className={styles.winnerImg} />
+                      <span className={styles.winnerName}>
+                        {winnerName} won the challenge
+                      </span>
+                    </div>
+                  )}
+                  <div className={styles.voteWrap}>
+                    <span className={styles.votes}>
+                      {data.voteParticipantEntryArray.length} votes
+                    </span>
+                    {!winnerName && isObserver && (
+                      <button className={styles.button}>
+                        <img src={voteIcon} alt="Vote" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+                <div
+                  className={`${
+                    winnerName ? styles.challengeDesc : styles.challengeDescWithoutWinner
+                  }`}
+                >
+                  <span className={styles.name}>{challengeName}</span>
+                  <span className={styles.description}>{challengeDescription}</span>
+                </div>
+              </div>
+            </div>
+          </>
         </Link>
       ) : (
-        <Content />
+        <>
+          {!isClosed && (
+            <img src={challengeImg} alt="Challenge" className={styles.challengeImg} />
+          )}
+          {isClosed && !currentMedia.isFetching && currentMedia.isFailed && (
+            <div className={styles.placeholder}>
+              <Result
+                status="warning"
+                title="There are some problems with your operation."
+              />
+            </div>
+          )}
+          {((isClosed && !currentMedia.file.mediaType) || currentMedia.isFetching) && (
+            <div className={styles.placeholder}>
+              <Spin tip="Loading..." />
+              <Skeleton.Image active />
+            </div>
+          )}
+          <MediaFile
+            isClosed={isClosed}
+            mediaType={currentMedia.file?.mediaType}
+            metadata={currentMedia.file?.metadata}
+          />
+          <div className={styles.footer}>
+            <div
+              className={`${styles.votesContainer} ${
+                winnerName ? styles.votesContainerClosed : ""
+              }`}
+            >
+              <div
+                className={`${styles.headerDesc} ${
+                  !winnerName ? styles.headerDescWithoutWinner : ""
+                }`}
+              >
+                {winnerName && (
+                  <div className={styles.winWrap}>
+                    <img src={userImg} alt="Winner" className={styles.winnerImg} />
+                    <span className={styles.winnerName}>
+                      {winnerName} won the challenge
+                    </span>
+                  </div>
+                )}
+                <div className={styles.voteWrap}>
+                  <span className={styles.votes}>
+                    {data.voteParticipantEntryArray.length} votes
+                  </span>
+                  {!winnerName && isObserver && (
+                    <button className={styles.button}>
+                      <img src={voteIcon} alt="Vote" />
+                    </button>
+                  )}
+                </div>
+              </div>
+              <div
+                className={`${
+                  winnerName ? styles.challengeDesc : styles.challengeDescWithoutWinner
+                }`}
+              >
+                <span className={styles.name}>{challengeName}</span>
+                <span className={styles.description}>{challengeDescription}</span>
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </section>
   );
